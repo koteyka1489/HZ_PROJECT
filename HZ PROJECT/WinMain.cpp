@@ -6,6 +6,21 @@
 static TCHAR pClassName[] = _T("HZ PROJECT");
 static TCHAR pTitle[] = _T("HZ");
 
+
+// кастомна€ функци€ обработки сообщений
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_CLOSE:
+		PostQuitMessage(666);
+		break;
+	}
+
+	return DefWindowProc(hWnd, msg, wParam, lParam); // DefWindowProc обрабатывает остальные сообщени€ по умолчанию.
+}
+
+
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -17,7 +32,7 @@ int WINAPI WinMain(
 	WNDCLASSEX wcex = {0};
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_OWNDC;
-	wcex.lpfnWndProc = DefWindowProc;
+	wcex.lpfnWndProc = WndProc;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = hInstance;
@@ -56,5 +71,5 @@ int WINAPI WinMain(
 		DispatchMessage(&msg);
 	}
 
-	return 0;
+	return msg.wParam;
 };
