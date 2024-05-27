@@ -1,6 +1,8 @@
 #include <windows.h>
-#include <tchar.h>
+#include <tchar.h> //  содержит макросы для работы с символами и строками в зависимости от настроек Unicode или ANSI приложения
 
+
+// Определение статических строковых переменных с использованием макроса _T для поддержки обоих ANSI и Unicode символов.
 static TCHAR pClassName[] = _T("HZ PROJECT");
 static TCHAR pTitle[] = _T("HZ");
 
@@ -11,7 +13,7 @@ int WINAPI WinMain(
 	_In_ int       nCmdShow
 )
 {
-	
+	// Заполнение параметров  для регистрации класса Windows
 	WNDCLASSEX wcex = {0};
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_OWNDC;
@@ -26,10 +28,10 @@ int WINAPI WinMain(
 	wcex.lpszClassName = pClassName;
 	wcex.hIconSm = nullptr;
 
-
+	// Регистрация класса Windows
 	RegisterClassEx(&wcex);
 
-
+	// создание экземляра окна
 	HWND hWnd = CreateWindowEx(
 		0,
 		pClassName,
@@ -42,8 +44,17 @@ int WINAPI WinMain(
 		nullptr
 	);
 
+
+	// отображение окна
 	ShowWindow(hWnd, SW_SHOW);
-	while (true);
+
+	// Обработка сообщений
+	MSG msg;
+	while ( GetMessage(&msg, nullptr, 0, 0) > 0 )
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 
 	return 0;
 };
