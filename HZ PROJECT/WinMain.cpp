@@ -7,7 +7,7 @@ static TCHAR pClassName[] = _T("HZ PROJECT");
 static TCHAR pTitle[] = _T("HZ");
 
 
-// кастомна€ функци€ обработки сообщений
+// кастомный обработчик сообщений окна
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -29,34 +29,34 @@ int WINAPI WinMain(
 )
 {
 	// «аполнение параметров  дл€ регистрации класса Windows
-	WNDCLASSEX wcex = {0};
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_OWNDC;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = nullptr;
-	wcex.hCursor = nullptr;
-	wcex.hbrBackground = nullptr;
-	wcex.lpszMenuName = nullptr;
-	wcex.lpszClassName = pClassName;
-	wcex.hIconSm = nullptr;
+	WNDCLASSEX wcex = {0}; //  структура, котора€ содержит информацию о классе окна
+	wcex.cbSize = sizeof(WNDCLASSEX); // размер структуры
+	wcex.style = CS_OWNDC; // стиль класса окна, в данном случае устанавливаетс€ флаг CS_OWNDC, который позвол€ет окну иметь собственный контекст устройства отображени€ (device context).
+	wcex.lpfnWndProc = WndProc; // указатель на функцию WndProc, котора€ будет обработчиком сообщений окна.
+	wcex.cbClsExtra = 0; // количество дополнительной пам€ти, выделенной дл€ класса окна
+	wcex.cbWndExtra = 0; // количество дополнительной пам€ти, выделенной дл€ каждого экземпл€ра окна
+	wcex.hInstance = hInstance; // дескриптор экземпл€ра приложени€
+	wcex.hIcon = nullptr; // дескриптор значка дл€ класса окна
+	wcex.hCursor = nullptr; // дескриптор курсора дл€ класса окна
+	wcex.hbrBackground = nullptr; //  дескриптор кисти дл€ фона окна
+	wcex.lpszMenuName = nullptr; //  им€ строки меню дл€ класса окна
+	wcex.lpszClassName = pClassName; //  указатель на строку с именем класса окна.
+	wcex.hIconSm = nullptr;//  дескриптор маленького значка дл€ класса окна
 
 	// –егистраци€ класса Windows
 	RegisterClassEx(&wcex);
 
 	// создание экземл€ра окна
-	HWND hWnd = CreateWindowEx(
-		0,
-		pClassName,
-		pTitle,
-		WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU,
-		200, 200,
-		1200, 800,
-		nullptr, nullptr,
-		hInstance,
-		nullptr
+	HWND hWnd = CreateWindowEx( 
+		0, // дополнительные стили окна (в данном случае отсутствуют)
+		pClassName, // указатель на строку с именем класса окна
+		pTitle, // указатель на строку с заголовком окна
+		WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, //  стили окна, в данном случае окно будет иметь заголовок, кнопку максимизации и системное меню
+		200, 200, // стартова€ точка x y
+		1200, 800, // размеры окна ширина и высота
+		nullptr, nullptr, // указатель на родительское окно (в данном случае отсутствует)
+		hInstance, // дескриптор экземпл€ра приложени€
+		nullptr // указатель на данные созданного окна (в данном случае отсутствуют)
 	);
 
 
