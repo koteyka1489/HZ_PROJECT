@@ -1,5 +1,9 @@
 #include "Window.h"
 
+
+const std::wstring Window::WindowClass::wndClassName = L"HZ PROJECT";
+Window::WindowClass Window::WindowClass::wndClass;
+
 const WCHAR* Window::WindowClass::GetName()
 {
     return wndClassName.c_str();
@@ -7,19 +11,18 @@ const WCHAR* Window::WindowClass::GetName()
 
 HINSTANCE Window::WindowClass::GetInstance()
 {
-    return hInstance;
+    return wndClass.hInstance;
 }
 
 Window::WindowClass::WindowClass()
+	:
+	hInstance(GetModuleHandle(nullptr))
 {
-	wndClassName = L"HZ PROJECT";
-	hInstance = GetModuleHandle(nullptr); // получение дискриптора
-
-
+	
 	WNDCLASSEX wcex = { 0 }; //  структура, которая содержит информацию о классе окна
 	wcex.cbSize = sizeof(WNDCLASSEX); // размер структуры
 	wcex.style = CS_OWNDC; // стиль класса окна, в данном случае устанавливается флаг CS_OWNDC, который позволяет окну иметь собственный контекст устройства отображения (device context).
-	wcex.lpfnWndProc = WndProc; // указатель на функцию WndProc, которая будет обработчиком сообщений окна.
+	wcex.lpfnWndProc = HandleMsgSetup; // указатель на функцию WndProc, которая будет обработчиком сообщений окна.
 	wcex.cbClsExtra = 0; // количество дополнительной памяти, выделенной для класса окна
 	wcex.cbWndExtra = 0; // количество дополнительной памяти, выделенной для каждого экземпляра окна
 	wcex.hInstance = GetInstance(); // дескриптор экземпляра приложения
@@ -40,6 +43,9 @@ Window::WindowClass::~WindowClass()
 }
 
 Window::Window(int width, int height)
+	:
+	width(width),
+	height(height)
 {
 	RECT rectWin;
 	rectWin.left = 100;
@@ -49,20 +55,20 @@ Window::Window(int width, int height)
 
 	AdjustWindowRect(&rectWin, WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, false);
 
-	HWND hWnd = CreateWindowEx(
+	hWnd = CreateWindowEx(
 		0, // дополнительные стили окна (в данном случае отсутствуют)
 		WindowClass::GetName(), // указатель на строку с именем класса окна
 		GetTitle(), // указатель на строку с заголовком окна
 		WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, //  стили окна, в данном случае окно будет иметь заголовок, кнопку максимизации и системное меню
 		CW_USEDEFAULT, CW_USEDEFAULT, // стартовая точка x y
 		rectWin.right - rectWin.left, rectWin.bottom - rectWin.top, // размеры окна ширина и высота
-		nullptr, nullptr, 
+		nullptr, nullptr,
 		WindowClass::GetInstance(), // дескриптор экземпляра приложения
 		this
 	);
 
+	UpdateWindow(hWnd);
 	ShowWindow(hWnd, SW_SHOW);
-
 }
 
 Window::~Window()
@@ -73,4 +79,43 @@ Window::~Window()
 const WCHAR* Window::GetTitle()
 {
 	return titleName.c_str();
+}
+
+LRESULT Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
+{
+	// использование параметра создания, переданного из CreateWindow(), для сохранения указателя класса окна на стороне WinAPI
+	if (msg == WM_NCCREATE)
+	{
+		// извлечение указателя на класс окна из данных создания
+		const CREATESTRUCTW* const pCreate = reinterpret_cast<CREATESTRUCTW*>(lParam);
+		Window* const pWnd = static_cast<Window*>(pCreate->lpCreateParams);
+		// установка управляемых WinAPI данных пользователя для сохранения указателя на экземпляр окна
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWnd));
+		// установка обработчика сообщения в нормальный (не настроечный) после завершения настройки
+		SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&Window::HandleMsgThunk));
+		// пересылка сообщения обработчику экземпляра окна
+		return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
+	}
+	// если мы получили сообщение до сообщения WM_NCCREATE, обработать его с помощью обработчика по умолчанию
+	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+LRESULT Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
+{
+	// получение указателя на экземпляр окна
+	Window* const pWnd = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+	// пересылка сообщения обработчику экземпляра окна
+	return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
+}
+
+LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
+{
+	switch (msg)
+	{
+	case WM_CLOSE:
+		// посылка сообщения о выходе
+		PostQuitMessage(0);
+		return 0;
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }

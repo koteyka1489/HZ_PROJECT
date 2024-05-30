@@ -10,7 +10,7 @@ private:
 	public:
 		static const WCHAR* GetName();
 		static HINSTANCE GetInstance();
-
+		
 	// Private Methods
 	private:
 		WindowClass();
@@ -19,9 +19,10 @@ private:
 		WindowClass& operator= (const WindowClass&) = delete;
 	// Fields
 	private:
-		static std::wstring wndClassName;
-		static HINSTANCE hInstance;
+		
+		static const std::wstring wndClassName;
 		static WindowClass wndClass;
+		HINSTANCE hInstance;
 	};
 
 // Public Methods
@@ -31,14 +32,17 @@ public:
 	Window(const Window&) = delete;
 	Window& operator= (const Window&) = delete;
 	const WCHAR* GetTitle();
-
+	
 // Private Methods
 private:
+	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
+	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
+	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
 // Fields
 private:
-	int width;
-	int height;
+	int width = 0;
+	int height = 0;
 	std::wstring titleName = L"HZ PROJECT";
 	HWND hWnd;
 };
