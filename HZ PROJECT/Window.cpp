@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "resource.h"
 
 
 const std::wstring Window::WindowClass::wndClassName = L"HZ PROJECT";
@@ -26,12 +27,12 @@ Window::WindowClass::WindowClass()
 	wcex.cbClsExtra = 0; // количество дополнительной пам€ти, выделенной дл€ класса окна
 	wcex.cbWndExtra = 0; // количество дополнительной пам€ти, выделенной дл€ каждого экземпл€ра окна
 	wcex.hInstance = GetInstance(); // дескриптор экземпл€ра приложени€
-	wcex.hIcon = nullptr; // дескриптор значка дл€ класса окна
+	wcex.hIcon = static_cast<HICON>(LoadImage(GetInstance(), MAKEINTRESOURCE( IDI_ICON3 ), IMAGE_ICON, 32, 32, 0));
 	wcex.hCursor = nullptr; // дескриптор курсора дл€ класса окна
 	wcex.hbrBackground = nullptr; //  дескриптор кисти дл€ фона окна
 	wcex.lpszMenuName = nullptr; //  им€ строки меню дл€ класса окна
 	wcex.lpszClassName = GetName(); //  указатель на строку с именем класса окна.
-	wcex.hIconSm = nullptr;//  дескриптор маленького значка дл€ класса окна
+	wcex.hIconSm = static_cast<HICON>(LoadImage(GetInstance(), MAKEINTRESOURCE (IDI_ICON3), IMAGE_ICON, 16, 16, 0));
 
 	// –егистраци€ класса Windows
 	RegisterClassEx(&wcex);
