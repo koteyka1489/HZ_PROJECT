@@ -27,6 +27,7 @@ int WINAPI WinMain(
 
 		return (int)msg.wParam;
 	}
+
 	catch (const ChiliException& e)
 	{
 		CharToWchar what(e.what());
@@ -34,16 +35,19 @@ int WINAPI WinMain(
 		
 		MessageBox(nullptr, what.GetWchar(), type.GetWchar(), MB_OK | MB_ICONEXCLAMATION);
 	}
+
 	catch (const std::exception& e)
 	{
 		CharToWchar what(e.what());
 
 		MessageBox(nullptr, what.GetWchar(), L"Standard Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
+
 	catch (...)
 	{
 		MessageBox(nullptr, L"No details available", L"Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
+
 	return -1;
 
 };
