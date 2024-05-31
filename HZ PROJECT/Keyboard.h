@@ -62,7 +62,7 @@ public:
 	// autorepeat control
 	void EnableAutoRepeat();
 	void DisableAutoRepeat();
-	bool AutoRepeatIsEnable();
+	bool AutoRepeatIsEnabled();
 
 private:
 	//Window side

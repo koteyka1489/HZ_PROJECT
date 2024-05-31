@@ -15,7 +15,7 @@ int WINAPI WinMain(
 {
 	try
 	{
-		Window win(1200, 800);
+		Window wnd(1200, 800);
 
 		// Обработка сообщений
 		MSG msg;

@@ -114,10 +114,38 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	switch (msg)
 	{
 	case WM_CLOSE:
-		// посылка сообщения о выходе
+		// обработка сообщения о выходе
 		PostQuitMessage(0);
 		return 0;
+
+		
+
+	case WM_KILLFOCUS: // обработка сообщения о потере фокуса окна
+		kbd.ClearState(); 
+		break;
+
+		// обработка сообщений с клавиатуры
+	case WM_KEYDOWN: // буквы и тд нажаты
+	case WM_SYSKEYDOWN: // системные клавиши нажаты
+		if (!(lParam & 0x40000000) || kbd.AutoRepeatIsEnabled())
+		{
+			kbd.OnKeyPressed(static_cast<unsigned char>(wParam));
+		}
+		break;
+
+	case WM_KEYUP: // буквы и тд подняты
+	case WM_SYSKEYUP: // ситсемные клавиши подняты 
+		kbd.OnKeyReleased(static_cast<unsigned char>(wParam));
+		break;
+
+	case WM_CHAR:
+		kbd.OnChar(static_cast<unsigned char>(wParam));
+		break;
+
+
 	}
+	
+	
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 

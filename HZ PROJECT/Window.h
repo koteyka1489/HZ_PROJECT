@@ -1,6 +1,7 @@
 #pragma once
 #include "KotWin.h"
 #include "ChiliException.h"
+#include "Keyboard.h"
 
 class Window
 {
@@ -56,6 +57,8 @@ private:
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
 // Fields
+public:
+	Keyboard kbd;
 private:
 	int width = 0;
 	int height = 0;

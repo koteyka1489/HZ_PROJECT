@@ -69,7 +69,7 @@ void Keyboard::DisableAutoRepeat()
     AutorepeatEnabled = false;
 }
 
-bool Keyboard::AutoRepeatIsEnable()
+bool Keyboard::AutoRepeatIsEnabled()
 {
     return AutorepeatEnabled;
 }
