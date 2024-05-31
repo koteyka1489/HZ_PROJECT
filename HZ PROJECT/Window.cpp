@@ -56,8 +56,6 @@ Window::Window(int width, int height)
 
 	AdjustWindowRect(&rectWin, WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, false);
 
-	throw CHWND_EXCEPT(ERROR_ARENA_TRASHED);
-
 	hWnd = CreateWindowEx(
 		0, // дополнительные стили окна (в данном случае отсутствуют)
 		WindowClass::GetName(), // указатель на строку с именем класса окна
