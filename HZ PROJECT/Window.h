@@ -25,7 +25,7 @@ private:
 	
 	// Public Methods
 	public:
-		static const WCHAR* GetName();
+		static const CHAR* GetName();
 		static HINSTANCE GetInstance();
 		
 	// Private Methods
@@ -37,7 +37,7 @@ private:
 	// Fields
 	private:
 		
-		static const std::wstring wndClassName;
+		static const std::string wndClassName;
 		static WindowClass wndClass;
 		HINSTANCE hInstance;
 	};
@@ -48,7 +48,7 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator= (const Window&) = delete;
-	const WCHAR* GetTitle();
+	const CHAR* GetTitle();
 	
 // Private Methods
 private:
@@ -62,7 +62,7 @@ public:
 private:
 	int width = 0;
 	int height = 0;
-	std::wstring titleName = L"HZ PROJECT";
+	std::string titleName = "HZ PROJECT";
 	HWND hWnd;
 };
 

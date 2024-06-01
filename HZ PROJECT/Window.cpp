@@ -2,10 +2,10 @@
 #include "resource.h"
 
 
-const std::wstring Window::WindowClass::wndClassName = L"HZ PROJECT";
+const std::string Window::WindowClass::wndClassName = "HZ PROJECT";
 Window::WindowClass Window::WindowClass::wndClass;
 
-const WCHAR* Window::WindowClass::GetName()
+const CHAR* Window::WindowClass::GetName()
 {
     return wndClassName.c_str();
 }
@@ -20,7 +20,7 @@ Window::WindowClass::WindowClass()
 	hInstance(GetModuleHandle(nullptr))
 {
 	
-	WNDCLASSEX wcex = { 0 }; //  структура, которая содержит информацию о классе окна
+	WNDCLASSEXA wcex = { 0 }; //  структура, которая содержит информацию о классе окна
 	wcex.cbSize = sizeof(WNDCLASSEX); // размер структуры
 	wcex.style = CS_OWNDC; // стиль класса окна, в данном случае устанавливается флаг CS_OWNDC, который позволяет окну иметь собственный контекст устройства отображения (device context).
 	wcex.lpfnWndProc = HandleMsgSetup; // указатель на функцию WndProc, которая будет обработчиком сообщений окна.
@@ -35,12 +35,12 @@ Window::WindowClass::WindowClass()
 	wcex.hIconSm = static_cast<HICON>(LoadImage(GetInstance(), MAKEINTRESOURCE (IDI_ICON3), IMAGE_ICON, 16, 16, 0));
 
 	// Регистрация класса Windows
-	RegisterClassEx(&wcex);
+	RegisterClassExA(&wcex);
 }
 
 Window::WindowClass::~WindowClass()
 {
-	UnregisterClass(GetName(), hInstance);
+	UnregisterClassA(GetName(), hInstance);
 }
 
 Window::Window(int width, int height)
@@ -56,7 +56,7 @@ Window::Window(int width, int height)
 
 	AdjustWindowRect(&rectWin, WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, false);
 
-	hWnd = CreateWindowEx(
+	hWnd = CreateWindowExA(
 		0, // дополнительные стили окна (в данном случае отсутствуют)
 		WindowClass::GetName(), // указатель на строку с именем класса окна
 		GetTitle(), // указатель на строку с заголовком окна
@@ -77,7 +77,7 @@ Window::~Window()
 	DestroyWindow(hWnd);
 }
 
-const WCHAR* Window::GetTitle()
+const CHAR* Window::GetTitle()
 {
 	return titleName.c_str();
 }
@@ -118,8 +118,6 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		PostQuitMessage(0);
 		return 0;
 
-		
-
 	case WM_KILLFOCUS: // обработка сообщения о потере фокуса окна
 		kbd.ClearState(); 
 		break;
@@ -141,7 +139,6 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	case WM_CHAR:
 		kbd.OnChar(static_cast<unsigned char>(wParam));
 		break;
-
 
 	}
 	
@@ -179,7 +176,7 @@ std::string Window::Exception::TranslateErrorCode(HRESULT hr) noexcept
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		nullptr, hr, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		reinterpret_cast<LPWSTR>(&pMsgBuf), 0, nullptr
+		reinterpret_cast<LPSTR>(&pMsgBuf), 0, nullptr
 	);
 	if (nMsgLen == 0)
 	{

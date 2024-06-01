@@ -24,28 +24,24 @@ int WINAPI WinMain(
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
-		return (int)msg.wParam;
+	
+		return static_cast<int>(msg.wParam);
 	}
 
 	catch (const ChiliException& e)
 	{
-		CharToWchar what(e.what());
-		CharToWchar type(e.GetType());
-		
-		MessageBox(nullptr, what.GetWchar(), type.GetWchar(), MB_OK | MB_ICONEXCLAMATION);
+
+		MessageBoxA(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
 	}
 
 	catch (const std::exception& e)
 	{
-		CharToWchar what(e.what());
-
-		MessageBox(nullptr, what.GetWchar(), L"Standard Exception", MB_OK | MB_ICONEXCLAMATION);
+		MessageBoxA(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
 
 	catch (...)
 	{
-		MessageBox(nullptr, L"No details available", L"Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
+		MessageBoxA(nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
 
 	return -1;
