@@ -54,7 +54,10 @@ Window::Window(int width, int height)
 	rectWin.top = 100;
 	rectWin.bottom = rectWin.top + height;
 
-	AdjustWindowRect(&rectWin, WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, false);
+	if (AdjustWindowRect(&rectWin, WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, false) == 0)
+	{
+		CHWND_LAST_EXCEPT();
+	}
 
 	hWnd = CreateWindowExA(
 		0, // дополнительные стили окна (в данном случае отсутствуют)
@@ -82,7 +85,7 @@ const CHAR* Window::GetTitle()
 	return titleName.c_str();
 }
 
-void Window::SetTitle(std::string str)
+void Window::SetTitle(const std::string str)
 {
 	if (SetWindowText(hWnd, str.c_str()) == 0)
 	{

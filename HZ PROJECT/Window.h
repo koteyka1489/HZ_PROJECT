@@ -49,7 +49,7 @@ public:
 	Window(const Window&) = delete;
 	Window& operator= (const Window&) = delete;
 	const CHAR* GetTitle();
-	void SetTitle(std::string str);
+	void SetTitle(const std::string str);
 	
 // Private Methods
 private:
