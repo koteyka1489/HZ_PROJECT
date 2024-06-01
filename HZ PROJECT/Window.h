@@ -2,6 +2,7 @@
 #include "KotWin.h"
 #include "ChiliException.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 class Window
 {
@@ -60,6 +61,7 @@ private:
 // Fields
 public:
 	Keyboard kbd;
+	Mouse mouse;
 private:
 	int width = 0;
 	int height = 0;

@@ -133,7 +133,8 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		kbd.ClearState(); 
 		break;
 
-		// обработка сообщений с клавиатуры
+// ОБРАБОТКА СООБЩЕНИЙ С КЛАВИАТУРЫ
+
 	case WM_KEYDOWN: // буквы и тд нажаты
 	case WM_SYSKEYDOWN: // системные клавиши нажаты
 		if (!(lParam & 0x40000000) || kbd.AutoRepeatIsEnabled())
@@ -150,6 +151,38 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	case WM_CHAR:
 		kbd.OnChar(static_cast<unsigned char>(wParam));
 		break;
+
+// ОБРАБОТКА СООБЩЕНИЙ МЫШИ
+	case WM_MOUSEMOVE:
+		POINTS pt = MAKEPOINTS(lParam);
+		mouse.OnMouseMove(pt.x, pt.y);
+		break;
+	
+	case WM_LBUTTONDOWN:
+		mouse.OnLeftIsPressed();
+		break;
+
+	case WM_LBUTTONUP:
+		mouse.OnLeftIsReleased();
+		break;
+
+	case WM_RBUTTONDOWN:
+		mouse.OnRightIsPressed();
+		break;
+
+	case WM_RBUTTONUP:
+		mouse.OnRightIsReleased();
+		break;
+
+	case WM_MOUSEWHEEL:
+		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
+		{
+			mouse.OnwheelUP();
+		}
+		else if (GET_WHEEL_DELTA_WPARAM(wParam) < 0)
+		{
+			mouse.OnWheelDown();
+		}
 
 	}
 	

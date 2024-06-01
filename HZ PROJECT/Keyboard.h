@@ -6,7 +6,7 @@ class Keyboard
 {
 	friend class Window;
 public:
-	class Event
+	class EventK
 	{
 	public:
 		enum class Type
@@ -15,12 +15,16 @@ public:
 			Release,
 			Invalid
 		};
-		Event()
+	private:
+		Type type;
+		unsigned char code;
+	public:
+		EventK()
 			:
 			type(Type::Invalid),
 			code(0u)
 		{}
-		Event(Type type, unsigned char code)
+		EventK(Type type, unsigned char code)
 			:
 			type(type),
 			code(code)
@@ -41,15 +45,12 @@ public:
 		{
 			return code;
 		}
-	private:
-		Type type;
-		unsigned char code;
 	};
 
 public:
 	// keyevent handling
 	bool KeyIsPressed(unsigned char keycode);
-	Event ReadKey();
+	EventK ReadKey();
 	bool KeyIsEmpty();
 	void FlushKey();
 
@@ -86,6 +87,6 @@ private:
 	static constexpr unsigned bufferSize = 16u;
 	bool AutorepeatEnabled = false;
 	std::bitset<nKeys> keyStates;
-	std::queue<Event> keyBuffer;
+	std::queue<EventK> keyBuffer;
 	std::queue<char> charBuffer;
 };

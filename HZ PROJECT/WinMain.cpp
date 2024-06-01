@@ -2,10 +2,6 @@
 #include "Window.h"
 #include "CharToWchar.h"
 
-
-// Определение статических строковых переменных с использованием макроса _T для поддержки обоих ANSI и Unicode символов.
-
-
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
