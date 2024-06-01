@@ -155,7 +155,28 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 // ОБРАБОТКА СООБЩЕНИЙ МЫШИ
 	case WM_MOUSEMOVE:
 		POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnMouseMove(pt.x, pt.y);
+		if (pt.x >= 0 && pt.x <= width && pt.y >= 0 && pt.y <= height)
+		{
+			mouse.OnMouseMove(pt.x, pt.y);
+
+			if (!mouse.IsInWindow())
+			{
+				SetCapture(hWnd); // позволяет захватывать сообщения даже за пределами окна
+				mouse.OnMouseEnter();
+			}
+		}
+		else
+		{
+			if (mouse.LIsPressed() || mouse.RIsPressed())
+			{
+				mouse.OnMouseMove(pt.x, pt.y);
+			}
+			else
+			{
+				ReleaseCapture(); // снимает захват сообщений за пределами окна
+				mouse.OnMouseLeave();
+			}
+		}
 		break;
 	
 	case WM_LBUTTONDOWN:
@@ -175,15 +196,8 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		break;
 
 	case WM_MOUSEWHEEL:
-		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
-		{
-			mouse.OnwheelUP();
-		}
-		else if (GET_WHEEL_DELTA_WPARAM(wParam) < 0)
-		{
-			mouse.OnWheelDown();
-		}
-
+		int delta = GET_WHEEL_DELTA_WPARAM(wParam);
+		mouse.OnWheelDeta(delta);
 	}
 	
 	

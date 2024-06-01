@@ -4,7 +4,7 @@
 class Mouse
 {
 	friend class Window;
-private:
+public:
 	class EventM
 	{
 	public:
@@ -17,6 +17,8 @@ private:
 			WheelUp,
 			WheelDown,
 			Move,
+			Enter,
+			Leave,
 			Invalid
 		};
 	private:
@@ -70,6 +72,7 @@ public:
 	// Vec2 GetPosVec()
 	int GetPosX();
 	int GetPosY();
+	bool IsInWindow();
 	bool LIsPressed();
 	bool RIsPressed();
 	Mouse::EventM Read();
@@ -84,6 +87,9 @@ private:
 	void OnRightIsReleased();
 	void OnwheelUP();
 	void OnWheelDown();
+	void OnMouseLeave();
+	void OnMouseEnter();
+	void OnWheelDeta(int delta);
 	void TrimBuffer();
 
 
@@ -93,6 +99,8 @@ private:
 	int y = 0;
 	bool lPressed = false;
 	bool rPressed = false;
+	bool isInWindow = false;
+	int wheelDeltaCarry = 0;
 	std::queue<EventM> buffer;
 };
 

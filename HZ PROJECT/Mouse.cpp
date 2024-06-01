@@ -1,4 +1,5 @@
 #include "Mouse.h"
+#include "Window.h"
 
 Mouse::Mouse()
 	:
@@ -17,6 +18,11 @@ int Mouse::GetPosX()
 int Mouse::GetPosY()
 {
 	return y;
+}
+
+bool Mouse::IsInWindow()
+{
+	return isInWindow;
 }
 
 bool Mouse::LIsPressed()
@@ -100,6 +106,35 @@ void Mouse::OnWheelDown()
 {
 	buffer.push(Mouse::EventM(EventM::Type::WheelDown, *this));
 	TrimBuffer();
+}
+
+void Mouse::OnMouseLeave()
+{
+	isInWindow = false;
+	buffer.push(Mouse::EventM(EventM::Type::Leave, *this));
+	TrimBuffer();
+}
+
+void Mouse::OnMouseEnter()
+{
+	isInWindow = true;
+	buffer.push(Mouse::EventM(EventM::Type::Enter, *this));
+	TrimBuffer();
+}
+
+void Mouse::OnWheelDeta(int delta)
+{
+	wheelDeltaCarry += delta;
+	while (wheelDeltaCarry >= WHEEL_DELTA)
+	{
+		wheelDeltaCarry -= WHEEL_DELTA;
+		OnwheelUP();
+	}
+	while (wheelDeltaCarry <= -WHEEL_DELTA)
+	{
+		wheelDeltaCarry += WHEEL_DELTA;
+		OnWheelDown();
+	}
 }
 
 void Mouse::TrimBuffer()

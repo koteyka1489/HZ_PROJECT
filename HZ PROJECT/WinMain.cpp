@@ -1,6 +1,9 @@
 #include "KotWin.h"
 #include "Window.h"
-#include "CharToWchar.h"
+#include <sstream>
+
+
+
 
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
@@ -19,6 +22,7 @@ int WINAPI WinMain(
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+
 		}
 
 		return static_cast<int>(msg.wParam);
