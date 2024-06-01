@@ -49,6 +49,7 @@ public:
 	Window(const Window&) = delete;
 	Window& operator= (const Window&) = delete;
 	const CHAR* GetTitle();
+	void SetTitle(std::string str);
 	
 // Private Methods
 private:
@@ -66,4 +67,5 @@ private:
 	HWND hWnd;
 };
 
-#define CHWND_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,hr )
+#define CHWND_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,(hr) )
+#define CHWND_LAST_EXCEPT() Window::Exception( __LINE__,__FILE__,GetLastError() )

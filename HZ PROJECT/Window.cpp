@@ -20,7 +20,7 @@ Window::WindowClass::WindowClass()
 	hInstance(GetModuleHandle(nullptr))
 {
 	
-	WNDCLASSEXA wcex = { 0 }; //  структура, которая содержит информацию о классе окна
+	WNDCLASSEX wcex = { 0 }; //  структура, которая содержит информацию о классе окна
 	wcex.cbSize = sizeof(WNDCLASSEX); // размер структуры
 	wcex.style = CS_OWNDC; // стиль класса окна, в данном случае устанавливается флаг CS_OWNDC, который позволяет окну иметь собственный контекст устройства отображения (device context).
 	wcex.lpfnWndProc = HandleMsgSetup; // указатель на функцию WndProc, которая будет обработчиком сообщений окна.
@@ -35,12 +35,12 @@ Window::WindowClass::WindowClass()
 	wcex.hIconSm = static_cast<HICON>(LoadImage(GetInstance(), MAKEINTRESOURCE (IDI_ICON3), IMAGE_ICON, 16, 16, 0));
 
 	// Регистрация класса Windows
-	RegisterClassExA(&wcex);
+	RegisterClassEx(&wcex);
 }
 
 Window::WindowClass::~WindowClass()
 {
-	UnregisterClassA(GetName(), hInstance);
+	UnregisterClass(GetName(), hInstance);
 }
 
 Window::Window(int width, int height)
@@ -80,6 +80,14 @@ Window::~Window()
 const CHAR* Window::GetTitle()
 {
 	return titleName.c_str();
+}
+
+void Window::SetTitle(std::string str)
+{
+	if (SetWindowText(hWnd, str.c_str()) == 0)
+	{
+		throw CHWND_LAST_EXCEPT();
+	}
 }
 
 LRESULT Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept

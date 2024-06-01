@@ -31,7 +31,7 @@ void Keyboard::FlushKey()
 
 char Keyboard::ReadChar()
 {
-    if (keyBuffer.size() > 0)
+    if (charBuffer.size() > 0)
     {
         char c = charBuffer.front();
         charBuffer.pop();

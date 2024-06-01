@@ -147,14 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CharToWchar.cpp" />
     <ClCompile Include="ChiliException.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CharToWchar.h" />
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KotWin.h" />

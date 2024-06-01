@@ -24,7 +24,7 @@ int WINAPI WinMain(
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-	
+
 		return static_cast<int>(msg.wParam);
 	}
 
