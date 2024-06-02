@@ -15,7 +15,6 @@ int WINAPI WinMain(
 
 	catch (const ChiliException& e)
 	{
-
 		MessageBox(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
 	}
 
@@ -30,5 +29,4 @@ int WINAPI WinMain(
 	}
 
 	return -1;
-
 };

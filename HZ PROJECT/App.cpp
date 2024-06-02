@@ -8,20 +8,21 @@ App::App()
 
 int App::Go()
 {
-
-	// Обработка сообщений
-	MSG msg;
-	while (GetMessage(&msg, nullptr, 0, 0) > 0)
+	while (true)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (const auto ecode = Window::PrecessMessages())
+		{
+			return *ecode;
+		}
 		DoFrame();
 	}
-
-	return static_cast<int>(msg.wParam);
+	
 }
 
 void App::DoFrame()
 {
-
+	dt += ft.MarkRealDt();
+	std::ostringstream oss;
+	oss << "Time - " << dt;
+	wnd.SetTitle(oss.str());
 }

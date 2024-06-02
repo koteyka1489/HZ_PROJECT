@@ -1,5 +1,6 @@
 #pragma once
 #include <queue>
+#include "Vec2.h"
 
 class Mouse
 {
@@ -69,7 +70,7 @@ public:
 public:
 	Mouse();
 	Mouse& operator=(const Mouse&) = delete;
-	// Vec2 GetPosVec()
+	Vec2 GetPosVec();
 	int GetPosX();
 	int GetPosY();
 	bool IsInWindow();

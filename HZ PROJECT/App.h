@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "FrameTimer.h"
 
 class App
 {
@@ -12,5 +13,7 @@ private:
 
 private:
 	Window wnd;
+	FrameTimer ft;
+	float dt = 0.f;
 };
 

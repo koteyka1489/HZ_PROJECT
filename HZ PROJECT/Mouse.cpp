@@ -10,6 +10,11 @@ Mouse::Mouse()
 {
 }
 
+Vec2 Mouse::GetPosVec()
+{
+	return Vec2{ static_cast<float>(x), static_cast<float>(y) };
+}
+
 int Mouse::GetPosX()
 {
 	return x;

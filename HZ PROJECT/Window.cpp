@@ -93,6 +93,23 @@ void Window::SetTitle(const std::string str)
 	}
 }
 
+std::optional<int> Window::PrecessMessages()
+{
+	MSG msg;
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) )
+	{
+		if (msg.message == WM_QUIT)
+		{
+			return static_cast<int>(msg.wParam);
+		}
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return {};
+}
+
 LRESULT Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	// использование параметра создания, переданного из CreateWindow(), для сохранения указателя класса окна на стороне WinAPI
