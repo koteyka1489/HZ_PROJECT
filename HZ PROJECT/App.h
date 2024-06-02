@@ -13,7 +13,5 @@ private:
 
 private:
 	Window wnd;
-	FrameTimer ft;
-	float dt = 0.f;
 };
 

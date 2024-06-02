@@ -21,8 +21,5 @@ int App::Go()
 
 void App::DoFrame()
 {
-	dt += ft.MarkRealDt();
-	std::ostringstream oss;
-	oss << "Time - " << dt;
-	wnd.SetTitle(oss.str());
+
 }
