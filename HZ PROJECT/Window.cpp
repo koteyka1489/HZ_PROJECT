@@ -73,6 +73,9 @@ Window::Window(int width, int height)
 
 	UpdateWindow(hWnd);
 	ShowWindow(hWnd, SW_SHOW);
+
+	// создание графического обьекта и передача в аргументы дискриптора Окна
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window()
@@ -108,6 +111,11 @@ std::optional<int> Window::PrecessMessages()
 	}
 
 	return {};
+}
+
+Graphics& Window::gfx()
+{
+	return *pGfx;
 }
 
 LRESULT Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept

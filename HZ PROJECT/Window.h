@@ -5,6 +5,8 @@
 #include "Mouse.h"
 #include <sstream>
 #include <optional>
+#include "Graphics.h"
+
 
 class Window
 {
@@ -54,6 +56,8 @@ public:
 	const CHAR* GetTitle();
 	void SetTitle(const std::string str);
 	static std::optional<int> PrecessMessages();
+	Graphics& gfx();
+
 // Private Methods
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -69,6 +73,7 @@ private:
 	int height = 0;
 	std::string titleName = "HZ PROJECT";
 	HWND hWnd;
+	std::unique_ptr<Graphics> pGfx;
 };
 
 #define CHWND_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,(hr) )

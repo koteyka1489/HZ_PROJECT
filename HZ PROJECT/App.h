@@ -13,5 +13,10 @@ private:
 
 private:
 	Window wnd;
+	FrameTimer ft;
+	float red = 0.f;
+	float green = 0.f;
+	float blue = 255.f;
+	float dt = 0;
 };
 

@@ -21,5 +21,18 @@ int App::Go()
 
 void App::DoFrame()
 {
+	if (dt < 250)
+	{
+		red = +dt;
+		green += dt;
+		blue -= dt;
+		dt += ft.MarkRealDt();
+	}
+	else
+	{
+		dt = 0.f;
+	}
 
+	wnd.gfx().ClearBuffer(red, green, blue);
+	wnd.gfx().EndFrame();
 }
