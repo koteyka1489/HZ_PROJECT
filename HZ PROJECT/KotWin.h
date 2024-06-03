@@ -15,7 +15,6 @@
 #define NOCTLMGR // Отключение контроллера
 #define NODRAWTEXT // Отключение вывода текста
 #define NOKERNEL // Отключение вызовов ядра
-#define NONLS // Отключение национальных языковых настроек
 #define NOMEMMGR // Отключение менеджера памяти
 #define NOMETAFILE // Отключение работы с файлами метаданных
 #define NOOPENFILE // Отключение доступа к открытым файлам
@@ -37,8 +36,6 @@
 #define NOCRYPT // Отключение работы с криптографией
 #define NOMINMAX // Отключение определений для min() и max()
 #define STRICT // Установка строгого режима для объявлений
-#define WIN32_NO_STATUS // Отключение зависимости от структур статуса
-#define VC_EXTRALEAN // Отключение некоторых дополнительных заголовочных файлов Visual C++
 #define NOIME // Отключение работы с методами ввода
 #endif
 
@@ -46,3 +43,4 @@
 #include <tchar.h> //  содержит макросы для работы с символами и строками в зависимости от настроек Unicode или ANSI приложения
 #include <string>
 #include <sstream>
+#include <comdef.h>

@@ -1,6 +1,7 @@
 #pragma once
 #include "KotWin.h"
 #include <d3d11.h>
+#include "ThrowMacros.h"
 
 class Graphics
 {
@@ -13,6 +14,7 @@ public:
 	void ClearBuffer(float red, float green, float blue);
 
 private:
+	HRESULT hr;
 	ID3D11Device* pDevice = nullptr;
 	IDXGISwapChain* pSwap = nullptr;
 	ID3D11DeviceContext* pContext = nullptr;

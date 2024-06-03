@@ -53,10 +53,11 @@ Window::Window(int width, int height)
 	rectWin.right = rectWin.left + width;
 	rectWin.top = 100;
 	rectWin.bottom = rectWin.top + height;
+	
 
 	if (AdjustWindowRect(&rectWin, WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, false) == 0)
 	{
-		CHWND_LAST_EXCEPT();
+		THROW_COM_ERROR_LAST("Adjust Window Rect ERROR");
 	}
 
 	hWnd = CreateWindowExA(
@@ -70,6 +71,10 @@ Window::Window(int width, int height)
 		WindowClass::GetInstance(), // дескриптор экземпляра приложения
 		this
 	);
+	if (hWnd == nullptr)
+	{
+		THROW_COM_ERROR_LAST("Creare Window ERROR");
+	}
 
 	UpdateWindow(hWnd);
 	ShowWindow(hWnd, SW_SHOW);
@@ -90,7 +95,7 @@ void Window::SetTitle(const std::string str)
 {
 	if (SetWindowText(hWnd, str.c_str()) == 0)
 	{
-		throw CHWND_LAST_EXCEPT();
+		THROW_COM_ERROR_LAST("SET TITLE ERROR");
 	}
 }
 
@@ -225,55 +230,4 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	
 	
 	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
-
-// Window Exception Stuff
-Window::Exception::Exception(int line, const char* file, HRESULT hr) noexcept
-	:
-	ChiliException(line, file),
-	hr(hr)
-{}
-
-const char* Window::Exception::what() const noexcept
-{
-	std::ostringstream oss;
-	oss << GetType() << std::endl
-		<< "[Error Code] " << GetErrorCode() << std::endl
-		<< "[Description] " << GetErrorString() << std::endl
-		<< GetOriginString();
-	whatBuffer = oss.str();
-	return whatBuffer.c_str();
-}
-
-const char* Window::Exception::GetType() const noexcept
-{
-	return "Chili Window Exception";
-}
-
-std::string Window::Exception::TranslateErrorCode(HRESULT hr) noexcept
-{
-	char* pMsgBuf = nullptr;
-	DWORD nMsgLen = FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		nullptr, hr, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		reinterpret_cast<LPSTR>(&pMsgBuf), 0, nullptr
-	);
-	if (nMsgLen == 0)
-	{
-		return "Unidentified error code";
-	}
-	std::string errorString = pMsgBuf;
-	LocalFree(pMsgBuf);
-	return errorString;
-}
-
-HRESULT Window::Exception::GetErrorCode() const noexcept
-{
-	return hr;
-}
-
-std::string Window::Exception::GetErrorString() const noexcept
-{
-	return TranslateErrorCode(hr);
 }

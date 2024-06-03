@@ -1,5 +1,6 @@
 #include "KotWin.h"
 #include "App.h"
+#include "ErrorLogger.h"
 
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
@@ -14,19 +15,14 @@ int WINAPI WinMain(
 		return app.Go();
 	}
 
-	catch (const ChiliException& e)
+	catch (COMException& exception)
 	{
-		MessageBox(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
-	}
-
-	catch (const std::exception& e)
-	{
-		MessageBox(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
+		ErrorLogger::Log(exception);
 	}
 
 	catch (...)
 	{
-		MessageBox(nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
+		ErrorLogger::Log("Unkown Exception");
 	}
 
 	return -1;

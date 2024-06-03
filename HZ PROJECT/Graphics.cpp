@@ -2,6 +2,7 @@
 
 #pragma comment (lib, "d3d11.lib")
 
+
 Graphics::Graphics(HWND hWnd)
 {
 	DXGI_SWAP_CHAIN_DESC sd = {};
@@ -21,8 +22,8 @@ Graphics::Graphics(HWND hWnd)
 	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	sd.Flags = 0;
 
-
-	HRESULT hr = D3D11CreateDeviceAndSwapChain(
+	
+	hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
@@ -36,11 +37,15 @@ Graphics::Graphics(HWND hWnd)
 		nullptr,
 		&pContext
 	);
+	THROW_COM_ERROR_GFX(hr, "ERROR CREATE DEVICE");
+
 	ID3D11Resource* pBackBuffer = nullptr;
 
-	pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
+	hr = pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
+	THROW_COM_ERROR_GFX(hr, "ERROR Get Buffer");
 
-	pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pTarget);
+	hr = pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pTarget);
+	THROW_COM_ERROR_GFX(hr, "ERROR CREATE Render Target View");
 
 	pBackBuffer->Release();
 }
@@ -67,7 +72,8 @@ Graphics::~Graphics()
 
 void Graphics::EndFrame()
 {
-	pSwap->Present(1u, 0u);
+	hr = pSwap->Present(1u, 0u);
+	THROW_COM_ERROR_GFX(hr, "ERROR pSwap Present");
 }
 
 void Graphics::ClearBuffer(float red, float green, float blue)
