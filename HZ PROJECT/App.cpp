@@ -2,7 +2,8 @@
 
 App::App()
 	:
-	wnd(1200, 800)
+	wnd(1200, 800),
+	gfx(wnd.GetHwnd())
 {
 }
 
@@ -21,18 +22,19 @@ int App::Go()
 
 void App::DoFrame()
 {
-	if (dt < 250)
-	{
-		red = +dt;
-		green += dt;
-		blue -= dt;
-		dt += ft.MarkRealDt();
-	}
-	else
-	{
-		dt = 0.f;
-	}
-
-	wnd.gfx().ClearBuffer(red, green, blue);
-	wnd.gfx().EndFrame();
+    const float dt = ft.MarkRealDt() * 50.0f; 
+    if (red < 250.f)
+    {
+        red += dt;
+        green += dt;
+        blue -= dt;
+    }
+    else
+    {
+        red = 0.f;
+        green = 0.f;
+        blue = 250.f;
+    }
+    gfx.ClearBuffer(red / 255.f, green / 255.f, blue / 255.f);
+    gfx.EndFrame();
 }

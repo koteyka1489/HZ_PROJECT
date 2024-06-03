@@ -10,7 +10,8 @@ int WINAPI WinMain(
 {
 	try
 	{
-		return App{}.Go();
+		App app;
+		return app.Go();
 	}
 
 	catch (const ChiliException& e)

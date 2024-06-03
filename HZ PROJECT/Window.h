@@ -56,7 +56,7 @@ public:
 	const CHAR* GetTitle();
 	void SetTitle(const std::string str);
 	static std::optional<int> PrecessMessages();
-	Graphics& gfx();
+	HWND GetHwnd();
 
 // Private Methods
 private:
@@ -73,7 +73,6 @@ private:
 	int height = 0;
 	std::string titleName = "HZ PROJECT";
 	HWND hWnd;
-	std::unique_ptr<Graphics> pGfx;
 };
 
 #define CHWND_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,(hr) )
