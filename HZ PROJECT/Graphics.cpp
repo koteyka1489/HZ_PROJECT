@@ -22,12 +22,17 @@ Graphics::Graphics(HWND hWnd)
 	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	sd.Flags = 0;
 
-	
+	UINT swapCreateFlags = 0u;
+#ifndef NDEBUG
+	swapCreateFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+
 	hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		D3D11_CREATE_DEVICE_DEBUG,
+		swapCreateFlags,
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,
@@ -39,36 +44,16 @@ Graphics::Graphics(HWND hWnd)
 	);
 	THROW_COM_ERROR_GFX(hr, "ERROR CREATE DEVICE");
 
-	ID3D11Resource* pBackBuffer = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
 
-	hr = pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
+	hr = pSwap->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
 	THROW_COM_ERROR_GFX(hr, "ERROR Get Buffer");
 
-	hr = pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pTarget);
+	hr = pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget);
 	THROW_COM_ERROR_GFX(hr, "ERROR CREATE Render Target View");
 
-	pBackBuffer->Release();
 }
 
-Graphics::~Graphics()
-{
-	if (pDevice != nullptr)
-	{
-		pDevice->Release();
-	}
-	if (pSwap != nullptr)
-	{
-		pSwap->Release();
-	}
-	if (pContext != nullptr)
-	{
-		pContext ->Release();
-	}
-	if (pTarget != nullptr)
-	{
-		pTarget->Release();
-	}
-}
 
 void Graphics::EndFrame()
 {
@@ -79,5 +64,5 @@ void Graphics::EndFrame()
 void Graphics::ClearBuffer(float red, float green, float blue)
 {
 	const float color[] = { red, green, blue, 1.0f };
-	pContext->ClearRenderTargetView(pTarget, color);
+	pContext->ClearRenderTargetView(pTarget.Get(), color);
 }
