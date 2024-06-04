@@ -4,6 +4,8 @@
 #include "ThrowMacros.h"
 #include <wrl.h>
 
+#define ComPtr Microsoft::WRL::ComPtr
+
 class Graphics
 {
 public:
@@ -16,9 +18,9 @@ public:
 
 private:
 	HRESULT hr;
-	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
-	Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pContext;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget;
+	ComPtr<ID3D11Device> pDevice;
+	ComPtr<IDXGISwapChain> pSwap;
+	ComPtr<ID3D11DeviceContext> pContext;
+	ComPtr<ID3D11RenderTargetView> pTarget;
 };
 

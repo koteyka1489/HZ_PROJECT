@@ -44,7 +44,7 @@ Graphics::Graphics(HWND hWnd)
 	);
 	THROW_COM_ERROR_GFX(hr, "ERROR CREATE DEVICE");
 
-	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
+	ComPtr<ID3D11Resource> pBackBuffer;
 
 	hr = pSwap->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
 	THROW_COM_ERROR_GFX(hr, "ERROR Get Buffer");
