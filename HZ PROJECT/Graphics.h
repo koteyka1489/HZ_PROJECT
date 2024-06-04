@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include "ThrowMacros.h"
 #include <wrl.h>
+#include "DxgiInfoManager.h"
 
 #define ComPtr Microsoft::WRL::ComPtr
 
@@ -17,6 +18,9 @@ public:
 	void ClearBuffer(float red, float green, float blue);
 
 private:
+#ifndef NDEBUG
+	DxgiInfoManager infoManager;
+#endif
 	HRESULT hr;
 	ComPtr<ID3D11Device> pDevice;
 	ComPtr<IDXGISwapChain> pSwap;

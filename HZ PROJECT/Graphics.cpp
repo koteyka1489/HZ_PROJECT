@@ -42,23 +42,26 @@ Graphics::Graphics(HWND hWnd)
 		nullptr,
 		&pContext
 	);
-	THROW_COM_ERROR_GFX(hr, "ERROR CREATE DEVICE");
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CREATE DEVICE");
 
 	ComPtr<ID3D11Resource> pBackBuffer;
 
 	hr = pSwap->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
-	THROW_COM_ERROR_GFX(hr, "ERROR Get Buffer");
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR Get Buffer");
 
 	hr = pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget);
-	THROW_COM_ERROR_GFX(hr, "ERROR CREATE Render Target View");
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CREATE Render Target View");
 
 }
 
 
 void Graphics::EndFrame()
 {
+#ifndef NDEBUG
+	infoManager.Set();
+#endif
 	hr = pSwap->Present(1u, 0u);
-	THROW_COM_ERROR_GFX(hr, "ERROR pSwap Present");
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
 }
 
 void Graphics::ClearBuffer(float red, float green, float blue)
