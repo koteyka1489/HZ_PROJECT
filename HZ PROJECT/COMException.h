@@ -29,6 +29,18 @@ public:
 		whatmsg += "\nfile: " + file;
 		whatmsg += "\nline^ " + line;
 	}
+	COMException(std::vector<std::string> dxInfo, const std::string& file, int line)
+	{
+		
+		for (int i = 0; i < dxInfo.size(); i++)
+		{
+			whatmsg = "\n\n";
+			whatmsg += dxInfo[i];
+		}
+
+		whatmsg += "\nfile: " + file;
+		whatmsg += "\nline: " + line;
+	}
 
 
 	std::string what()

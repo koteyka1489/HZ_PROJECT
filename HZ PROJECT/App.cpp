@@ -36,5 +36,6 @@ void App::DoFrame()
         blue = 250.f;
     }
     gfx.ClearBuffer(red / 255.f, green / 255.f, blue / 255.f);
+    gfx.DrawTestTriangle();
     gfx.EndFrame();
 }
