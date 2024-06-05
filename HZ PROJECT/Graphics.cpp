@@ -71,7 +71,7 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
 }
 
-void Graphics::DrawTestTriangle()
+void Graphics::DrawTestTriangle(float angle)
 {
 
 	struct Vertex // базовая структура вершин
@@ -102,7 +102,7 @@ void Graphics::DrawTestTriangle()
 	};
 	
 	
-	// Создание vertex buffer 
+	// СОЗДАНИЕ БУФЕРА ВЕРШИН 
 	ComPtr<ID3D11Buffer> pVertexBuffer; // указатель на буфер верщшин
 	D3D11_BUFFER_DESC VBDesc = {}; // описание свойств для буфера
 	VBDesc.ByteWidth = sizeof(vertices);
@@ -141,13 +141,49 @@ void Graphics::DrawTestTriangle()
 	hr = pDevice->CreateBuffer(&IBDesc, &indSubResData, &pIndexBuffer);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Indexes");
 
+	// Создание constsnt Буфера для матрицы трансформации
+	struct ConstantBuffer
+	{
+		struct
+		{
+			float element[4][4];
+		}transformation;
+	};
+
+	ConstantBuffer cb =
+	{
+		{
+			(3.f / 4.f) * std::cos(angle),  std::sin(angle), 0.f, 0.f,
+			(3.f / 4.f) * -std::sin(angle), std::cos(angle), 0.f, 0.f,
+			0.f,                        0.f,             1.f, 0.f,
+			0.f,                        0.f,             0.f, 1.f
+		}
+	};
+
+	ComPtr<ID3D11Buffer> pConstantBuffer;
+	D3D11_BUFFER_DESC CBDesc = { };
+	CBDesc.ByteWidth = sizeof(cb);
+	CBDesc.Usage = D3D11_USAGE_DYNAMIC;
+	CBDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	CBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	CBDesc.MiscFlags = 0u;
+	CBDesc.StructureByteStride = 0u;
+
+	D3D11_SUBRESOURCE_DATA ConsSubResData = {};
+	ConsSubResData.pSysMem = &cb;
+
+	hr = pDevice->CreateBuffer(&CBDesc, &ConsSubResData, &pConstantBuffer);
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Constant");
+
 
 
 	const UINT stride = sizeof(Vertex); // шаг
 	const UINT offset = 0u; // смещение
 
-	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //связывание буфера вершин в pipeline
-	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u);
+	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //привязка буфера вершин в pipeline
+	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u); //привязка буфера индексов в pipeline
+	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Vertex Shader
+
 
 	// указатель через который можно получить доступ к считанным данным
 	ComPtr<ID3DBlob> pBlob; 

@@ -19,5 +19,7 @@ private:
 	float red = 0.f;
 	float green = 0.f;
 	float blue = 250.f;
+	float rotAngle = 0.f;
+
 };
 
