@@ -108,7 +108,7 @@ void Graphics::DrawTestTriangle()
 	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //связывание буфера вершин в pipeline
 
 
-	// указатель через который можно поулчить доступ к считанным данным
+	// указатель через который можно получить доступ к считанным данным
 	ComPtr<ID3DBlob> pBlob; 
 
 	// СОЗДАНИЕ И УСТАНОВКА PIXEL SHADER
@@ -151,15 +151,15 @@ void Graphics::DrawTestTriangle()
 
 	// создание ViewPort
 	D3D11_VIEWPORT vp;
-	vp.Width = 1200;
-	vp.Height = 800;
-	vp.MinDepth = 0;
-	vp.MaxDepth = 1;
-	vp.TopLeftX = 100;
-	vp.TopLeftY = 100;
+	vp.Width = 1200.f;
+	vp.Height = 800.f;
+	vp.MinDepth = 0.f;
+	vp.MaxDepth = 1.f;
+	vp.TopLeftX = 0.f;
+	vp.TopLeftY = 0.f;
 	pContext->RSSetViewports(1u, &vp);
 
-	pContext->Draw((UINT)std::size(vertices), 0u);
+	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->Draw((UINT)std::size(vertices), 0u));
 
 }
 
