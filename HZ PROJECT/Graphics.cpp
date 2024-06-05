@@ -68,7 +68,7 @@ void Graphics::EndFrame()
 void Graphics::ClearBuffer(float red, float green, float blue)
 {
 	const float color[] = { red, green, blue, 1.0f };
-	pContext->ClearRenderTargetView(pTarget.Get(), color);
+	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
 }
 
 void Graphics::DrawTestTriangle()
@@ -76,37 +76,78 @@ void Graphics::DrawTestTriangle()
 
 	struct Vertex // базовая структура вершин
 	{
-		float x;
-		float y;
+		struct
+		{
+			float x;
+			float y;
+		} pos;
+		struct
+		{
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
+			unsigned char a;
+		} color;
+		
 	};
 
-	const Vertex vertices[] = // создангие масима вершин треугольника
+	Vertex vertices[] = // создание масива вершин треугольника
 	{
-		{0.f, 0.5f},
-		{0.5f, -0.5f},
-		{-0.5f, -0.5f}
+		{ 0.f,   0.5f, 255, 50,  50,  0},
+		{ 0.5f, -0.5f, 50,  255, 50,  0},
+		{-0.5f, -0.5f, 50,  50,  255, 0},
+		{-0.3f,  0.3f, 50,  255, 50,   0},
+		{ 0.3f,  0.3f, 50,  50,  255, 0},
+		{ 0.f,  -0.8f, 255, 50,  50,   0}
 	};
 	
-	// Создание vertex buffer и связывание с render pipeline 
+	
+	// Создание vertex buffer 
 	ComPtr<ID3D11Buffer> pVertexBuffer; // указатель на буфер верщшин
-	D3D11_BUFFER_DESC bufferDesc = {}; // описание свойств для буфера
-	bufferDesc.ByteWidth = sizeof(vertices);
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufferDesc.CPUAccessFlags = 0u;
-	bufferDesc.MiscFlags = 0u;
-	bufferDesc.StructureByteStride = sizeof(Vertex);
+	D3D11_BUFFER_DESC VBDesc = {}; // описание свойств для буфера
+	VBDesc.ByteWidth = sizeof(vertices);
+	VBDesc.Usage = D3D11_USAGE_DEFAULT;
+	VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	VBDesc.CPUAccessFlags = 0u;
+	VBDesc.MiscFlags = 0u;
+	VBDesc.StructureByteStride = sizeof(Vertex);
 
-	D3D11_SUBRESOURCE_DATA subResData = {}; // описание данных
-	subResData.pSysMem = vertices; // указание что данные это вершины
+	D3D11_SUBRESOURCE_DATA verSubResData = {}; // описание данных
+	verSubResData.pSysMem = vertices; // указание что данные это вершины
 
-	hr = pDevice->CreateBuffer(&bufferDesc, &subResData, &pVertexBuffer); // создание бафера с использованием описания бафера, описание данных
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer");
+	hr = pDevice->CreateBuffer(&VBDesc, &verSubResData, &pVertexBuffer); // создание бафера с использованием описания бафера, описание данных
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Vertexes");
+
+	// СОЗДАНИЕ БУФЕРА ИНДЕКСОВ
+	const unsigned short indexes[] =
+	{
+		0, 1, 2,
+		0, 2, 3,
+		0, 4, 1,
+		2, 1, 5
+	};
+	ComPtr<ID3D11Buffer> pIndexBuffer;
+	D3D11_BUFFER_DESC IBDesc = { };
+	IBDesc.ByteWidth = sizeof(indexes);
+	IBDesc.Usage = D3D11_USAGE_DEFAULT;
+	IBDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	IBDesc.CPUAccessFlags = 0u;
+	IBDesc.MiscFlags = 0u;
+	IBDesc.StructureByteStride = sizeof(unsigned short);
+
+	D3D11_SUBRESOURCE_DATA indSubResData = {};
+	indSubResData.pSysMem = indexes;
+
+	hr = pDevice->CreateBuffer(&IBDesc, &indSubResData, &pIndexBuffer);
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Indexes");
+
+
 
 	const UINT stride = sizeof(Vertex); // шаг
 	const UINT offset = 0u; // смещение
-	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //связывание буфера вершин в pipeline
 
+	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //связывание буфера вершин в pipeline
+	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u);
 
 	// указатель через который можно получить доступ к считанным данным
 	ComPtr<ID3DBlob> pBlob; 
@@ -132,7 +173,8 @@ void Graphics::DrawTestTriangle()
 	ComPtr<ID3D11InputLayout> pInputLayout;
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		{"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 	hr = pDevice->CreateInputLayout(ied, (UINT)std::size(ied), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CreateInputLayout");
@@ -157,9 +199,10 @@ void Graphics::DrawTestTriangle()
 	vp.MaxDepth = 1.f;
 	vp.TopLeftX = 0.f;
 	vp.TopLeftY = 0.f;
+
 	pContext->RSSetViewports(1u, &vp);
 
-	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->Draw((UINT)std::size(vertices), 0u));
+	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->DrawIndexed((UINT)std::size(indexes), 0u, 0u));
 
 }
 
