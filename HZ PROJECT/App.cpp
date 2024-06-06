@@ -23,7 +23,7 @@ int App::Go()
 void App::DoFrame()
 {
     const float dt = ft.MarkRealDt() * 50.0f; 
-    rotAngle += dt / 25;
+    rotAngle += dt / 50;
     if (red < 250.f)
     {
         red += dt;
@@ -37,6 +37,8 @@ void App::DoFrame()
         blue = 250.f;
     }
     gfx.ClearBuffer(red / 255.f, green / 255.f, blue / 255.f);
-    gfx.DrawTestTriangle(rotAngle);
+    gfx.DrawTestTriangle(rotAngle,
+        wnd.mouse.GetPosX() / 800.f - 1.f,
+        -wnd.mouse.GetPosY() / 400.f + 1.f);
     gfx.EndFrame();
 }

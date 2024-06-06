@@ -6,13 +6,13 @@ struct VSOut
 
 cbuffer cbuff
 {
-    row_major matrix transform;
+    matrix transform;
 };
 
-VSOut main(float2 pos : POSITION, float3 color : COLOR)
+VSOut main(float3 pos : POSITION, float3 color : COLOR)
 {
     VSOut vso;
-    vso.pos = mul(float4(pos.x, pos.y, 0.f, 1.f), transform);
+    vso.pos = mul(float4(pos.x, pos.y, pos.z, 1.f), transform);
     vso.color = float3(color.r, color.g, color.b);
     
     return vso;

@@ -1,8 +1,12 @@
 #include "Graphics.h"
 #include <d3dcompiler.h>
+#include <DirectXMath.h>
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "D3DCompiler.lib")
+
+namespace dx = DirectX;
+
 
 Graphics::Graphics(HWND hWnd)
 {
@@ -71,8 +75,11 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
 }
 
-void Graphics::DrawTestTriangle(float angle)
+void Graphics::DrawTestTriangle(float angle, float x, float y)
 {
+
+	dx::XMVECTOR vec = dx::XMVectorSet(1.f, 1.f, 1.f, 1.f);
+	dx::XMVECTOR vecFive = dx::XMVectorReplicate(5.f);
 
 	struct Vertex // базовая структура вершин
 	{
@@ -80,6 +87,7 @@ void Graphics::DrawTestTriangle(float angle)
 		{
 			float x;
 			float y;
+			float z;
 		} pos;
 		struct
 		{
@@ -93,12 +101,14 @@ void Graphics::DrawTestTriangle(float angle)
 
 	Vertex vertices[] = // создание масива вершин треугольника
 	{
-		{ 0.f,   0.5f, 255, 50,  50,  0},
-		{ 0.5f, -0.5f, 50,  255, 50,  0},
-		{-0.5f, -0.5f, 50,  50,  255, 0},
-		{-0.3f,  0.3f, 50,  255, 50,   0},
-		{ 0.3f,  0.3f, 50,  50,  255, 0},
-		{ 0.f,  -0.8f, 255, 50,  50,   0}
+		{{-1.f, -1.f, -1.0f},    {255, 0,   0,   0}},
+		{{ 1.f, -1.f, -1.0f},    {0,   255, 0,   0}},
+		{{-1.f,  1.f, -1.0f},    {0,   0,   255, 0}},
+		{{ 1.f,  1.f, -1.0f},    {255, 255, 0,   0}},
+		{{-1.f, -1.f,  1.0f},    {255, 0,   255, 0}},
+		{{ 1.f, -1.f,  1.0f},    {0,   255, 255, 0}},
+		{{-1.f,  1.f,  1.0f},    {0,   0,   0,   0}},
+		{{ 1.f,  1.f,  1.0f},    {255, 255, 255, 0}}
 	};
 	
 	
@@ -121,10 +131,12 @@ void Graphics::DrawTestTriangle(float angle)
 	// СОЗДАНИЕ БУФЕРА ИНДЕКСОВ
 	const unsigned short indexes[] =
 	{
-		0, 1, 2,
-		0, 2, 3,
-		0, 4, 1,
-		2, 1, 5
+		0, 2, 1,  2, 3, 1,
+		1, 3, 5,  3, 7, 5,
+		2, 6, 3,  3, 6, 7,
+		4, 5, 7,  4, 7, 6,
+		0, 4, 2,  2, 4, 6,
+		0, 1, 4,  1, 5, 4
 	};
 	ComPtr<ID3D11Buffer> pIndexBuffer;
 	D3D11_BUFFER_DESC IBDesc = { };
@@ -144,19 +156,19 @@ void Graphics::DrawTestTriangle(float angle)
 	// Создание constsnt Буфера для матрицы трансформации
 	struct ConstantBuffer
 	{
-		struct
-		{
-			float element[4][4];
-		}transformation;
+		dx::XMMATRIX transform;
 	};
 
 	ConstantBuffer cb =
 	{
 		{
-			(3.f / 4.f) * std::cos(angle),  std::sin(angle), 0.f, 0.f,
-			(3.f / 4.f) * -std::sin(angle), std::cos(angle), 0.f, 0.f,
-			0.f,                        0.f,             1.f, 0.f,
-			0.f,                        0.f,             0.f, 1.f
+			dx::XMMatrixTranspose (
+				dx::XMMatrixRotationZ(angle) *
+				dx::XMMatrixRotationX(angle) *
+				//dx::XMMatrixScaling(3.f / 4.f, 1.f, 1.f) *
+				dx::XMMatrixTranslation(x, y, 5.f) *
+				dx::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 10.f)
+				)
 		}
 	};
 
@@ -209,7 +221,7 @@ void Graphics::DrawTestTriangle(float angle)
 	ComPtr<ID3D11InputLayout> pInputLayout;
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 	hr = pDevice->CreateInputLayout(ied, (UINT)std::size(ied), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
