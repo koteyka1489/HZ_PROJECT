@@ -21,10 +21,10 @@ Graphics::Graphics(HWND hWnd)
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	sd.BufferCount = 1;
+	sd.BufferCount = 2;
 	sd.OutputWindow = hWnd;
 	sd.Windowed = true;
-	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	sd.Flags = 0;
 
 	UINT swapCreateFlags = 0u;
@@ -78,9 +78,6 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 void Graphics::DrawTestTriangle(float angle, float x, float y)
 {
 
-	dx::XMVECTOR vec = dx::XMVectorSet(1.f, 1.f, 1.f, 1.f);
-	dx::XMVECTOR vecFive = dx::XMVectorReplicate(5.f);
-
 	struct Vertex // базовая структура вершин
 	{
 		struct
@@ -89,26 +86,18 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 			float y;
 			float z;
 		} pos;
-		struct
-		{
-			unsigned char r;
-			unsigned char g;
-			unsigned char b;
-			unsigned char a;
-		} color;
-		
 	};
 
 	Vertex vertices[] = // создание масива вершин треугольника
 	{
-		{{-1.f, -1.f, -1.0f},    {255, 0,   0,   0}},
-		{{ 1.f, -1.f, -1.0f},    {0,   255, 0,   0}},
-		{{-1.f,  1.f, -1.0f},    {0,   0,   255, 0}},
-		{{ 1.f,  1.f, -1.0f},    {255, 255, 0,   0}},
-		{{-1.f, -1.f,  1.0f},    {255, 0,   255, 0}},
-		{{ 1.f, -1.f,  1.0f},    {0,   255, 255, 0}},
-		{{-1.f,  1.f,  1.0f},    {0,   0,   0,   0}},
-		{{ 1.f,  1.f,  1.0f},    {255, 255, 255, 0}}
+		{-1.f, -1.f, -1.0f},
+		{ 1.f, -1.f, -1.0f},
+		{-1.f,  1.f, -1.0f},
+		{ 1.f,  1.f, -1.0f},
+		{-1.f, -1.f,  1.0f},
+		{ 1.f, -1.f,  1.0f},
+		{-1.f,  1.f,  1.0f},
+		{ 1.f,  1.f,  1.0f}
 	};
 	
 	
@@ -127,6 +116,9 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 
 	hr = pDevice->CreateBuffer(&VBDesc, &verSubResData, &pVertexBuffer); // создание бафера с использованием описания бафера, описание данных
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Vertexes");
+	const UINT stride = sizeof(Vertex); // шаг
+	const UINT offset = 0u; // смещение
+	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //привязка буфера вершин в pipeline
 
 	// СОЗДАНИЕ БУФЕРА ИНДЕКСОВ
 	const unsigned short indexes[] =
@@ -153,6 +145,8 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 	hr = pDevice->CreateBuffer(&IBDesc, &indSubResData, &pIndexBuffer);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Indexes");
 
+	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u); //привязка буфера индексов в pipeline
+
 	// Создание constsnt Буфера для матрицы трансформации
 	struct ConstantBuffer
 	{
@@ -163,9 +157,8 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 	{
 		{
 			dx::XMMatrixTranspose (
-				dx::XMMatrixRotationZ(angle) *
+				dx::XMMatrixRotationZ(angle * 2) *
 				dx::XMMatrixRotationX(angle) *
-				//dx::XMMatrixScaling(3.f / 4.f, 1.f, 1.f) *
 				dx::XMMatrixTranslation(x, y, 5.f) *
 				dx::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 10.f)
 				)
@@ -187,18 +180,54 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 	hr = pDevice->CreateBuffer(&CBDesc, &ConsSubResData, &pConstantBuffer);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Constant");
 
-
-
-	const UINT stride = sizeof(Vertex); // шаг
-	const UINT offset = 0u; // смещение
-
-	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //привязка буфера вершин в pipeline
-	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u); //привязка буфера индексов в pipeline
 	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Vertex Shader
 
 
+
+	struct ConstantBuffer2
+	{
+		struct
+		{
+			float r;
+			float g;
+			float b;
+			float a;
+		}face_colors[6];
+	};
+
+	ConstantBuffer2 cb2 =
+	{
+		{
+			{1.0f, 1.0f, 1.0f},
+			{0.0f, 0.0f, 0.0f},
+			{1.0f, 0.0f, 1.0f},
+			{0.0f, 1.0f, 0.0f},
+			{1.0f, 1.0f, 0.0f},
+			{0.0f, 1.0f, 1.0f}
+		}
+	};
+	float xeew = cb2.face_colors[0].r;
+
+	ComPtr<ID3D11Buffer> pConstantBuffer2;
+	D3D11_BUFFER_DESC CBDesc2 = { };
+	CBDesc2.ByteWidth = sizeof(cb2);
+	CBDesc2.Usage = D3D11_USAGE_DEFAULT;
+	CBDesc2.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	CBDesc2.CPUAccessFlags = 0u;
+	CBDesc2.MiscFlags = 0u;
+	CBDesc2.StructureByteStride = 0u;
+
+	D3D11_SUBRESOURCE_DATA ConsSubResData2 = {};
+	ConsSubResData2.pSysMem = &cb2;
+
+	hr = pDevice->CreateBuffer(&CBDesc2, &ConsSubResData2, &pConstantBuffer2);
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Constant2");
+	pContext->PSSetConstantBuffers(0u, 1u, pConstantBuffer2.GetAddressOf());
+
 	// указатель через который можно получить доступ к считанным данным
 	ComPtr<ID3DBlob> pBlob; 
+
+	
 
 	// СОЗДАНИЕ И УСТАНОВКА PIXEL SHADER
 	ComPtr<ID3D11PixelShader> pPixelShader; // создание указателя на Pixel Shader
@@ -210,7 +239,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 
 	// СОЗДАНИЕ И УСТАНОВКА VERTEX SHADER
 	ComPtr<ID3D11VertexShader> pVertexShader; // создание указателя на шейдер вершин
-	
+
 	hr = D3DReadFileToBlob(L"VertexShader.cso", &pBlob); // Считывание прекомпилированного файла вершинного шейдера VertexShader.cso и загрузка его в память.
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR D3DReadFileToBlob");
 	hr = pDevice->CreateVertexShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader); // создание Vertex Shader
@@ -221,8 +250,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 	ComPtr<ID3D11InputLayout> pInputLayout;
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 	hr = pDevice->CreateInputLayout(ied, (UINT)std::size(ied), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CreateInputLayout");
