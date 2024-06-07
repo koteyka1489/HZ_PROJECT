@@ -26,5 +26,6 @@ private:
 	ComPtr<IDXGISwapChain> pSwap;
 	ComPtr<ID3D11DeviceContext> pContext;
 	ComPtr<ID3D11RenderTargetView> pTarget;
+	ComPtr<ID3D11DepthStencilView> pDSV;
 };
 

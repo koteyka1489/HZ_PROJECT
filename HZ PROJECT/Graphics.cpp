@@ -57,6 +57,45 @@ Graphics::Graphics(HWND hWnd)
 	hr = pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CREATE Render Target View");
 
+
+	// CREATE DEPTH STENCIL VIEW
+	D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+	dsDesc.DepthEnable = TRUE;
+	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	ComPtr<ID3D11DepthStencilState> pDSState;
+	hr = pDevice->CreateDepthStencilState(&dsDesc, &pDSState);
+	THROW_COM_ERROR_GFX_INFO(hr, "CreateDepthStencilState");
+
+	pContext->OMSetDepthStencilState(pDSState.Get(), 1u);
+
+	ComPtr<ID3D11Texture2D> pDepthStencil;
+	D3D11_TEXTURE2D_DESC descDepth;
+	descDepth.Width = 1200u;
+	descDepth.Height = 800u;
+	descDepth.MipLevels = 1u;
+	descDepth.ArraySize = 1u;
+	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+	descDepth.SampleDesc.Count = 1u;
+	descDepth.SampleDesc.Quality = 0u;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	descDepth.CPUAccessFlags = 0u; 
+	descDepth.MiscFlags = 0u; 
+
+	hr = pDevice->CreateTexture2D(&descDepth, nullptr, &pDepthStencil);
+	THROW_COM_ERROR_GFX_INFO(hr, "CreateTexture2D");
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
+	descDSV.Format = DXGI_FORMAT_D32_FLOAT;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Texture2D.MipSlice = 0u;
+
+	hr = pDevice->CreateDepthStencilView(pDepthStencil.Get(), &descDSV, &pDSV);
+	THROW_COM_ERROR_GFX_INFO(hr, "reateDepthStencilView");
+
+	
+
 }
 
 
@@ -73,9 +112,10 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 {
 	const float color[] = { red, green, blue, 1.0f };
 	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
+	pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }
 
-void Graphics::DrawTestTriangle(float angle, float x, float y)
+void Graphics::DrawTestTriangle(float angle, float x, float z)
 {
 
 	struct Vertex // базовая структура вершин
@@ -159,7 +199,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 			dx::XMMatrixTranspose (
 				dx::XMMatrixRotationZ(angle * 2) *
 				dx::XMMatrixRotationX(angle) *
-				dx::XMMatrixTranslation(x, y, 5.f) *
+				dx::XMMatrixTranslation(x, 0, z + 5.f) *
 				dx::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 10.f)
 				)
 		}
@@ -260,7 +300,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float y)
 
 
 	// УСТАНОВКА RENDER TARGET
-	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), nullptr);
+	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
 
 
 	//set primitive Topology
