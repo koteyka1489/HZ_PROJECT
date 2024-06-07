@@ -43,6 +43,6 @@ void App::DoFrame()
         -wnd.mouse.GetPosY() / 400.f + 1.f);
     gfx.DrawTestTriangle(rotAngle,
         0,
-        5);
+        0);
     gfx.EndFrame();
 }
