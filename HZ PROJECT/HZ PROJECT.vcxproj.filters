@@ -99,6 +99,9 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>Source Files\Graphics\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="TransfornCBuff.cpp">
+      <Filter>Source Files\Graphics\Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KotWin.h">
@@ -171,6 +174,9 @@
       <Filter>Header Files\Graphics\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="ConstantBuffer.h">
+      <Filter>Header Files\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="TransfornCBuff.h">
       <Filter>Header Files\Graphics\Bindable</Filter>
     </ClInclude>
   </ItemGroup>
