@@ -1,7 +1,6 @@
 #pragma once
 #include "Bindable.h"
-class TransfornCBuff :
-    public Bindable
+class TransfornCBuff :   public Bindable
 {
 };
 

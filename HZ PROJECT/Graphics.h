@@ -4,11 +4,13 @@
 #include "ThrowMacros.h"
 #include <wrl.h>
 #include "DxgiInfoManager.h"
+#include <DirectXMath.h>
 
 #define ComPtr Microsoft::WRL::ComPtr
 
 class Graphics
 {
+	friend class Bindable;
 public:
 	Graphics(HWND hWnd);
 	~Graphics() = default;
@@ -17,7 +19,11 @@ public:
 	void EndFrame();
 	void ClearBuffer(float red, float green, float blue);
 	void DrawTestTriangle(float angle, float x, float y);
+	void DrawIndexed(UINT count);
+	void SetMatrixProjection(DirectX::FXMMATRIX projection_in);
+	DirectX::XMMATRIX GetMatrixProjection();
 private:
+
 #ifndef NDEBUG
 	DxgiInfoManager infoManager;
 #endif
@@ -27,5 +33,7 @@ private:
 	ComPtr<ID3D11DeviceContext> pContext;
 	ComPtr<ID3D11RenderTargetView> pTarget;
 	ComPtr<ID3D11DepthStencilView> pDSV;
+	DirectX::XMMATRIX projection;
+	
 };
 

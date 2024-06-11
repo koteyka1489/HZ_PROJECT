@@ -1,11 +1,11 @@
 #include "Graphics.h"
 #include <d3dcompiler.h>
-#include <DirectXMath.h>
+
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "D3DCompiler.lib")
 
-namespace dx = DirectX;
+
 
 
 Graphics::Graphics(HWND hWnd)
@@ -94,8 +94,18 @@ Graphics::Graphics(HWND hWnd)
 	hr = pDevice->CreateDepthStencilView(pDepthStencil.Get(), &descDSV, &pDSV);
 	THROW_COM_ERROR_GFX_INFO(hr, "reateDepthStencilView");
 
-	
+	// создание ViewPort
+	D3D11_VIEWPORT vp;
+	vp.Width = 1200.f;
+	vp.Height = 800.f;
+	vp.MinDepth = 0.f;
+	vp.MaxDepth = 1.f;
+	vp.TopLeftX = 0.f;
+	vp.TopLeftY = 0.f;
 
+	pContext->RSSetViewports(1u, &vp);
+
+	projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 40.f);
 }
 
 
@@ -200,7 +210,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 				dx::XMMatrixRotationZ(angle * 2) *
 				dx::XMMatrixRotationX(angle) *
 				dx::XMMatrixTranslation(x, 0, z + 5.f) *
-				dx::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 10.f)
+				
 				)
 		}
 	};
@@ -307,18 +317,24 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 
-	// создание ViewPort
-	D3D11_VIEWPORT vp;
-	vp.Width = 1200.f;
-	vp.Height = 800.f;
-	vp.MinDepth = 0.f;
-	vp.MaxDepth = 1.f;
-	vp.TopLeftX = 0.f;
-	vp.TopLeftY = 0.f;
 
-	pContext->RSSetViewports(1u, &vp);
 
-	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->DrawIndexed((UINT)std::size(indexes), 0u, 0u));
+	
 
+}
+
+void Graphics::DrawIndexed(UINT count)
+{
+	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->DrawIndexed(count, 0u, 0u));
+}
+
+void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
+{
+	projection = projection_in;
+}
+
+DirectX::XMMATRIX Graphics::GetMatrixProjection()
+{
+	return projection;
 }
 
