@@ -5,6 +5,10 @@
 #include <wrl.h>
 #include "DxgiInfoManager.h"
 #include <DirectXMath.h>
+#include <d3dcompiler.h>
+
+#pragma comment (lib, "d3d11.lib")
+#pragma comment (lib, "D3DCompiler.lib")
 
 #define ComPtr Microsoft::WRL::ComPtr
 

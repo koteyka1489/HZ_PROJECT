@@ -10,7 +10,7 @@ ID3D11Device* Bindable::GetDevice(Graphics& gfx)
     return gfx.pDevice.Get();
 }
 
-DxgiInfoManager& Bindable::GerInfoManager(Graphics& gfx)
+DxgiInfoManager& Bindable::GetInfoManager(Graphics& gfx)
 {
     return gfx.infoManager;
 }

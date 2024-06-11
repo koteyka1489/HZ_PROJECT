@@ -1,7 +1,14 @@
 #pragma once
 #include "Bindable.h"
-class VertexShader :
-    public Bindable
+
+class VertexShader :  public Bindable
 {
+public:
+	VertexShader(Graphics& gfx, std::wstring fileName);
+	ID3DBlob* GetByteCode();
+	void Bind(Graphics& gfx) override;
+protected:
+	ComPtr<ID3DBlob> pBlob;
+	ComPtr<ID3D11VertexShader> pVertexShader; 
 };
 

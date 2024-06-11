@@ -11,3 +11,5 @@
 #else
 #define THROW_COM_ERROR_GFX_INFO(hr, msg) if ( FAILED( hr ) ) throw COMException(hr, msg, __FILE__, __LINE__)
 #endif
+
+#define INFOMAN(gfx) HRESULT hr; DxgiInfoManager& infoManager = GetInfoManager((gfx))

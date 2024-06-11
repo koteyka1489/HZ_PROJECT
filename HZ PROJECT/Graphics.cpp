@@ -1,9 +1,5 @@
 #include "Graphics.h"
-#include <d3dcompiler.h>
 
-
-#pragma comment (lib, "d3d11.lib")
-#pragma comment (lib, "D3DCompiler.lib")
 
 
 
@@ -152,23 +148,9 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 	
 	
 	// СОЗДАНИЕ БУФЕРА ВЕРШИН 
-	ComPtr<ID3D11Buffer> pVertexBuffer; // указатель на буфер верщшин
-	D3D11_BUFFER_DESC VBDesc = {}; // описание свойств для буфера
-	VBDesc.ByteWidth = sizeof(vertices);
-	VBDesc.Usage = D3D11_USAGE_DEFAULT;
-	VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	VBDesc.CPUAccessFlags = 0u;
-	VBDesc.MiscFlags = 0u;
-	VBDesc.StructureByteStride = sizeof(Vertex);
+	 // указатель на буфер верщшин
+	
 
-	D3D11_SUBRESOURCE_DATA verSubResData = {}; // описание данных
-	verSubResData.pSysMem = vertices; // указание что данные это вершины
-
-	hr = pDevice->CreateBuffer(&VBDesc, &verSubResData, &pVertexBuffer); // создание бафера с использованием описания бафера, описание данных
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Vertexes");
-	const UINT stride = sizeof(Vertex); // шаг
-	const UINT offset = 0u; // смещение
-	pContext->IASetVertexBuffers(0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset); //привязка буфера вершин в pipeline
 
 	// СОЗДАНИЕ БУФЕРА ИНДЕКСОВ
 	const unsigned short indexes[] =
@@ -180,23 +162,8 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 		0, 4, 2,  2, 4, 6,
 		0, 1, 4,  1, 5, 4
 	};
-	ComPtr<ID3D11Buffer> pIndexBuffer;
-	D3D11_BUFFER_DESC IBDesc = { };
-	IBDesc.ByteWidth = sizeof(indexes);
-	IBDesc.Usage = D3D11_USAGE_DEFAULT;
-	IBDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	IBDesc.CPUAccessFlags = 0u;
-	IBDesc.MiscFlags = 0u;
-	IBDesc.StructureByteStride = sizeof(unsigned short);
-
-	D3D11_SUBRESOURCE_DATA indSubResData = {};
-	indSubResData.pSysMem = indexes;
-
-	hr = pDevice->CreateBuffer(&IBDesc, &indSubResData, &pIndexBuffer);
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Indexes");
-
-	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u); //привязка буфера индексов в pipeline
-
+	
+	
 	// Создание constsnt Буфера для матрицы трансформации
 	struct ConstantBuffer
 	{
@@ -275,46 +242,29 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 	pContext->PSSetConstantBuffers(0u, 1u, pConstantBuffer2.GetAddressOf());
 
 	// указатель через который можно получить доступ к считанным данным
-	ComPtr<ID3DBlob> pBlob; 
+	
 
 	
 
 	// СОЗДАНИЕ И УСТАНОВКА PIXEL SHADER
-	ComPtr<ID3D11PixelShader> pPixelShader; // создание указателя на Pixel Shader
-	hr = D3DReadFileToBlob(L"PixelShader.cso", &pBlob); // Считывание прекомпилированного файла вершинного шейдера PixelShader.cso и загрузка его в память.
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR D3DReadFileToBlob");
-	hr = pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader); // создание Pixel Shader
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CreatePixelShader");
-	pContext->PSSetShader(pPixelShader.Get(), nullptr, 0);
+	
+	
 
 	// СОЗДАНИЕ И УСТАНОВКА VERTEX SHADER
-	ComPtr<ID3D11VertexShader> pVertexShader; // создание указателя на шейдер вершин
+	
 
-	hr = D3DReadFileToBlob(L"VertexShader.cso", &pBlob); // Считывание прекомпилированного файла вершинного шейдера VertexShader.cso и загрузка его в память.
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR D3DReadFileToBlob");
-	hr = pDevice->CreateVertexShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader); // создание Vertex Shader
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CreateVertexShader");
-	pContext->VSSetShader(pVertexShader.Get(), nullptr, 0);
+	
+	
 
 	// input layout
-	ComPtr<ID3D11InputLayout> pInputLayout;
-	const D3D11_INPUT_ELEMENT_DESC ied[] =
-	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
-	};
-	hr = pDevice->CreateInputLayout(ied, (UINT)std::size(ied), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR CreateInputLayout");
-	
-	//bind input layout
-	pContext->IASetInputLayout(pInputLayout.Get());
+
 
 
 	// УСТАНОВКА RENDER TARGET
 	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
 
 
-	//set primitive Topology
-	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	
 
 
 
