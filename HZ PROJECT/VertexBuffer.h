@@ -1,7 +1,7 @@
 #pragma once
 #include "Bindable.h"
 
-class VertexBuffer :    public Bindable
+class VertexBuffer : public Bindable
 {
 public:
 	template <typename V>

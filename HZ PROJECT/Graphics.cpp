@@ -124,27 +124,7 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 void Graphics::DrawTestTriangle(float angle, float x, float z)
 {
 
-	struct Vertex // базовая структура вершин
-	{
-		struct
-		{
-			float x;
-			float y;
-			float z;
-		} pos;
-	};
 
-	Vertex vertices[] = // создание масива вершин треугольника
-	{
-		{-1.f, -1.f, -1.0f},
-		{ 1.f, -1.f, -1.0f},
-		{-1.f,  1.f, -1.0f},
-		{ 1.f,  1.f, -1.0f},
-		{-1.f, -1.f,  1.0f},
-		{ 1.f, -1.f,  1.0f},
-		{-1.f,  1.f,  1.0f},
-		{ 1.f,  1.f,  1.0f}
-	};
 	
 	
 	// СОЗДАНИЕ БУФЕРА ВЕРШИН 
@@ -164,23 +144,23 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 	};
 	
 	
-	// Создание constsnt Буфера для матрицы трансформации
-	struct ConstantBuffer
-	{
-		dx::XMMATRIX transform;
-	};
+	//// Создание constsnt Буфера для матрицы трансформации
+	//struct ConstantBuffer
+	//{
+	//	dx::XMMATRIX transform;
+	//};
 
-	ConstantBuffer cb =
-	{
-		{
-			dx::XMMatrixTranspose (
-				dx::XMMatrixRotationZ(angle * 2) *
-				dx::XMMatrixRotationX(angle) *
-				dx::XMMatrixTranslation(x, 0, z + 5.f) *
-				
-				)
-		}
-	};
+	//ConstantBuffer cb =
+	//{
+	//	{
+	//		dx::XMMatrixTranspose (
+	//			dx::XMMatrixRotationZ(angle * 2) *
+	//			dx::XMMatrixRotationX(angle) *
+	//			dx::XMMatrixTranslation(x, 0, z + 5.f) *
+	//			
+	//			)
+	//	}
+	//};
 
 	
 	

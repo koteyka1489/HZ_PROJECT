@@ -27,7 +27,7 @@ public:
 	{
 		INFOMAN(gfx);
 		D3D11_BUFFER_DESC CBDesc = { };
-		CBDesc.ByteWidth = sizeof(consts);
+		CBDesc.ByteWidth = sizeof(C);
 		CBDesc.Usage = D3D11_USAGE_DYNAMIC;
 		CBDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		CBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -80,7 +80,7 @@ class VertexConstantBuffer : public ConstantBuffer<C>
 	using ConstantBuffer::GetContext;
 
 public:
-	using ConstantBuffer::ConstantBuffer;
+	using ConstantBuffer<C>::ConstantBuffer;
 	void Bind(Graphics& gfx) override
 	{
 		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Vertex Shader
@@ -94,7 +94,7 @@ class PixelConstantBuffer : public ConstantBuffer<C>
 	using ConstantBuffer::GetContext;
 
 public:
-	using ConstantBuffer::ConstantBuffer;
+	using ConstantBuffer<C>::ConstantBuffer;
 	void Bind(Graphics& gfx) override
 	{
 		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Pixel Shader

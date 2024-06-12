@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Bindable.h" />
+    <ClInclude Include="BindableBase.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="COMException.h" />
     <ClInclude Include="ConstantBuffer.h" />

@@ -176,6 +176,9 @@
     <ClInclude Include="TransfornCBuff.h">
       <Filter>Header Files\Graphics\Bindable</Filter>
     </ClInclude>
+    <ClInclude Include="BindableBase.h">
+      <Filter>Header Files\Graphics\Bindable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HZ PROJECT.rc">
