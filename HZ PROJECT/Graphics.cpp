@@ -182,22 +182,10 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 		}
 	};
 
-	ComPtr<ID3D11Buffer> pConstantBuffer;
-	D3D11_BUFFER_DESC CBDesc = { };
-	CBDesc.ByteWidth = sizeof(cb);
-	CBDesc.Usage = D3D11_USAGE_DYNAMIC;
-	CBDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	CBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	CBDesc.MiscFlags = 0u;
-	CBDesc.StructureByteStride = 0u;
+	
+	
 
-	D3D11_SUBRESOURCE_DATA ConsSubResData = {};
-	ConsSubResData.pSysMem = &cb;
-
-	hr = pDevice->CreateBuffer(&CBDesc, &ConsSubResData, &pConstantBuffer);
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Constant");
-
-	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Vertex Shader
+	
 
 
 
@@ -239,7 +227,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float z)
 
 	hr = pDevice->CreateBuffer(&CBDesc2, &ConsSubResData2, &pConstantBuffer2);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Constant2");
-	pContext->PSSetConstantBuffers(0u, 1u, pConstantBuffer2.GetAddressOf());
+	
 
 	// указатель через который можно получить доступ к считанным данным
 	

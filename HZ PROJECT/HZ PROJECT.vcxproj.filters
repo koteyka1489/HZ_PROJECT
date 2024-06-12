@@ -96,9 +96,6 @@
     <ClCompile Include="IndexBuffer.cpp">
       <Filter>Source Files\Graphics\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="ConstantBuffer.cpp">
-      <Filter>Source Files\Graphics\Bindable</Filter>
-    </ClCompile>
     <ClCompile Include="TransfornCBuff.cpp">
       <Filter>Source Files\Graphics\Bindable</Filter>
     </ClCompile>
