@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
-#include "FrameTimer.h"
+#include "ChiliTimer.h"
+#include "Box.h"
 
 
 class App
@@ -15,11 +16,8 @@ private:
 private:
 	Window wnd;
 	Graphics gfx;
-	FrameTimer ft;
-	float red = 0.f;
-	float green = 0.f;
-	float blue = 250.f;
-	float rotAngle = 0.f;
+	ChiliTimer timer;
+	std::vector <std::unique_ptr<Box>> boxes;
 
 };
 

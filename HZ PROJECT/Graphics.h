@@ -6,9 +6,12 @@
 #include "DxgiInfoManager.h"
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
+#include <dxgidebug.h>
+#include <dxgi1_3.h>
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "D3DCompiler.lib")
+#pragma comment (lib, "DXGI.lib")
 
 #define ComPtr Microsoft::WRL::ComPtr
 
@@ -17,27 +20,26 @@ class Graphics
 	friend class Bindable;
 public:
 	Graphics(HWND hWnd);
-	~Graphics() = default;
+	~Graphics();
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
 	void EndFrame();
 	void ClearBuffer(float red, float green, float blue);
-	void DrawTestTriangle(float angle, float x, float y);
 	void DrawIndexed(UINT count);
 	void SetMatrixProjection(DirectX::FXMMATRIX projection_in);
-	DirectX::XMMATRIX GetMatrixProjection();
+	DirectX::XMMATRIX GetMatrixProjection() const;
 private:
-
-#ifndef NDEBUG
-	DxgiInfoManager infoManager;
-#endif
 	HRESULT hr;
 	ComPtr<ID3D11Device> pDevice;
-	ComPtr<IDXGISwapChain> pSwap;
 	ComPtr<ID3D11DeviceContext> pContext;
+	ComPtr<IDXGISwapChain> pSwap;
 	ComPtr<ID3D11RenderTargetView> pTarget;
 	ComPtr<ID3D11DepthStencilView> pDSV;
 	DirectX::XMMATRIX projection;
+#ifndef NDEBUG
+	IDXGIDebug* dxgiDebug;
+	DxgiInfoManager infoManager;
+#endif
 	
 };
 

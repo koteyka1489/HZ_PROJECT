@@ -67,36 +67,36 @@ public:
 		// Размонтирование (unmap) буфера, освобождая доступ к его памяти.
 		GetContext(gfx)->Unmap(pConstantBuffer.Get(), 0u);
 	}
-
-private:
 	ComPtr<ID3D11Buffer> pConstantBuffer;
+private:
+	
 };
 
 
 template <typename C>
 class VertexConstantBuffer : public ConstantBuffer<C>
 {
-	using ConstantBuffer::pConstantBuffer;
-	using ConstantBuffer::GetContext;
+	using ConstantBuffer<C>::pConstantBuffer;
+	using Bindable::GetContext;
 
 public:
 	using ConstantBuffer<C>::ConstantBuffer;
 	void Bind(Graphics& gfx) override
 	{
 		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Vertex Shader
-	}
+	};
 };
 
 template <typename C>
 class PixelConstantBuffer : public ConstantBuffer<C>
 {
-	using ConstantBuffer::pConstantBuffer;
-	using ConstantBuffer::GetContext;
+	using ConstantBuffer<C>::pConstantBuffer;
+	using Bindable::GetContext;
 
 public:
 	using ConstantBuffer<C>::ConstantBuffer;
 	void Bind(Graphics& gfx) override
 	{
 		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Pixel Shader
-	}
+	};
 };

@@ -5,6 +5,18 @@ App::App()
 	wnd(1200, 800),
 	gfx(wnd.GetHwnd())
 {
+    std::mt19937 rng(std::random_device{}());
+    std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
+    std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
+    std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
+    std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
+    for (auto i = 0; i < 5; i++)
+    {
+        boxes.push_back(std::make_unique<Box>(
+            gfx, rng, adist,
+            ddist, odist, rdist
+        ));
+    }
 }
 
 int App::Go()
@@ -22,27 +34,12 @@ int App::Go()
 
 void App::DoFrame()
 {
-    const float dt = ft.MarkRealDt() * 50.0f; 
-    rotAngle += dt / 50;
-    if (red < 250.f)
-    {
-        red += dt;
-        green += dt;
-        blue -= dt;
-    }
-    else
-    {
-        red = 0.f;
-        green = 0.f;
-        blue = 250.f;
-    }
-    gfx.ClearBuffer(red / 255.f, green / 255.f, blue / 255.f);
-    
-    gfx.DrawTestTriangle(rotAngle -1.f,
-        wnd.mouse.GetPosX() / 600.f - 1.f,
-        -wnd.mouse.GetPosY() / 400.f + 1.f);
-    gfx.DrawTestTriangle(rotAngle,
-        0,
-        0);
+	auto dt = timer.Mark();
+	gfx.ClearBuffer(0.07f, 0.0f, 0.12f);
+	for (auto& b : boxes)
+	{
+		b->Update(dt);
+		b->Draw(gfx);
+	}
     gfx.EndFrame();
 }
