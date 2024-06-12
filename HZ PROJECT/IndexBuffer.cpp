@@ -25,7 +25,7 @@ void IndexBuffer::Bind(Graphics& gfx)
 	GetContext(gfx)->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u); //привязка буфера индексов в pipeline
 }
 
-UINT IndexBuffer::GetCount()
+UINT IndexBuffer::GetCount() const
 {
 	return count;
 }
