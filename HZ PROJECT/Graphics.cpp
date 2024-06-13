@@ -6,13 +6,13 @@
 
 Graphics::Graphics(HWND hWnd)
 {
-#ifndef NDEBUG
-    // Создание интерфейса отладки DXGI
-    hr = DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug));
-    if (FAILED(hr)) {
-        throw std::runtime_error("Failed to get DXGI Debug Interface");
-    }
-#endif
+//#ifndef NDEBUG
+//    // Создание интерфейса отладки DXGI
+//    hr = DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug));
+//    if (FAILED(hr)) {
+//        throw std::runtime_error("Failed to get DXGI Debug Interface");
+//    }
+//#endif
 
 
     RECT rect;
@@ -113,21 +113,10 @@ Graphics::Graphics(HWND hWnd)
     pContext->RSSetViewports(1u, &vp);
 
     projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 40.f);
-
-    // Отслеживание утечек
-#ifndef NDEBUG
-    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-#endif
-
+    
 }
 
-Graphics::~Graphics()
-{
-#ifndef NDEBUG
-    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-    dxgiDebug->Release();
-#endif
-}
+
 
 
 void Graphics::EndFrame()
@@ -138,9 +127,9 @@ void Graphics::EndFrame()
 	hr = pSwap->Present(1u, 0u);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
     // Отслеживание утечек
-#ifndef NDEBUG
-    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-#endif
+//#ifndef NDEBUG
+//    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+//#endif
 }
 
 void Graphics::ClearBuffer(float red, float green, float blue)
@@ -150,20 +139,12 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 	pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
 
-    // Отслеживание утечек
-#ifndef NDEBUG
-    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-#endif
 }
 
 void Graphics::DrawIndexed(UINT count)
 {
 	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->DrawIndexed(count, 0u, 0u));
 
-    // Отслеживание утечек
-#ifndef NDEBUG
-    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-#endif
 }
 
 void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
@@ -174,5 +155,10 @@ void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
 DirectX::XMMATRIX Graphics::GetMatrixProjection() const
 {
 	return projection;
+}
+
+IDXGIDebug* Graphics::GetpDebug()
+{
+    return dxgiDebug.Get();
 }
 

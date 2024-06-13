@@ -5,6 +5,6 @@
 #include "InputLayout.h"
 #include "PixelShader.h"
 #include "Topology.h"
-#include "TransfornCBuff.h"
+#include "TransformCBuff.h"
 #include "VertexBuffer.h"
 #include "VertexShader.h"

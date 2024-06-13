@@ -12,7 +12,7 @@ public:
 		INFOMAN(gfx);
 
 		D3D11_BUFFER_DESC VBDesc = {}; // описание свойств для Vertex Buffer
-		VBDesc.ByteWidth = sizeof(vertices);
+		VBDesc.ByteWidth = UINT(vertices.size() * sizeof(V));
 		VBDesc.Usage = D3D11_USAGE_DEFAULT;
 		VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		VBDesc.CPUAccessFlags = 0u;

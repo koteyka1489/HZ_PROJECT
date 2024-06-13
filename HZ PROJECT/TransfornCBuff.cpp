@@ -1,4 +1,4 @@
-#include "TransfornCBuff.h"
+#include "TransformCBuff.h"
 
 TransformCbuf::TransformCbuf(Graphics& gfx, const Drawable& parent)
 	:

@@ -20,7 +20,7 @@ class Graphics
 	friend class Bindable;
 public:
 	Graphics(HWND hWnd);
-	~Graphics();
+	~Graphics() = default;
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
 	void EndFrame();
@@ -28,6 +28,7 @@ public:
 	void DrawIndexed(UINT count);
 	void SetMatrixProjection(DirectX::FXMMATRIX projection_in);
 	DirectX::XMMATRIX GetMatrixProjection() const;
+	IDXGIDebug* GetpDebug();
 private:
 	HRESULT hr;
 	ComPtr<ID3D11Device> pDevice;
@@ -37,7 +38,7 @@ private:
 	ComPtr<ID3D11DepthStencilView> pDSV;
 	DirectX::XMMATRIX projection;
 #ifndef NDEBUG
-	IDXGIDebug* dxgiDebug;
+	ComPtr<IDXGIDebug> dxgiDebug;
 	DxgiInfoManager infoManager;
 #endif
 	

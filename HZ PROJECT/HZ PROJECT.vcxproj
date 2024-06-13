@@ -190,7 +190,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ThrowMacros.h" />
     <ClInclude Include="Topology.h" />
-    <ClInclude Include="TransfornCBuff.h" />
+    <ClInclude Include="TransformCBuff.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
     <ClInclude Include="VertexBuffer.h" />

@@ -81,9 +81,19 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 
 	AddBind(std::make_unique<InputLayout>(gfx, pvsbt));
 
-	AddBind(std::make_unique<Topology>(gfx, D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+	AddBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
+
+//#ifndef NDEBUG
+//	// Проверка отладочных сообщений
+//	HRESULT hr;
+//	hr = gfx.GetpDebug()->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+//	if (FAILED(hr))
+//	{
+//		throw std::runtime_error("Failed to report live objects");
+//	}
+//#endif
 
 }
 
