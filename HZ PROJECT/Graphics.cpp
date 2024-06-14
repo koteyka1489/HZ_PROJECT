@@ -6,14 +6,6 @@
 
 Graphics::Graphics(HWND hWnd)
 {
-//#ifndef NDEBUG
-//    // Создание интерфейса отладки DXGI
-//    hr = DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug));
-//    if (FAILED(hr)) {
-//        throw std::runtime_error("Failed to get DXGI Debug Interface");
-//    }
-//#endif
-
 
     RECT rect;
     GetClientRect(hWnd, &rect);
@@ -112,7 +104,7 @@ Graphics::Graphics(HWND hWnd)
 
     pContext->RSSetViewports(1u, &vp);
 
-    projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 40.f);
+    projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 100.f);
 
     
     
@@ -136,11 +128,27 @@ void Graphics::EndFrame()
 
 void Graphics::ClearBuffer(float red, float green, float blue)
 {
-	const float color[] = { red, green, blue, 1.0f };
-	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
-	pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
+    // Задание цвета для очистки буфера кадра (цветной буфер). Последний компонент (1.0f) представляет альфа-канал (прозрачность)
+    const float color[] = { red, green, blue, 1.0f };
+
+    // Очистка буфера кадра (цветного буфера) заданным цветом. 
+    // pContext - это контекст устройства, который используется для выполнения команд рендеринга.
+    // pTarget - это целевой рендеринг (буфер кадра), который мы очищаем.
+    // THROW_COM_ERROR_GFX_ONLY_INFO - это макрос для обработки ошибок, который проверяет результат выполнения команды и бросает исключение в случае ошибки.
+    THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
+
+    // Очистка буфера глубины и трафарета. 
+    // pDSV - это вид глубины-трафарета (depth stencil view), который мы очищаем.
+    // D3D11_CLEAR_DEPTH - флаг, указывающий, что нужно очистить только буфер глубины.
+    // 1.0f - значение, на которое устанавливается буфер глубины (максимальная глубина).
+    // 0u - значение, на которое устанавливается буфер трафарета (в данном случае трафарет не используется).
+    pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
+
+    // Установка целевого рендеринга и буфера глубины-трафарета для выходного модуля (output merger).
+    // 1u - количество целевых рендерингов (в данном случае один).
+    // pTarget.GetAddressOf() - указатель на целевой рендеринг.
+    // pDSV.Get() - указатель на буфер глубины-трафарета.
     pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
- 
 }
 
 void Graphics::DrawIndexed(UINT count)
