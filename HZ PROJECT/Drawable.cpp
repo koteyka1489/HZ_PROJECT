@@ -5,7 +5,7 @@ void Drawable::Draw(Graphics& gfx)
 {
 	for (auto& b : binds)
 	{
-		b.get()->Bind(gfx);
+		b->Bind(gfx);
 	}
 	gfx.DrawIndexed(pIndexBuffer->GetCount());
 }

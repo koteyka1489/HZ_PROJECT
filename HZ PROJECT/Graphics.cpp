@@ -113,6 +113,8 @@ Graphics::Graphics(HWND hWnd)
     pContext->RSSetViewports(1u, &vp);
 
     projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 40.f);
+
+    
     
 }
 
@@ -137,12 +139,14 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 	const float color[] = { red, green, blue, 1.0f };
 	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
 	pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
-	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
+	
 
 }
 
 void Graphics::DrawIndexed(UINT count)
+
 {
+    pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
 	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->DrawIndexed(count, 0u, 0u));
 
 }
