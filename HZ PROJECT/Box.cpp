@@ -25,14 +25,14 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 
 	const std::vector<Vertex> vertices = // создание масива вершин треугольника
 	{
-		{-1.f, -1.f, -1.0f},
-		{ 1.f, -1.f, -1.0f},
-		{-1.f,  1.f, -1.0f},
-		{ 1.f,  1.f, -1.0f},
-		{-1.f, -1.f,  1.0f},
-		{ 1.f, -1.f,  1.0f},
-		{-1.f,  1.f,  1.0f},
-		{ 1.f,  1.f,  1.0f}
+		{-1.0f, -1.0f, -1.0f},
+		{ 1.0f, -1.0f, -1.0f},
+		{-1.0f,  1.0f, -1.0f},
+		{ 1.0f,  1.0f, -1.0f},
+		{-1.0f, -1.0f,  1.0f},
+		{ 1.0f, -1.0f,  1.0f},
+		{-1.0f,  1.0f,  1.0f},
+		{ 1.0f,  1.0f,  1.0f}
 	};
 
 	AddBind(std::make_unique<VertexBuffer>(gfx, vertices));
@@ -41,7 +41,7 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 	auto pvsbt = pvs->GetByteCode();
 	AddBind(std::move(pvs));
 
-	AddBind(std::make_unique<PixelShader>(gfx, L"PixelShader.cso"));
+	
 
 	const std::vector<unsigned short> indexes =
 	{
@@ -53,6 +53,12 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 		0, 1, 4,  1, 5, 4
 	};
 	AddIndexBuffer(std::make_unique<IndexBuffer>(gfx, indexes));
+
+	AddBind(std::make_unique<InputLayout>(gfx, pvsbt));
+
+	AddBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+
+	
 
 	struct ConstantBuffer2
 	{
@@ -79,21 +85,12 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 
 	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
 
-	AddBind(std::make_unique<InputLayout>(gfx, pvsbt));
-
-	AddBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
 
-//#ifndef NDEBUG
-//	// ѕроверка отладочных сообщений
-//	HRESULT hr;
-//	hr = gfx.GetpDebug()->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-//	if (FAILED(hr))
-//	{
-//		throw std::runtime_error("Failed to report live objects");
-//	}
-//#endif
+	AddBind(std::make_unique<PixelShader>(gfx, L"PixelShader.cso"));
+	
+
+
 
 }
 
@@ -110,8 +107,8 @@ void Box::Update(float dt)
 DirectX::XMMATRIX Box::GetTransformXM() const
 {
 
-	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) * 
-		DirectX::XMMatrixTranslation(r, 0.f, 0.f) *
+	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
+		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
-		DirectX::XMMatrixTranslation(0.f, 0.f, 20.f);
+		DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
 }
