@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "ChiliTimer.h"
 #include "Box.h"
-
+#include "Prism.h"
 
 class App
 {
@@ -17,8 +17,8 @@ private:
 	Window wnd;
 	Graphics gfx;
 	ChiliTimer timer;
-	std::vector <std::unique_ptr<Box>> boxes;
-	static constexpr int boxesCount = 500;
+	std::vector <std::unique_ptr<Prism>> shapes;
+	static constexpr int boxesCount = 100;
 
 
 };

@@ -160,6 +160,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Topology.cpp" />
     <ClCompile Include="TransfornCBuff.cpp" />
     <ClCompile Include="Vec2.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="KotWin.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="Prism.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ThrowMacros.h" />
     <ClInclude Include="Topology.h" />
@@ -197,6 +199,7 @@
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexIndexedList.h" />
     <ClInclude Include="VertexIndexedListBox.h" />
+    <ClInclude Include="VertexIndexedListPrism.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

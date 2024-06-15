@@ -1,6 +1,6 @@
-#include "Box.h"
+#include "Prism.h"
 
-Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>& adist, std::uniform_real_distribution<float>& ddist, std::uniform_real_distribution<float>& odist, std::uniform_real_distribution<float>& rdist)
+Prism::Prism(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>& adist, std::uniform_real_distribution<float>& ddist, std::uniform_real_distribution<float>& odist, std::uniform_real_distribution<float>& rdist)
 	:
 	r(rdist(rng)),
 	droll(ddist(rng)),
@@ -16,14 +16,14 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 	if (IsStaticNonInitialized())
 	{
 
-		AddStaticBind(std::make_unique<VertexBuffer>(gfx, verIndListBox.GetVertices()));
+		AddStaticBind(std::make_unique<VertexBuffer>(gfx, verIndListPrism.GetVertices()));
 
 		auto pvs = std::make_unique<VertexShader>(gfx, L"VertexShader.cso");
 		auto pvsbt = pvs->GetByteCode();
 		AddStaticBind(std::move(pvs));
 
 
-		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, verIndListBox.GetIndexes()));
+		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, verIndListPrism.GetIndexes()));
 
 		AddStaticBind(std::make_unique<InputLayout>(gfx, pvsbt));
 
@@ -56,7 +56,7 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 
 		AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
 
-		
+
 
 		AddStaticBind(std::make_unique<PixelShader>(gfx, L"PixelShader.cso"));
 
@@ -65,7 +65,8 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
 }
 
-void Box::Update(float dt)
+
+void Prism::Update(float dt)
 {
 	roll += droll * dt;
 	pitch += dpitch * dt;
@@ -75,9 +76,8 @@ void Box::Update(float dt)
 	chi += dchi * dt;
 }
 
-DirectX::XMMATRIX Box::GetTransformXM() const
+DirectX::XMMATRIX Prism::GetTransformXM() const
 {
-
 	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
 		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *

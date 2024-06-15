@@ -12,7 +12,7 @@ App::App()
     std::uniform_real_distribution<float> rdist(6.0f, 40.0f);
     for (auto i = 0; i < boxesCount; i++)
     {
-        boxes.push_back(std::make_unique<Box>(
+        shapes.push_back(std::make_unique<Prism>(
             gfx, rng, adist,
             ddist, odist, rdist
         ));
@@ -36,7 +36,7 @@ void App::DoFrame()
 {
 	auto dt = timer.Mark();
 	gfx.ClearBuffer(0.07f, 0.0f, 0.12f);
-	for (auto& b : boxes)
+	for (auto& b : shapes)
 	{
 		b->Update(dt);
 		b->Draw(gfx);

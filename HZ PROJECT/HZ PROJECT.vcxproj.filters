@@ -34,6 +34,9 @@
     <Filter Include="Header Files\Graphics\Drawable">
       <UniqueIdentifier>{23987422-fbf7-4636-8bc8-ea75f168c82e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\VertexIndexList">
+      <UniqueIdentifier>{31962a66-9766-4bd6-b560-4d22330a1a0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -98,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="TransfornCBuff.cpp">
       <Filter>Source Files\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Prism.cpp">
+      <Filter>Source Files\Graphics\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,10 +189,16 @@
       <Filter>Header Files\Graphics\Drawable</Filter>
     </ClInclude>
     <ClInclude Include="VertexIndexedList.h">
-      <Filter>Header Files\Graphics\Drawable</Filter>
+      <Filter>Header Files\Graphics\VertexIndexList</Filter>
     </ClInclude>
     <ClInclude Include="VertexIndexedListBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics\VertexIndexList</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexIndexedListPrism.h">
+      <Filter>Header Files\Graphics\VertexIndexList</Filter>
+    </ClInclude>
+    <ClInclude Include="Prism.h">
+      <Filter>Header Files\Graphics\Drawable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
