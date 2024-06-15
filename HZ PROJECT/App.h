@@ -3,6 +3,7 @@
 #include "ChiliTimer.h"
 #include "Box.h"
 #include "Prism.h"
+#include "Cone.h"
 
 class App
 {

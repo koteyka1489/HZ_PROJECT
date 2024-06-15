@@ -19,6 +19,13 @@ App::App()
 				ddist, odist, rdist
 			));
 		}
+		else if (i % 3 == 0)
+		{
+			shapes.push_back(std::make_unique<Cone>(
+				gfx, rng, adist,
+				ddist, odist, rdist
+			));
+		}
 		else
 		{
 			shapes.push_back(std::make_unique<Box>(

@@ -105,6 +105,9 @@
     <ClCompile Include="Prism.cpp">
       <Filter>Source Files\Graphics\Drawable</Filter>
     </ClCompile>
+    <ClCompile Include="Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KotWin.h">
@@ -200,6 +203,12 @@
     <ClInclude Include="Prism.h">
       <Filter>Header Files\Graphics\Drawable</Filter>
     </ClInclude>
+    <ClInclude Include="VertexIndexedListCone.h">
+      <Filter>Header Files\Graphics\VertexIndexList</Filter>
+    </ClInclude>
+    <ClInclude Include="Cone.h">
+      <Filter>Header Files\Graphics\Drawable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HZ PROJECT.rc">
@@ -219,6 +228,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="PixelShaderPrism.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShaderCone.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
