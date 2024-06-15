@@ -132,9 +132,6 @@ void Graphics::ClearBuffer(float red, float green, float blue)
     const float color[] = { red, green, blue, 1.0f };
 
     // Очистка буфера кадра (цветного буфера) заданным цветом. 
-    // pContext - это контекст устройства, который используется для выполнения команд рендеринга.
-    // pTarget - это целевой рендеринг (буфер кадра), который мы очищаем.
-    // THROW_COM_ERROR_GFX_ONLY_INFO - это макрос для обработки ошибок, который проверяет результат выполнения команды и бросает исключение в случае ошибки.
     THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
 
     // Очистка буфера глубины и трафарета. 
