@@ -14,8 +14,8 @@ public:
 	Drawable(const Drawable&) = delete;
 	Drawable& operator=(const Drawable&) = delete;
 	virtual ~Drawable() = default;
-	virtual DirectX::XMMATRIX GetTransformXM() const= 0;
-	virtual void Update(float dt) = 0;
+	DirectX::XMMATRIX GetTransformXM() const;
+	void Update(float dt);
 	void Draw(Graphics& gfx);
 
 protected:
@@ -28,5 +28,21 @@ private:
 protected:
 	std::vector<std::unique_ptr<Bindable>> binds;
 	const IndexBuffer* pIndexBuffer = nullptr;
+	//pos
+	float r;
+	float roll = 0.f;
+	float pitch = 0.f;
+	float yaw = 0.f;
+	float theta;
+	float phi;
+	float chi;
+
+	//speed
+	float droll = 0.f;
+	float dpitch = 0.f;
+	float dyaw = 0.f;
+	float dtheta;
+	float dphi;
+	float dchi;
 };
 

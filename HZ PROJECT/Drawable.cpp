@@ -1,6 +1,24 @@
 #include "Drawable.h"
 #include <cassert>
 
+DirectX::XMMATRIX Drawable::GetTransformXM() const
+{
+    return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
+        DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
+        DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
+        DirectX::XMMatrixTranslation(0.0f, 0.0f, 40.0f);
+}
+
+void Drawable::Update(float dt)
+{
+    roll += droll * dt;
+    pitch += dpitch * dt;
+    yaw += dyaw * dt;
+    theta += dtheta * dt;
+    phi += dphi * dt;
+    chi += dchi * dt;
+}
+
 void Drawable::Draw(Graphics& gfx)
 {
 	for (auto& b : binds)
