@@ -38,18 +38,20 @@ Prism::Prism(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<fl
 				float g;
 				float b;
 				float a;
-			}face_colors[6];
+			}face_colors[8];
 		};
 
 		const ConstantBuffer2 cb2 =
 		{
 			{
-				{1.0f, 1.0f, 1.0f},
-				{0.0f, 0.0f, 0.0f},
-				{1.0f, 0.0f, 1.0f},
-				{0.0f, 1.0f, 0.0f},
-				{1.0f, 1.0f, 0.0f},
-				{0.0f, 1.0f, 1.0f}
+				{0.5f, 0.0f, 1.0f},
+				{0.0f, 0.0f, 1.0f},
+				{0.5f, 0.5f, 1.0f},
+				{0.0f, 0.5f, 1.0f},
+				{0.5f, 0.0f, 0.0f},
+				{0.5f, 0.0f, 0.0f},
+				{0.5f, 0.0f, 1.0f},
+				{0.0f, 0.0f, 1.0f}
 			}
 		};
 
@@ -57,7 +59,7 @@ Prism::Prism(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<fl
 
 
 
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"PixelShader.cso"));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"PixelShaderPrism.cso"));
 
 	}
 

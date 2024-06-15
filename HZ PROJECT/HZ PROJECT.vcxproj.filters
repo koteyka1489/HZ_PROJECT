@@ -218,5 +218,8 @@
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="PixelShaderPrism.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

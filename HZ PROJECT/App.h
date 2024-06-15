@@ -17,8 +17,8 @@ private:
 	Window wnd;
 	Graphics gfx;
 	ChiliTimer timer;
-	std::vector <std::unique_ptr<Prism>> shapes;
-	static constexpr int boxesCount = 100;
+	std::vector <std::unique_ptr<Drawable>> shapes;
+	static constexpr int boxesCount = 200;
 
 
 };
