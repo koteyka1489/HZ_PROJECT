@@ -18,6 +18,8 @@ private:
 	Graphics gfx;
 	ChiliTimer timer;
 	std::vector <std::unique_ptr<Box>> boxes;
+	static constexpr int boxesCount = 1000;
+
 
 };
 

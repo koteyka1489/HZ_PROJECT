@@ -6,6 +6,9 @@
 
 class Drawable
 {
+	template <class T>
+	friend class DrawableBase;
+
 public:
 	Drawable() = default;
 	Drawable(const Drawable&) = delete;
@@ -18,6 +21,9 @@ public:
 	void AddBind(std::unique_ptr<Bindable> bind);
 	void AddIndexBuffer(std::unique_ptr<IndexBuffer> bind);
 
+private:
+	virtual const std::vector < std::unique_ptr<Bindable>>& GetStaticBinds() const = 0;
+	virtual const IndexBuffer* GetpStaticIndexBuffer() = 0;
 protected:
 	std::vector<std::unique_ptr<Bindable>> binds;
 	const IndexBuffer* pIndexBuffer = nullptr;

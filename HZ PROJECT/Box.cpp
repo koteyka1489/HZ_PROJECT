@@ -13,85 +13,88 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 	theta(adist(rng)),
 	phi(adist(rng))
 {
-	struct Vertex // базовая структура вершин
+	if (IsStaticInitialized())
 	{
-		struct
+
+		struct Vertex // базовая структура вершин
 		{
-			float x;
-			float y;
-			float z;
-		} pos;
-	};
+			struct
+			{
+				float x;
+				float y;
+				float z;
+			} pos;
+		};
 
-	const std::vector<Vertex> vertices = // создание масива вершин треугольника
-	{
-		{-1.0f, -1.0f, -1.0f},
-		{ 1.0f, -1.0f, -1.0f},
-		{-1.0f,  1.0f, -1.0f},
-		{ 1.0f,  1.0f, -1.0f},
-		{-1.0f, -1.0f,  1.0f},
-		{ 1.0f, -1.0f,  1.0f},
-		{-1.0f,  1.0f,  1.0f},
-		{ 1.0f,  1.0f,  1.0f}
-	};
-
-	AddBind(std::make_unique<VertexBuffer>(gfx, vertices));
-
-	auto pvs = std::make_unique<VertexShader>(gfx, L"VertexShader.cso");
-	auto pvsbt = pvs->GetByteCode();
-	AddBind(std::move(pvs));
-
-	
-
-	const std::vector<unsigned short> indexes =
-	{
-		0, 2, 1,  2, 3, 1,
-		1, 3, 5,  3, 7, 5,
-		2, 6, 3,  3, 6, 7,
-		4, 5, 7,  4, 7, 6,
-		0, 4, 2,  2, 4, 6,
-		0, 1, 4,  1, 5, 4
-	};
-	AddIndexBuffer(std::make_unique<IndexBuffer>(gfx, indexes));
-
-	AddBind(std::make_unique<InputLayout>(gfx, pvsbt));
-
-	AddBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-
-	
-
-	struct ConstantBuffer2
-	{
-		struct
+		const std::vector<Vertex> vertices = // создание масива вершин треугольника
 		{
-			float r;
-			float g;
-			float b;
-			float a;
-		}face_colors[6];
-	};
+			{-1.0f, -1.0f, -1.0f},
+			{ 1.0f, -1.0f, -1.0f},
+			{-1.0f,  1.0f, -1.0f},
+			{ 1.0f,  1.0f, -1.0f},
+			{-1.0f, -1.0f,  1.0f},
+			{ 1.0f, -1.0f,  1.0f},
+			{-1.0f,  1.0f,  1.0f},
+			{ 1.0f,  1.0f,  1.0f}
+		};
 
-	const ConstantBuffer2 cb2 =
-	{
+		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vertices));
+
+		auto pvs = std::make_unique<VertexShader>(gfx, L"VertexShader.cso");
+		auto pvsbt = pvs->GetByteCode();
+		AddStaticBind(std::move(pvs));
+
+
+
+		const std::vector<unsigned short> indexes =
 		{
-			{1.0f, 1.0f, 1.0f},
-			{0.0f, 0.0f, 0.0f},
-			{1.0f, 0.0f, 1.0f},
-			{0.0f, 1.0f, 0.0f},
-			{1.0f, 1.0f, 0.0f},
-			{0.0f, 1.0f, 1.0f}
-		}
-	};
+			0, 2, 1,  2, 3, 1,
+			1, 3, 5,  3, 7, 5,
+			2, 6, 3,  3, 6, 7,
+			4, 5, 7,  4, 7, 6,
+			0, 4, 2,  2, 4, 6,
+			0, 1, 4,  1, 5, 4
+		};
+		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, indexes));
 
-	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
+		AddStaticBind(std::make_unique<InputLayout>(gfx, pvsbt));
+
+		AddStaticBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+
+
+
+		struct ConstantBuffer2
+		{
+			struct
+			{
+				float r;
+				float g;
+				float b;
+				float a;
+			}face_colors[6];
+		};
+
+		const ConstantBuffer2 cb2 =
+		{
+			{
+				{1.0f, 1.0f, 1.0f},
+				{0.0f, 0.0f, 0.0f},
+				{1.0f, 0.0f, 1.0f},
+				{0.0f, 1.0f, 0.0f},
+				{1.0f, 1.0f, 0.0f},
+				{0.0f, 1.0f, 1.0f}
+			}
+		};
+
+		AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
+
+		
+
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"PixelShader.cso"));
+
+	}
 
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
-
-	AddBind(std::make_unique<PixelShader>(gfx, L"PixelShader.cso"));
-	
-
-
-
 }
 
 void Box::Update(float dt)

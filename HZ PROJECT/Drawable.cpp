@@ -7,7 +7,13 @@ void Drawable::Draw(Graphics& gfx)
 	{
 		b->Bind(gfx);
 	}
-	gfx.DrawIndexed(pIndexBuffer->GetCount());
+
+    for (auto& b : GetStaticBinds())
+    {
+        b->Bind(gfx);
+    }
+
+	gfx.DrawIndexed(GetpStaticIndexBuffer()->GetCount());
 }
 
 void Drawable::AddBind(std::unique_ptr<Bindable> bind) 
