@@ -15,30 +15,19 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 {
 	if (IsStaticNonInitialized())
 	{
-
+		
 		struct Vertex // базовая структура вершин
 		{
-			struct
-			{
-				float x;
-				float y;
-				float z;
-			} pos;
+			
+			DirectX::XMFLOAT3 pos;
+			Vertex(float x, float y, float z) : pos(x, y, z) {};
 		};
 
-		const std::vector<Vertex> vertices = // создание масива вершин треугольника
-		{
-			{-1.0f, -1.0f, -1.0f},
-			{ 1.0f, -1.0f, -1.0f},
-			{-1.0f,  1.0f, -1.0f},
-			{ 1.0f,  1.0f, -1.0f},
-			{-1.0f, -1.0f,  1.0f},
-			{ 1.0f, -1.0f,  1.0f},
-			{-1.0f,  1.0f,  1.0f},
-			{ 1.0f,  1.0f,  1.0f}
-		};
+				
+		
+		
 
-		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vertices));
+		AddStaticBind(std::make_unique<VertexBuffer>(gfx, verIndListBox.GetVertices()));
 
 		auto pvs = std::make_unique<VertexShader>(gfx, L"VertexShader.cso");
 		auto pvsbt = pvs->GetByteCode();
@@ -46,16 +35,8 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 
 
 
-		const std::vector<unsigned short> indexes =
-		{
-			0, 2, 1,  2, 3, 1,
-			1, 3, 5,  3, 7, 5,
-			2, 6, 3,  3, 6, 7,
-			4, 5, 7,  4, 7, 6,
-			0, 4, 2,  2, 4, 6,
-			0, 1, 4,  1, 5, 4
-		};
-		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, indexes));
+		
+		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, verIndListBox.GetIndexes()));
 
 		AddStaticBind(std::make_unique<InputLayout>(gfx, pvsbt));
 
@@ -113,5 +94,5 @@ DirectX::XMMATRIX Box::GetTransformXM() const
 	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
 		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
-		DirectX::XMMatrixTranslation(0.0f, 0.0f, 200.0f);
+		DirectX::XMMatrixTranslation(0.0f, 0.0f, 60.0f);
 }

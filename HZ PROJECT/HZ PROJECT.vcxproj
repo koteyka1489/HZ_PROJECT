@@ -177,6 +177,7 @@
     <ClInclude Include="COMException.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Drawable.h" />
+    <ClInclude Include="DrawableBase.h" />
     <ClInclude Include="DxgiInfoManager.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="ChiliTimer.h" />
@@ -194,6 +195,8 @@
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
     <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="VertexIndexedList.h" />
+    <ClInclude Include="VertexIndexedListBox.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include "DrawableBase.h"
 #include <random>
 #include "BindableBase.h"
-
+#include "VertexIndexedListBox.h"
 
 
 class Box : public DrawableBase<Box>
@@ -36,5 +36,7 @@ private:
 	float dtheta;
 	float dphi;
 	float dchi;
+
+	VertexIndexedListBox verIndListBox;
 };
 
