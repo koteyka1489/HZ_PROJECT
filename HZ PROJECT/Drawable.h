@@ -16,8 +16,9 @@ public:
 	virtual ~Drawable() = default;
 	virtual DirectX::XMMATRIX GetTransformXM() const= 0;
 	virtual void Update(float dt) = 0;
-
 	void Draw(Graphics& gfx);
+
+protected:
 	void AddBind(std::unique_ptr<Bindable> bind);
 	void AddIndexBuffer(std::unique_ptr<IndexBuffer> bind);
 

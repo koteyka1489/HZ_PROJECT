@@ -14,3 +14,5 @@ DxgiInfoManager& Bindable::GetInfoManager(Graphics& gfx)
 {
     return gfx.infoManager;
 }
+
+

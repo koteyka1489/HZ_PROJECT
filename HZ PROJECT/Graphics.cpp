@@ -120,10 +120,6 @@ void Graphics::EndFrame()
 #endif
 	hr = pSwap->Present(1u, 0u);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
-    // Отслеживание утечек
-//#ifndef NDEBUG
-//    dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-//#endif
 }
 
 void Graphics::ClearBuffer(float red, float green, float blue)
@@ -132,7 +128,7 @@ void Graphics::ClearBuffer(float red, float green, float blue)
     const float color[] = { red, green, blue, 1.0f };
 
     // Очистка буфера кадра (цветного буфера) заданным цветом. 
-    THROW_COM_ERROR_GFX_ONLY_INFO(pContext->ClearRenderTargetView(pTarget.Get(), color));
+    pContext->ClearRenderTargetView(pTarget.Get(), color);
 
     // Очистка буфера глубины и трафарета. 
     // pDSV - это вид глубины-трафарета (depth stencil view), который мы очищаем.
@@ -152,7 +148,7 @@ void Graphics::DrawIndexed(UINT count)
 
 {
   
-	THROW_COM_ERROR_GFX_ONLY_INFO(pContext->DrawIndexed(count, 0u, 0u));
+	pContext->DrawIndexed(count, 0u, 0u);
 }
 
 void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
@@ -163,10 +159,5 @@ void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
 DirectX::XMMATRIX Graphics::GetMatrixProjection() const
 {
 	return projection;
-}
-
-IDXGIDebug* Graphics::GetpDebug()
-{
-    return dxgiDebug.Get();
 }
 

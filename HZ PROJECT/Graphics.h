@@ -28,7 +28,6 @@ public:
 	void DrawIndexed(UINT count);
 	void SetMatrixProjection(DirectX::FXMMATRIX projection_in);
 	DirectX::XMMATRIX GetMatrixProjection() const;
-	IDXGIDebug* GetpDebug();
 private:
 	HRESULT hr;
 	ComPtr<ID3D11Device> pDevice;
@@ -37,10 +36,7 @@ private:
 	ComPtr<ID3D11RenderTargetView> pTarget;
 	ComPtr<ID3D11DepthStencilView> pDSV;
 	DirectX::XMMATRIX projection;
-#ifndef NDEBUG
-	ComPtr<IDXGIDebug> dxgiDebug;
 	DxgiInfoManager infoManager;
-#endif
-	
+
 };
 

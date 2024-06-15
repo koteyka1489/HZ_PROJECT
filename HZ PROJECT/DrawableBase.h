@@ -4,9 +4,9 @@
 template <class T>
 class DrawableBase : public Drawable
 {
-public:
+protected:
 
-	bool IsStaticInitialized()
+	bool IsStaticNonInitialized()
 	{
 		return staticBinds.empty();
 	}

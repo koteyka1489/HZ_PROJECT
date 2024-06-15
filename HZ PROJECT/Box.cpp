@@ -13,7 +13,7 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 	theta(adist(rng)),
 	phi(adist(rng))
 {
-	if (IsStaticInitialized())
+	if (IsStaticNonInitialized())
 	{
 
 		struct Vertex // базовая структура вершин
