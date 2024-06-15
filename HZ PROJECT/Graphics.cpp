@@ -104,7 +104,7 @@ Graphics::Graphics(HWND hWnd)
 
     pContext->RSSetViewports(1u, &vp);
 
-    projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 100.f);
+    projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 1000.f);
 
     
     
