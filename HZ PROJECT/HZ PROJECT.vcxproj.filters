@@ -109,7 +109,7 @@
       <Filter>Source Files\Graphics\Drawable</Filter>
     </ClCompile>
     <ClCompile Include="Octo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

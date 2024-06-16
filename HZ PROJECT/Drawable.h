@@ -44,5 +44,10 @@ protected:
 	float dtheta;
 	float dphi;
 	float dchi;
+
+	//scale
+	float scaleX = 1.0f;
+	float scaleY = 1.0f;
+	float scaleZ = 1.0f;
 };
 

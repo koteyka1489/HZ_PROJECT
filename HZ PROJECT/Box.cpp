@@ -1,6 +1,6 @@
 #include "Box.h"
 
-Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>& adist, std::uniform_real_distribution<float>& ddist, std::uniform_real_distribution<float>& odist, std::uniform_real_distribution<float>& rdist)
+Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>& adist, std::uniform_real_distribution<float>& ddist, std::uniform_real_distribution<float>& odist, std::uniform_real_distribution<float>& rdist, std::uniform_real_distribution<float>& sdist)
 
 {
 	r = (rdist(rng));
@@ -13,6 +13,7 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 	chi = (adist(rng));
 	theta = (adist(rng));
 	phi = (adist(rng));
+	scaleZ = (sdist(rng));
 	if (IsStaticNonInitialized())
 	{
 

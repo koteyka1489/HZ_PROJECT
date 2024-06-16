@@ -3,7 +3,9 @@
 
 DirectX::XMMATRIX Drawable::GetTransformXM() const
 {
-    return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
+    
+    return DirectX::XMMatrixScaling(scaleX, scaleY, scaleZ) *
+        DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
         DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
         DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
         DirectX::XMMatrixTranslation(0.0f, 0.0f, 40.0f);
