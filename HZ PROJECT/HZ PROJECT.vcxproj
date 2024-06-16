@@ -160,6 +160,7 @@
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Octo.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Topology.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KotWin.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Octo.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="resource.h" />
@@ -202,6 +204,7 @@
     <ClInclude Include="VertexIndexedList.h" />
     <ClInclude Include="VertexIndexedListBox.h" />
     <ClInclude Include="VertexIndexedListCone.h" />
+    <ClInclude Include="VertexIndexedListOcto.h" />
     <ClInclude Include="VertexIndexedListPrism.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="Window.h" />
@@ -224,6 +227,16 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="PixelShaderCone.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="PixelShaderOcto.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

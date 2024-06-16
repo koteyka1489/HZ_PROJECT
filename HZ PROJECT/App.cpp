@@ -28,7 +28,7 @@ App::App()
 		}
 		else
 		{
-			shapes.push_back(std::make_unique<Box>(
+			shapes.push_back(std::make_unique<Octo>(
 				gfx, rng, adist,
 				ddist, odist, rdist
 			));

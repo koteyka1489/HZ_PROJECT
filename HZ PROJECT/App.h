@@ -4,6 +4,7 @@
 #include "Box.h"
 #include "Prism.h"
 #include "Cone.h"
+#include "Octo.h"
 
 class App
 {
