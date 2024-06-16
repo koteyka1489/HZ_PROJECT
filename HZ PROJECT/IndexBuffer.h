@@ -4,7 +4,7 @@ class IndexBuffer :  public Bindable
 {
 public:
 	IndexBuffer(Graphics& gfx, const std::vector<unsigned short>& indexes);
-	void Bind(Graphics& gfx) override;
+	void Bind(Graphics& gfx) noexcept override;
 	UINT GetCount() const;
 protected:
 	UINT count;

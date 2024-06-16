@@ -26,7 +26,13 @@ Box::Box(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>
 
 		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, verIndListBox.GetIndexes()));
 
-		AddStaticBind(std::make_unique<InputLayout>(gfx, pvsbt));
+		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
+		{
+			{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		};
+
+
+		AddStaticBind(std::make_unique<InputLayout>(gfx, pvsbt, ied));
 
 		AddStaticBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 

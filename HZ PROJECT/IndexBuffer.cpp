@@ -22,7 +22,7 @@ IndexBuffer::IndexBuffer(Graphics& gfx, const std::vector<unsigned short>& index
 
 }
 
-void IndexBuffer::Bind(Graphics& gfx)
+void IndexBuffer::Bind(Graphics& gfx) noexcept
 {
 	GetContext(gfx)->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u); //привязка буфера индексов в pipeline
 }

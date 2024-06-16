@@ -81,7 +81,7 @@ class VertexConstantBuffer : public ConstantBuffer<C>
 
 public:
 	using ConstantBuffer<C>::ConstantBuffer;
-	void Bind(Graphics& gfx) override
+	void Bind(Graphics& gfx) noexcept override
 	{
 		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Vertex Shader
 	};
@@ -95,7 +95,7 @@ class PixelConstantBuffer : public ConstantBuffer<C>
 
 public:
 	using ConstantBuffer<C>::ConstantBuffer;
-	void Bind(Graphics& gfx) override
+	void Bind(Graphics& gfx) noexcept override
 	{
 		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //привязка буфера констант  в pipeline к Pixel Shader
 	};

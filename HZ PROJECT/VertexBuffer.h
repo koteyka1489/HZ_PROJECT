@@ -26,7 +26,7 @@ public:
 		THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Vertexes");
 
 	};
-	void Bind(Graphics& gfx) override;
+	void Bind(Graphics& gfx) noexcept override;
 	
 protected:
 	UINT stride;

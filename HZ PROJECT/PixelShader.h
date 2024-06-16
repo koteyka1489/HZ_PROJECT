@@ -4,7 +4,7 @@ class PixelShader : public Bindable
 {
 public:
 	PixelShader(Graphics& gfx, std::wstring fileName);
-	void Bind(Graphics& gfx) override;
+	void Bind(Graphics& gfx) noexcept override;
 protected:
 	ComPtr<ID3DBlob> pBlob;
 	ComPtr<ID3D11PixelShader> pPixelShader; 

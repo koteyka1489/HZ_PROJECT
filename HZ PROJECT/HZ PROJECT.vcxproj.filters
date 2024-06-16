@@ -111,6 +111,15 @@
     <ClCompile Include="Octo.cpp">
       <Filter>Source Files\Graphics\Drawable</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Sampler.cpp">
+      <Filter>Source Files\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxTextured.cpp">
+      <Filter>Source Files\Graphics\Drawable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KotWin.h">
@@ -218,6 +227,15 @@
     <ClInclude Include="Octo.h">
       <Filter>Header Files\Graphics\Drawable</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler.h">
+      <Filter>Header Files\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxTextured.h">
+      <Filter>Header Files\Graphics\Drawable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HZ PROJECT.rc">
@@ -245,5 +263,14 @@
     <FxCompile Include="PixelShaderOcto.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="TextureVertexShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturePixelShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

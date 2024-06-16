@@ -5,6 +5,7 @@
 #include "Prism.h"
 #include "Cone.h"
 #include "Octo.h"
+#include "BoxTextured.h"
 
 class App
 {

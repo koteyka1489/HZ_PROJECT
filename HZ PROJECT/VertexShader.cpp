@@ -15,7 +15,7 @@ ID3DBlob* VertexShader::GetByteCode()
 	return pBlob.Get();
 }
 
-void VertexShader::Bind(Graphics& gfx)
+void VertexShader::Bind(Graphics& gfx) noexcept
 {
 	GetContext(gfx)->VSSetShader(pVertexShader.Get(), nullptr, 0);
 }

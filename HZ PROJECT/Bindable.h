@@ -6,7 +6,7 @@
 class Bindable
 {
 public:
-	virtual void Bind(Graphics& gfx) = 0;
+	virtual void Bind(Graphics& gfx) noexcept = 0;
 
 protected:
 	static ID3D11DeviceContext* GetContext(Graphics& gfx);

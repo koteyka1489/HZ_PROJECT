@@ -12,7 +12,7 @@ PixelShader::PixelShader(Graphics& gfx, std::wstring fileName)
 	
 }
 
-void PixelShader::Bind(Graphics& gfx)
+void PixelShader::Bind(Graphics& gfx) noexcept
 {
 	GetContext(gfx)->PSSetShader(pPixelShader.Get(), nullptr, 0);
 }

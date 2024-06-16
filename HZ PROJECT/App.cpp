@@ -1,5 +1,6 @@
 #include "App.h"
 
+
 App::App()
 	:
 	wnd(1200, 800),
@@ -13,7 +14,7 @@ App::App()
 	std::uniform_real_distribution<float> sdist(0.5f, 3.0f);
     for (int i = 0; i < boxesCount; i++)
     {
-		if (i % 2 == 0)
+	/*	if (i % 2 == 0)
 		{
 			shapes.push_back(std::make_unique<Prism>(
 				gfx, rng, adist,
@@ -29,11 +30,15 @@ App::App()
 		}
 		else
 		{
-			shapes.push_back(std::make_unique<Box>(
+			shapes.push_back(std::make_unique<BoxTextured>(
 				gfx, rng, adist,
 				ddist, odist, rdist, sdist
 			));
-		}
+		}*/
+		shapes.push_back(std::make_unique<BoxTextured>(
+			gfx, rng, adist,
+			ddist, odist, rdist, sdist
+		));
     }
 }
 

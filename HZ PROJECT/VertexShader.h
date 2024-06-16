@@ -6,7 +6,7 @@ class VertexShader :  public Bindable
 public:
 	VertexShader(Graphics& gfx, std::wstring fileName);
 	ID3DBlob* GetByteCode();
-	void Bind(Graphics& gfx) override;
+	void Bind(Graphics& gfx) noexcept override;
 protected:
 	ComPtr<ID3DBlob> pBlob;
 	ComPtr<ID3D11VertexShader> pVertexShader; 
