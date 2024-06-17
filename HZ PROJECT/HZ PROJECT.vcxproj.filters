@@ -246,6 +246,9 @@
     <Image Include="head.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\head.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">

@@ -14,11 +14,11 @@ App::App()
 	std::uniform_real_distribution<float> sdist(0.5f, 3.0f);
     for (int i = 0; i < boxesCount; i++)
     {
-	/*	if (i % 2 == 0)
+		if (i % 2 == 0)
 		{
-			shapes.push_back(std::make_unique<Prism>(
+			shapes.push_back(std::make_unique<BoxTextured>(
 				gfx, rng, adist,
-				ddist, odist, rdist
+				ddist, odist, rdist, sdist
 			));
 		}
 		else if (i % 3 == 0)
@@ -30,15 +30,12 @@ App::App()
 		}
 		else
 		{
-			shapes.push_back(std::make_unique<BoxTextured>(
+			shapes.push_back(std::make_unique<Box>(
 				gfx, rng, adist,
 				ddist, odist, rdist, sdist
 			));
-		}*/
-		shapes.push_back(std::make_unique<BoxTextured>(
-			gfx, rng, adist,
-			ddist, odist, rdist, sdist
-		));
+		}
+		
     }
 }
 

@@ -4,18 +4,19 @@ cbuffer cbuff
     matrix transform;
 };
 
-struct VSOut
+struct VS_OUT
 {
-    float2 tex : TEXCOORD;
+    float2 tc : TEXCOORD;
     float4 pos : SV_Position;
     
 };
 
 
-VSOut main(float3 pos : POSITION, float2 tex : TEXCOORD)
+
+VS_OUT main(float3 pos : POSITION, float2 tc : TEXCOORD)
 {
-    VSOut vso;
-    vso.tex = tex;
+    VS_OUT vso;
+    vso.tc = tc;
     vso.pos = mul(float4(pos, 1.f), transform);
     
     return vso;

@@ -24,4 +24,5 @@ public:
 protected:
 	std::vector<DirectX::XMFLOAT3> vertices;
 	std::vector<unsigned short> indexes;
+	
 };

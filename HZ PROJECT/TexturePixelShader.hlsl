@@ -1,5 +1,4 @@
 Texture2D tex;
-
 SamplerState smpState;
 
 

@@ -15,8 +15,35 @@ BoxTextured::BoxTextured(Graphics& gfx, std::mt19937& rng, std::uniform_real_dis
 	scaleZ = 1.f;
 	if (IsStaticNonInitialized())
 	{
+		struct Vertex
+		{
+			struct
+			{
+				float x;
+				float y;
+				float z;
+			} pos;
 
-		AddStaticBind(std::make_unique<VertexBuffer>(gfx, verIndListBox.GetVertices()));
+			struct
+			{
+				float u;
+				float v;
+			} tex;
+		};
+
+		const std::vector<Vertex> vertices =
+		{
+			{{-1.f, -1.f, -1.0f}, {0.0f, 1.0f}},
+			{{ 1.f, -1.f, -1.0f}, {1.0f, 1.0f}},
+			{{-1.f,  1.f, -1.0f}, {0.0f, 0.0f}},
+			{{ 1.f,  1.f, -1.0f}, {1.0f, 0.0f}},
+			{{-1.f, -1.f,  1.0f}, {0.0f, 1.0f}},
+			{{ 1.f, -1.f,  1.0f}, {1.0f, 1.0f}},
+			{{-1.f,  1.f,  1.0f}, {0.0f, 0.0f}},
+			{{ 1.f,  1.f,  1.0f}, {1.0f, 0.0f}}
+		};
+
+		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vertices));
 
 		AddStaticBind(std::make_unique<Texture>(gfx, L"images//head.png"));
 

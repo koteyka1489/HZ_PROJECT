@@ -220,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="head.ico" />
+    <Image Include="images\head.png" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
