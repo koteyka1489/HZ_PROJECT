@@ -1,5 +1,7 @@
 #include "App.h"
-
+#include "imgui\imgui.h"
+#include "imgui\imgui_impl_dx11.h"
+#include "imgui\imgui_impl_win32.h"
 
 App::App()
 	:
@@ -62,5 +64,15 @@ void App::DoFrame()
 		b->Update(dt);
 		b->Draw(gfx);
 	}
+
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	static bool show_demo_window = true;
+	ImGui::ShowDemoWindow(&show_demo_window);
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
     gfx.EndFrame();
 }

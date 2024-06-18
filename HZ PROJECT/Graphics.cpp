@@ -1,5 +1,5 @@
 #include "Graphics.h"
-
+#include "imgui\imgui_impl_dx11.h"
 
 
 
@@ -106,8 +106,21 @@ Graphics::Graphics(HWND hWnd)
 
     projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 1000.f);
 
+
+    // init imgui
+    ImGui_ImplDX11_Init(pDevice.Get(), pContext.Get());
     
-    
+}
+
+Graphics::~Graphics()
+{
+    ImGui_ImplDX11_Shutdown();
+    pDevice->Release();
+    pContext->Release();
+    pSwap->Release();
+    pTarget->Release();
+    pDSV->Release();
+
 }
 
 

@@ -20,7 +20,7 @@ class Graphics
 	friend class Bindable;
 public:
 	Graphics(HWND hWnd);
-	~Graphics() = default;
+	~Graphics();
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
 	void EndFrame();

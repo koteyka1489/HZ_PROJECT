@@ -147,6 +147,9 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Source Files\Graphics\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="imgui\ImguiManager.cpp">
+      <Filter>Source Files\Graphics\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KotWin.h">
@@ -285,6 +288,9 @@
       <Filter>Header Files\Graphics\imgui</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>Header Files\Graphics\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\ImguiManager.h">
       <Filter>Header Files\Graphics\imgui</Filter>
     </ClInclude>
   </ItemGroup>

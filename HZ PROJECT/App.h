@@ -6,6 +6,7 @@
 #include "Cone.h"
 #include "Octo.h"
 #include "BoxTextured.h"
+#include "imgui\ImguiManager.h"
 
 class App
 {
@@ -17,6 +18,7 @@ private:
 	void DoFrame();
 
 private:
+	ImguiManager imgui;
 	Window wnd;
 	Graphics gfx;
 	ChiliTimer timer;

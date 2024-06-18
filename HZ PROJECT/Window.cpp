@@ -1,9 +1,12 @@
 #include "Window.h"
 #include "resource.h"
-
+#include "imgui\imgui_impl_win32.h"
+#include "imgui\imgui.h"
 
 const std::string Window::WindowClass::wndClassName = "HZ PROJECT";
 Window::WindowClass Window::WindowClass::wndClass;
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 const CHAR* Window::WindowClass::GetName()
 {
@@ -79,10 +82,12 @@ Window::Window(int width, int height)
 	UpdateWindow(hWnd);
 	ShowWindow(hWnd, SW_SHOW);
 
+	ImGui_ImplWin32_Init(hWnd); // init Imgui
 }
 
 Window::~Window()
 {
+	ImGui_ImplWin32_Shutdown();
 	DestroyWindow(hWnd);
 }
 
@@ -150,6 +155,11 @@ LRESULT Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+	{
+		return true;
+	}
+
 	switch (msg)
 	{
 	case WM_CLOSE:
