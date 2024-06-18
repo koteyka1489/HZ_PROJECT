@@ -57,23 +57,22 @@ int App::Go()
 
 void App::DoFrame()
 {
-	auto dt = timer.Mark();
+	const auto dt = timer.Mark() * speedFactor;
 	gfx.BeginFrame(0.07f, 0.0f, 0.12f);
 	for (auto& b : shapes)
 	{
 		b->Update(dt);
 		b->Draw(gfx);
 	}
-	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+
+	if (ImGui::Begin("Simulation Speed"))
 	{
-		gfx.SetImguiEnabled(false);
+		ImGui::SliderFloat("Speed Factor", &speedFactor, 0.0f, 4.0f);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000 / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	}
-	else
-	{
-		gfx.SetImguiEnabled(true);
-	}
+	ImGui::End();
 
 
-	gfx.ImguiRender();
+	
     gfx.EndFrame();
 }

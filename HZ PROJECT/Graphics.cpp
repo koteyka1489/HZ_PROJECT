@@ -105,7 +105,7 @@ Graphics::Graphics(HWND hWnd)
     pContext->RSSetViewports(1u, &vp);
 
     projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 1000.f);
-
+    camera = DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
 
     // init imgui
     ImGui_ImplDX11_Init(pDevice.Get(), pContext.Get());
@@ -124,17 +124,6 @@ Graphics::~Graphics()
 }
 
 
-
-
-void Graphics::EndFrame()
-{
-#ifndef NDEBUG
-	infoManager.Set();
-#endif
-	hr = pSwap->Present(1u, 0u);
-	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
-}
-
 void Graphics::BeginFrame(float red, float green, float blue)
 {
     const float color[] = { red, green, blue, 1.0f };
@@ -150,6 +139,22 @@ void Graphics::BeginFrame(float red, float green, float blue)
     ImguiBeginFrame();
 }
 
+void Graphics::EndFrame()
+{
+    if (imguiIsEnabled)
+    {
+        ImGui::Render();
+        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+    }
+#ifndef NDEBUG
+	infoManager.Set();
+#endif
+	hr = pSwap->Present(1u, 0u);
+	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
+}
+
+
+
 void Graphics::ImguiBeginFrame()
 {
     if (imguiIsEnabled)
@@ -160,15 +165,7 @@ void Graphics::ImguiBeginFrame()
     }
 }
 
-void Graphics::ImguiRender()
-{
-    if (imguiIsEnabled)
-    {
-        ImGui::ShowDemoWindow(&show_demo_window);
-        ImGui::Render();
-        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-    }
-}
+
 
 void Graphics::DrawIndexed(UINT count)
 
@@ -184,6 +181,16 @@ void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
 DirectX::XMMATRIX Graphics::GetMatrixProjection() const
 {
 	return projection;
+}
+
+void Graphics::SetMatrixCamera(DirectX::FXMMATRIX camera_in)
+{
+    camera = camera_in;
+}
+
+DirectX::XMMATRIX Graphics::GetMatrixCamera() const
+{
+    return camera;
 }
 
 void Graphics::SetImguiEnabled(bool in_b)

@@ -23,12 +23,13 @@ public:
 	~Graphics();
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
-	void EndFrame();
 	void BeginFrame(float red, float green, float blue);
-	void ImguiRender();
+	void EndFrame();
 	void DrawIndexed(UINT count);
 	void SetMatrixProjection(DirectX::FXMMATRIX projection_in);
 	DirectX::XMMATRIX GetMatrixProjection() const;
+	void SetMatrixCamera(DirectX::FXMMATRIX camera_in);
+	DirectX::XMMATRIX GetMatrixCamera() const;
 	void SetImguiEnabled(bool in_b);
 	bool GetImguiEnabled();
 
@@ -37,13 +38,16 @@ private:
 	void ImguiBeginFrame();
 
 private:
+	DirectX::XMMATRIX projection;
+	DirectX::XMMATRIX camera;
 	HRESULT hr;
+
 	ComPtr<ID3D11Device> pDevice;
 	ComPtr<ID3D11DeviceContext> pContext;
 	ComPtr<IDXGISwapChain> pSwap;
 	ComPtr<ID3D11RenderTargetView> pTarget;
 	ComPtr<ID3D11DepthStencilView> pDSV;
-	DirectX::XMMATRIX projection;
+	
 	DxgiInfoManager infoManager;
 	bool show_demo_window = true;
 	bool imguiIsEnabled = true;
