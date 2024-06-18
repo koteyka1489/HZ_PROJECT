@@ -24,10 +24,18 @@ public:
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
 	void EndFrame();
-	void ClearBuffer(float red, float green, float blue);
+	void BeginFrame(float red, float green, float blue);
+	void ImguiRender();
 	void DrawIndexed(UINT count);
 	void SetMatrixProjection(DirectX::FXMMATRIX projection_in);
 	DirectX::XMMATRIX GetMatrixProjection() const;
+	void SetImguiEnabled(bool in_b);
+	bool GetImguiEnabled();
+
+
+private:
+	void ImguiBeginFrame();
+
 private:
 	HRESULT hr;
 	ComPtr<ID3D11Device> pDevice;
@@ -37,6 +45,7 @@ private:
 	ComPtr<ID3D11DepthStencilView> pDSV;
 	DirectX::XMMATRIX projection;
 	DxgiInfoManager infoManager;
-
+	bool show_demo_window = true;
+	bool imguiIsEnabled = true;
 };
 

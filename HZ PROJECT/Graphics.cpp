@@ -1,6 +1,6 @@
 #include "Graphics.h"
 #include "imgui\imgui_impl_dx11.h"
-
+#include "imgui\imgui_impl_win32.h"
 
 
 
@@ -135,32 +135,44 @@ void Graphics::EndFrame()
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
 }
 
-void Graphics::ClearBuffer(float red, float green, float blue)
+void Graphics::BeginFrame(float red, float green, float blue)
 {
-    // Задание цвета для очистки буфера кадра (цветной буфер). Последний компонент (1.0f) представляет альфа-канал (прозрачность)
     const float color[] = { red, green, blue, 1.0f };
-
     // Очистка буфера кадра (цветного буфера) заданным цветом. 
     pContext->ClearRenderTargetView(pTarget.Get(), color);
 
     // Очистка буфера глубины и трафарета. 
-    // pDSV - это вид глубины-трафарета (depth stencil view), который мы очищаем.
-    // D3D11_CLEAR_DEPTH - флаг, указывающий, что нужно очистить только буфер глубины.
-    // 1.0f - значение, на которое устанавливается буфер глубины (максимальная глубина).
-    // 0u - значение, на которое устанавливается буфер трафарета (в данном случае трафарет не используется).
     pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 
     // Установка целевого рендеринга и буфера глубины-трафарета для выходного модуля (output merger).
-    // 1u - количество целевых рендерингов (в данном случае один).
-    // pTarget.GetAddressOf() - указатель на целевой рендеринг.
-    // pDSV.Get() - указатель на буфер глубины-трафарета.
     pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
+
+    ImguiBeginFrame();
+}
+
+void Graphics::ImguiBeginFrame()
+{
+    if (imguiIsEnabled)
+    {
+        ImGui_ImplDX11_NewFrame();
+        ImGui_ImplWin32_NewFrame();
+        ImGui::NewFrame();
+    }
+}
+
+void Graphics::ImguiRender()
+{
+    if (imguiIsEnabled)
+    {
+        ImGui::ShowDemoWindow(&show_demo_window);
+        ImGui::Render();
+        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+    }
 }
 
 void Graphics::DrawIndexed(UINT count)
 
 {
-  
 	pContext->DrawIndexed(count, 0u, 0u);
 }
 
@@ -172,5 +184,15 @@ void Graphics::SetMatrixProjection(DirectX::FXMMATRIX projection_in)
 DirectX::XMMATRIX Graphics::GetMatrixProjection() const
 {
 	return projection;
+}
+
+void Graphics::SetImguiEnabled(bool in_b)
+{
+    imguiIsEnabled = in_b;
+}
+
+bool Graphics::GetImguiEnabled()
+{
+    return imguiIsEnabled;
 }
 

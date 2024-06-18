@@ -58,21 +58,22 @@ int App::Go()
 void App::DoFrame()
 {
 	auto dt = timer.Mark();
-	gfx.ClearBuffer(0.07f, 0.0f, 0.12f);
+	gfx.BeginFrame(0.07f, 0.0f, 0.12f);
 	for (auto& b : shapes)
 	{
 		b->Update(dt);
 		b->Draw(gfx);
 	}
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		gfx.SetImguiEnabled(false);
+	}
+	else
+	{
+		gfx.SetImguiEnabled(true);
+	}
 
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
 
-	static bool show_demo_window = true;
-	ImGui::ShowDemoWindow(&show_demo_window);
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
+	gfx.ImguiRender();
     gfx.EndFrame();
 }
