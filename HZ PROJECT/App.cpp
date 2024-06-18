@@ -65,6 +65,9 @@ void App::DoFrame()
 		b->Draw(gfx);
 	}
 
+	gfx.SetMatrixCamera(camera.GetMatrix());
+	camera.SpawnControlButton();
+
 	if (ImGui::Begin("Simulation Speed"))
 	{
 		ImGui::SliderFloat("Speed Factor", &speedFactor, 0.0f, 4.0f);

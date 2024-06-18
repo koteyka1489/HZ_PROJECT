@@ -150,6 +150,9 @@
     <ClCompile Include="imgui\ImguiManager.cpp">
       <Filter>Source Files\Graphics\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KotWin.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="imgui\ImguiManager.h">
       <Filter>Header Files\Graphics\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
