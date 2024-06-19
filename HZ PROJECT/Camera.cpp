@@ -36,24 +36,31 @@ void Camera::SpawnControlButton() noexcept
 
 void Camera::Control(Window& wnd, float dt)
 {
-    // Movement
     if (wnd.kbd.KeyIsPressed('W'))
     {
-        x += sinf(yaw) * cameraSpeed * dt;
-        z += cosf(yaw) * cameraSpeed * dt;
+        // Вперед
+        x += sinf(yaw) * cosf(pitch) * cameraSpeed * dt;
+        y -= sinf(pitch) * cameraSpeed * dt;
+        z += cosf(yaw) * cosf(pitch) * cameraSpeed * dt;
+       
     }
     if (wnd.kbd.KeyIsPressed('S'))
     {
-        x -= sinf(yaw) * cameraSpeed * dt;
-        z -= cosf(yaw) * cameraSpeed * dt;
+        // Назад
+        x -= sinf(yaw) * cosf(pitch) * cameraSpeed * dt;
+        y += sinf(pitch) * cameraSpeed * dt;
+        z -= cosf(yaw) * cosf(pitch) * cameraSpeed * dt;
+        
     }
     if (wnd.kbd.KeyIsPressed('A'))
     {
+        // Влево
         x -= cosf(yaw) * cameraSpeed * dt;
         z += sinf(yaw) * cameraSpeed * dt;
     }
     if (wnd.kbd.KeyIsPressed('D'))
     {
+        // Вправо
         x += cosf(yaw) * cameraSpeed * dt;
         z -= sinf(yaw) * cameraSpeed * dt;
     }
@@ -62,10 +69,12 @@ void Camera::Control(Window& wnd, float dt)
     if (wnd.kbd.KeyIsPressed(VK_UP))
     {
         pitch -= rotationSpeed * dt;
+       
     }
     if (wnd.kbd.KeyIsPressed(VK_DOWN))
     {
         pitch += rotationSpeed * dt;
+      
     }
     if (wnd.kbd.KeyIsPressed('Q'))
     {
@@ -83,10 +92,8 @@ void Camera::Reset() noexcept
 {
     x = 0.f;
     y = 0.f;
-    z = -20.f;
+    z = -50.f;
     pitch = 0.f;
     yaw = 0.f;
     roll = 0.f;
-    cameraSpeed = 10.f;
-    rotationSpeed = DirectX::XM_PIDIV2;
 }
