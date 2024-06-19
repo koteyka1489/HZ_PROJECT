@@ -1,21 +1,25 @@
 #pragma once
 #include "Graphics.h"
+#include "Window.h"
 
 class Camera
 {
 public:
 	DirectX::XMMATRIX GetMatrix() const noexcept;
 	void SpawnControlButton() noexcept;
+	void Control(Window& wnd, float dt);
 	void Reset() noexcept;
 
 
 private:
-	float r = 50.f;
-	float theta = 0.f;
-	float phi = 0.f;
-	float pitch = 0.f;
-	float yaw = 0.f;
-	float roll = 0.f;
+    float x = 0.f;
+    float y = 0.f;
+    float z = -50.f;
+    float pitch = 0.f;
+    float yaw = 0.f;
+    float roll = 0.f;
+    float cameraSpeed = 100.f;
+    float rotationSpeed = DirectX::XM_PIDIV2; // Pi/4 radians per second
 	
 };
 

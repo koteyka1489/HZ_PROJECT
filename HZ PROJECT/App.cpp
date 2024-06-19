@@ -67,6 +67,7 @@ void App::DoFrame()
 
 	gfx.SetMatrixCamera(camera.GetMatrix());
 	camera.SpawnControlButton();
+	camera.Control(wnd, dt);
 
 	if (ImGui::Begin("Simulation Speed"))
 	{
