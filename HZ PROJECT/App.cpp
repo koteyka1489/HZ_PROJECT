@@ -69,6 +69,15 @@ void App::DoFrame()
 	camera.SpawnControlButton();
 	camera.Control(wnd, dt);
 
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		speedFactor = 0.f;
+	}
+	else
+	{
+		speedFactor = 1.f;
+	}
+
 	if (ImGui::Begin("Simulation Speed"))
 	{
 		ImGui::SliderFloat("Speed Factor", &speedFactor, 0.0f, 4.0f);

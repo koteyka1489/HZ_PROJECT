@@ -33,14 +33,36 @@ BoxTextured::BoxTextured(Graphics& gfx, std::mt19937& rng, std::uniform_real_dis
 
 		const std::vector<Vertex> vertices =
 		{
-			{{-1.f, -1.f, -1.0f}, {0.0f, 1.0f}},
-			{{ 1.f, -1.f, -1.0f}, {1.0f, 1.0f}},
-			{{-1.f,  1.f, -1.0f}, {0.0f, 0.0f}},
-			{{ 1.f,  1.f, -1.0f}, {1.0f, 0.0f}},
-			{{-1.f, -1.f,  1.0f}, {0.0f, 1.0f}},
-			{{ 1.f, -1.f,  1.0f}, {1.0f, 1.0f}},
-			{{-1.f,  1.f,  1.0f}, {0.0f, 0.0f}},
-			{{ 1.f,  1.f,  1.0f}, {1.0f, 0.0f}}
+			// Front face
+			{{-1.f, -1.f, -1.f}, {0.0f, 1.0f}},
+			{{ 1.f, -1.f, -1.f}, {1.0f, 1.0f}},
+			{{-1.f,  1.f, -1.f}, {0.0f, 0.0f}},
+			{{ 1.f,  1.f, -1.f}, {1.0f, 0.0f}},
+			// Back face
+			{{-1.f, -1.f,  1.f}, {0.0f, 1.0f}},
+			{{ 1.f, -1.f,  1.f}, {1.0f, 1.0f}},
+			{{-1.f,  1.f,  1.f}, {0.0f, 0.0f}},
+			{{ 1.f,  1.f,  1.f}, {1.0f, 0.0f}},
+			// Left face
+			{{-1.f, -1.f,  1.f}, {0.0f, 1.0f}},
+			{{-1.f, -1.f, -1.f}, {1.0f, 1.0f}},
+			{{-1.f,  1.f,  1.f}, {0.0f, 0.0f}},
+			{{-1.f,  1.f, -1.f}, {1.0f, 0.0f}},
+			// Right face
+			{{ 1.f, -1.f,  1.f}, {0.0f, 1.0f}},
+			{{ 1.f, -1.f, -1.f}, {1.0f, 1.0f}},
+			{{ 1.f,  1.f,  1.f}, {0.0f, 0.0f}},
+			{{ 1.f,  1.f, -1.f}, {1.0f, 0.0f}},
+			// Top face
+			{{-1.f,  1.f, -1.f}, {0.0f, 1.0f}},
+			{{ 1.f,  1.f, -1.f}, {1.0f, 1.0f}},
+			{{-1.f,  1.f,  1.f}, {0.0f, 0.0f}},
+			{{ 1.f,  1.f,  1.f}, {1.0f, 0.0f}},
+			// Bottom face
+			{{-1.f, -1.f, -1.f}, {0.0f, 1.0f}},
+			{{ 1.f, -1.f, -1.f}, {1.0f, 1.0f}},
+			{{-1.f, -1.f,  1.f}, {0.0f, 0.0f}},
+			{{ 1.f, -1.f,  1.f}, {1.0f, 0.0f}}
 		};
 
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vertices));
@@ -53,8 +75,18 @@ BoxTextured::BoxTextured(Graphics& gfx, std::mt19937& rng, std::uniform_real_dis
 		auto pvsbt = pvs->GetByteCode();
 		AddStaticBind(std::move(pvs));
 
+		// Индексы для всех граней куба
+		const std::vector<unsigned short> indices =
+		{
+			0, 2, 1, 2, 3, 1,      // Front
+			4, 5, 6, 5, 7, 6,      // Back
+			8, 10, 9, 10, 11, 9,   // Left
+			12, 13, 14, 13, 15, 14, // Right
+			16, 18, 17, 18, 19, 17, // Top
+			20, 21, 22, 21, 23, 22  // Bottom
+		};
 
-		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, verIndListBox.GetIndexes()));
+		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, indices));
 
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 		{
@@ -67,8 +99,8 @@ BoxTextured::BoxTextured(Graphics& gfx, std::mt19937& rng, std::uniform_real_dis
 		AddStaticBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
 		AddStaticBind(std::make_unique<PixelShader>(gfx, L"TexturePixelShader.cso"));
-
 	}
 
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
 }
+
