@@ -2,7 +2,7 @@
 
 BoxTextured::BoxTextured(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>& adist, std::uniform_real_distribution<float>& ddist, std::uniform_real_distribution<float>& odist, std::uniform_real_distribution<float>& rdist, std::uniform_real_distribution<float>& sdist)
 {
-	r = (rdist(rng));
+	x = (rdist(rng));
 	droll = (ddist(rng));
 	dpitch = (ddist(rng));
 	dyaw = (ddist(rng));
@@ -67,7 +67,7 @@ BoxTextured::BoxTextured(Graphics& gfx, std::mt19937& rng, std::uniform_real_dis
 
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vertices));
 
-		AddStaticBind(std::make_unique<Texture>(gfx, L"images//head.png"));
+		AddStaticBind(std::make_unique<Texture>(gfx, L"images//pashok.png"));
 
 		AddStaticBind(std::make_unique<Sampler>(gfx));
 

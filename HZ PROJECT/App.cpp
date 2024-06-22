@@ -16,27 +16,32 @@ App::App()
 	std::uniform_real_distribution<float> sdist(0.1f, 5.0f);
     for (int i = 0; i < boxesCount; i++)
     {
-		if (i % 2 == 0)
-		{
-			shapes.push_back(std::make_unique<BoxTextured>(
-				gfx, rng, adist,
-				ddist, odist, rdist, sdist
-			));
-		}
-		else if (i % 3 == 0)
-		{
-			shapes.push_back(std::make_unique<Cone>(
-				gfx, rng, adist,
-				ddist, odist, rdist
-			));
-		}
-		else
-		{
-			shapes.push_back(std::make_unique<Box>(
-				gfx, rng, adist,
-				ddist, odist, rdist, sdist
-			));
-		}
+		shapes.push_back(std::make_unique<BoxTextured>(
+			gfx, rng, adist,
+			ddist, odist, rdist, sdist
+		));
+
+		//if (i % 2 == 0)
+		//{
+		//	shapes.push_back(std::make_unique<BoxTextured>(
+		//		gfx, rng, adist,
+		//		ddist, odist, rdist, sdist
+		//	));
+		//}
+		//else if (i % 3 == 0)
+		//{
+		//	shapes.push_back(std::make_unique<Cone>(
+		//		gfx, rng, adist,
+		//		ddist, odist, rdist
+		//	));
+		//}
+		//else
+		//{
+		//	shapes.push_back(std::make_unique<Box>(
+		//		gfx, rng, adist,
+		//		ddist, odist, rdist, sdist
+		//	));
+		//}
 		
 		
     }

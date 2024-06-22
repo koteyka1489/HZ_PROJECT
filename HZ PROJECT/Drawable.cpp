@@ -1,13 +1,18 @@
 #include "Drawable.h"
 #include <cassert>
 
-DirectX::XMMATRIX Drawable::GetTransformXM() const
+DirectX::XMMATRIX Drawable::GetTransformXMRotateAll() const
 {
     
     return DirectX::XMMatrixScaling(scaleX, scaleY, scaleZ) *
         DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-        DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
+        DirectX::XMMatrixTranslation(x, y, z) *
         DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi);
+}
+
+DirectX::XMMATRIX Drawable::GetTransformXMTranslate() const
+{
+    return DirectX::XMMatrixScaling(scaleX, scaleY, scaleZ) * DirectX::XMMatrixTranslation(x, y, z);
 }
 
 void Drawable::Update(float dt)
