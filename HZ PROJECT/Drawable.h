@@ -2,6 +2,7 @@
 #include "Bindable.h"
 #include <DirectXMath.h>
 #include "IndexBuffer.h"
+#include <random>
 
 
 class Drawable
@@ -14,18 +15,22 @@ public:
 	Drawable(const Drawable&) = delete;
 	Drawable& operator=(const Drawable&) = delete;
 	virtual ~Drawable() = default;
-	DirectX::XMMATRIX GetTransformXMRotateAll() const;
-	DirectX::XMMATRIX GetTransformXMTranslate() const;
+	DirectX::XMMATRIX GetMatrix() const;
 	void Update(float dt);
 	void Draw(Graphics& gfx);
 
 protected:
 	void AddBind(std::unique_ptr<Bindable> bind);
 	void AddIndexBuffer(std::unique_ptr<IndexBuffer> bind);
-
+	void RandomCoordInit();
 private:
 	virtual const std::vector < std::unique_ptr<Bindable>>& GetStaticBinds() const = 0;
 	virtual const IndexBuffer* GetpStaticIndexBuffer() = 0;
+	DirectX::XMMATRIX GetTransformXMRotateAll() const;
+	DirectX::XMMATRIX GetTransformXMRotateModelCoord() const;
+	DirectX::XMMATRIX GetTransformXMRotateWorldCoord() const;
+	DirectX::XMMATRIX GetTransformXMTranslate() const;
+	
 protected:
 	std::vector<std::unique_ptr<Bindable>> binds;
 	const IndexBuffer* pIndexBuffer = nullptr;
@@ -52,5 +57,10 @@ protected:
 	float scaleX = 1.0f;
 	float scaleY = 1.0f;
 	float scaleZ = 1.0f;
+
+	bool isModelCoordRotate = false;
+	bool isWorldCoordRotate = false;
+	bool isRandomCoord = false;
+	bool IsMoving = false;
 };
 

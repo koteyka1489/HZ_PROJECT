@@ -24,7 +24,7 @@ private:
 	Graphics gfx;
 	ChiliTimer timer;
 	std::vector <std::unique_ptr<Drawable>> shapes;
-	static constexpr int boxesCount = 1;
+	static constexpr int boxesCount = 20;
 	float speedFactor = 1.0f;
 	Camera camera;
 

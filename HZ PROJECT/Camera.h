@@ -14,7 +14,7 @@ public:
 private:
     float x = 0.f;
     float y = 0.f;
-    float z = -50.f;
+    float z = -20.f;
     float pitch = 0.f;
     float yaw = 0.f;
     float roll = 0.f;

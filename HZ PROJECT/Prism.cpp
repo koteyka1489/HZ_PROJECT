@@ -1,17 +1,16 @@
 #include "Prism.h"
 
-Prism::Prism(Graphics& gfx, std::mt19937& rng, std::uniform_real_distribution<float>& adist, std::uniform_real_distribution<float>& ddist, std::uniform_real_distribution<float>& odist, std::uniform_real_distribution<float>& rdist)
+Prism::Prism(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving)
 {
-	x = (rdist(rng));
-	droll = (ddist(rng));
-	dpitch = (ddist(rng));
-	dyaw = (ddist(rng));
-	dphi = (odist(rng));
-	dtheta = (odist(rng));
-	dchi = (odist(rng));
-	chi = (adist(rng));
-	theta = (adist(rng));
-	phi = (adist(rng));
+	isRandomCoord = randomCoord;
+	isWorldCoordRotate = worldRot;
+	isModelCoordRotate = modelRot;
+	IsMoving = moving;
+
+	if (isRandomCoord)
+	{
+		RandomCoordInit();
+	}
 	if (IsStaticNonInitialized())
 	{
 

@@ -8,18 +8,10 @@ App::App()
 	wnd(1200, 800),
 	gfx(wnd.GetHwnd())
 {
-    std::mt19937 rng(std::random_device{}());
-    std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
-    std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
-    std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
-    std::uniform_real_distribution<float> rdist(6.0f, 40.0f);
-	std::uniform_real_distribution<float> sdist(0.1f, 5.0f);
+    
     for (int i = 0; i < boxesCount; i++)
     {
-		shapes.push_back(std::make_unique<BoxTextured>(
-			gfx, rng, adist,
-			ddist, odist, rdist, sdist
-		));
+		shapes.push_back(std::make_unique<BoxTextured>(	gfx, true, false, false, true));
 
 		//if (i % 2 == 0)
 		//{

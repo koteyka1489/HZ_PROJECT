@@ -16,7 +16,7 @@ void TransformCbuf::Bind(Graphics& gfx) noexcept
 {
 	vcbuf->Update(gfx,
 		DirectX::XMMatrixTranspose(
-			parent.GetTransformXMTranslate() *
+			parent.GetMatrix() *
 			gfx.GetMatrixCamera() *
 			gfx.GetMatrixProjection()
 		)
