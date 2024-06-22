@@ -5,7 +5,7 @@
 
 App::App()
 	:
-	wnd(1200, 800),
+	wnd(1500, 1000),
 	gfx(wnd.GetHwnd())
 {
 	bool randomCoord = true;

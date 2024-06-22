@@ -53,5 +53,9 @@ private:
 	DxgiInfoManager infoManager;
 	bool show_demo_window = true;
 	bool imguiIsEnabled = true;
+
+	float width = 1200.f;
+	float height = 800.f;
+
 };
 

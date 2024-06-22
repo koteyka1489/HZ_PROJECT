@@ -8,12 +8,15 @@ Graphics::Graphics(HWND hWnd)
 
     RECT rect;
     GetClientRect(hWnd, &rect);
-    UINT width = rect.right - rect.left;
-    UINT height = rect.bottom - rect.top;
+    UINT widthU = rect.right - rect.left;
+    UINT heightU = rect.bottom - rect.top;
+
+    width = static_cast<float>(widthU);
+    height = static_cast<float>(heightU);
 
     DXGI_SWAP_CHAIN_DESC sd = {};
-    sd.BufferDesc.Width = width;
-    sd.BufferDesc.Height = height;
+    sd.BufferDesc.Width = widthU;
+    sd.BufferDesc.Height = heightU;
     sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
     sd.BufferDesc.RefreshRate.Denominator = 0;
     sd.BufferDesc.RefreshRate.Numerator = 0;
@@ -94,8 +97,8 @@ Graphics::Graphics(HWND hWnd)
 
     // Create ViewPort
     D3D11_VIEWPORT vp;
-    vp.Width = static_cast<float>(width);
-    vp.Height = static_cast<float>(height);
+    vp.Width = width;
+    vp.Height = height;
     vp.MinDepth = 0.f;
     vp.MaxDepth = 1.f;
     vp.TopLeftX = 0.f;
@@ -103,7 +106,7 @@ Graphics::Graphics(HWND hWnd)
 
     pContext->RSSetViewports(1u, &vp);
 
-    projection = DirectX::XMMatrixPerspectiveLH(1.f, 3.f / 4.f, 0.5f, 1000.f);
+    projection = DirectX::XMMatrixPerspectiveLH(1.f, height / width, 0.5f, 1000.f);
     camera = DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
 
     // init imgui
