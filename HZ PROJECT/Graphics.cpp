@@ -72,8 +72,8 @@ Graphics::Graphics(HWND hWnd)
 
     ComPtr<ID3D11Texture2D> pDepthStencil;
     D3D11_TEXTURE2D_DESC descDepth = {};
-    descDepth.Width = width;
-    descDepth.Height = height;
+    descDepth.Width = widthU;
+    descDepth.Height = heightU;
     descDepth.MipLevels = 1u;
     descDepth.ArraySize = 1u;
     descDepth.Format = DXGI_FORMAT_D32_FLOAT;
@@ -96,7 +96,7 @@ Graphics::Graphics(HWND hWnd)
     THROW_COM_ERROR_GFX_INFO(hr, "CreateDepthStencilView");
 
     // Create ViewPort
-    D3D11_VIEWPORT vp;
+    D3D11_VIEWPORT vp = {};
     vp.Width = width;
     vp.Height = height;
     vp.MinDepth = 0.f;
@@ -157,7 +157,7 @@ void Graphics::EndFrame()
 
 
 
-void Graphics::ImguiBeginFrame()
+void Graphics::ImguiBeginFrame() const
 {
     if (imguiIsEnabled)
     {
@@ -200,7 +200,7 @@ void Graphics::SetImguiEnabled(bool in_b)
     imguiIsEnabled = in_b;
 }
 
-bool Graphics::GetImguiEnabled()
+bool Graphics::GetImguiEnabled() const
 {
     return imguiIsEnabled;
 }

@@ -10,13 +10,16 @@ App::App()
 {
 	bool randomCoord = false;
 	bool worldRot = false;
-	bool modelRot = false;
+	bool modelRot = true;
 	bool moving = false;
-
-
+	std::wstring texfilename = L"images//pashok.png";
+	float yaw_in = 0;
+	float pitch_in = DirectX::XM_PIDIV2;
+	float roll_in = 0;
+	
     for (int i = 0; i < boxesCount; i++)
     {
-		shapes.push_back(std::make_unique<BoxTextured>(gfx, randomCoord, worldRot, modelRot, moving, 0.f, 0.f, 0.f));
+		shapes.push_back(std::make_unique<SheetTextured>(gfx, randomCoord, worldRot, modelRot, moving, 0.f, -5.f, 0.f, yaw_in, pitch_in, roll_in, texfilename));
 
 	/*	if (i % 2 == 0)
 		{

@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(Graphics& gfx, std::wstring fileName)
+Texture::Texture(Graphics& gfx, const std::wstring& fileName)
 {
 	INFOMAN(gfx);
 	

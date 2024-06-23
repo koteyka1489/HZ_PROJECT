@@ -33,11 +33,11 @@ public:
 	void SetMatrixCamera(DirectX::FXMMATRIX camera_in);
 	DirectX::XMMATRIX GetMatrixCamera() const;
 	void SetImguiEnabled(bool in_b);
-	bool GetImguiEnabled();
+	bool GetImguiEnabled() const;
 
 
 private:
-	void ImguiBeginFrame();
+	void ImguiBeginFrame() const;
 
 private:
 	DirectX::XMMATRIX projection;

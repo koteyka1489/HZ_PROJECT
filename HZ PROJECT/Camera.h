@@ -18,8 +18,8 @@ private:
     float pitch = 0.f;
     float yaw = 0.f;
     float roll = 0.f;
-    float cameraSpeed = 50.f;
-    float rotationSpeed = DirectX::XM_PIDIV2; // Pi/2 radians per second
+    float cameraSpeed = 30.f;
+    float rotationSpeed = DirectX::XM_PIDIV4; 
 	
 };
 

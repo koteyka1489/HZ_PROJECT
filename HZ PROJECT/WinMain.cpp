@@ -19,7 +19,10 @@ int WINAPI WinMain(
 	{
 		ErrorLogger::Log(exception);
 	}
-
+	catch (const std::exception& e)
+	{
+		
+	}
 	catch (...)
 	{
 		ErrorLogger::Log("Unkown Exception");

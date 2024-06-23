@@ -8,6 +8,7 @@
 #include "BoxTextured.h"
 #include "imgui\ImguiManager.h"
 #include "Camera.h"
+#include "SheetTextured.h"
 
 class App
 {

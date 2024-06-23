@@ -5,7 +5,7 @@
 class Texture : public Bindable
 {
 public:
-	Texture(Graphics& gfx, std::wstring fileName);
+	Texture(Graphics& gfx, const std::wstring& fileName);
 	void Bind(Graphics& gfx) noexcept override;
 
 protected:
