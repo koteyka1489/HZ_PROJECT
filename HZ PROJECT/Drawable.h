@@ -46,12 +46,12 @@ protected:
 	float chi = 0.f;
 
 	//speed
-	float droll = 0.f;
-	float dpitch = 0.f;
-	float dyaw = 0.f;
-	float dtheta = 0.f;
-	float dphi = 0.f;
-	float dchi = 0.f;
+	float droll = 0.5f;
+	float dpitch = 0.5f;
+	float dyaw = 0.5f;
+	float dtheta = 0.5f;
+	float dphi = 0.5f;
+	float dchi = 0.5f;
 
 	//scale
 	float scaleX = 1.0f;

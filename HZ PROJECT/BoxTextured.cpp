@@ -1,12 +1,15 @@
 #include "BoxTextured.h"
 
-BoxTextured::BoxTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving)
+BoxTextured::BoxTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving, float x_in, float y_in, float z_in)
 {
 	
 	isRandomCoord = randomCoord;
 	isWorldCoordRotate = worldRot;
 	isModelCoordRotate = modelRot;
 	IsMoving = moving;
+	x = x_in;
+	y = y_in;
+	z = z_in;
 
 	if (isRandomCoord)
 	{

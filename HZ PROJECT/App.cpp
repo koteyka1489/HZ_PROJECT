@@ -8,17 +8,17 @@ App::App()
 	wnd(1500, 1000),
 	gfx(wnd.GetHwnd())
 {
-	bool randomCoord = true;
-	bool modelRot = true;
-	bool worldRot = true;
-	bool moving = true;
+	bool randomCoord = false;
+	bool worldRot = false;
+	bool modelRot = false;
+	bool moving = false;
 
 
     for (int i = 0; i < boxesCount; i++)
     {
-		//shapes.push_back(std::make_unique<BoxTextured>(gfx, true, false, false, true));
+		shapes.push_back(std::make_unique<BoxTextured>(gfx, randomCoord, worldRot, modelRot, moving, 0.f, 0.f, 0.f));
 
-		if (i % 2 == 0)
+	/*	if (i % 2 == 0)
 		{
 			shapes.push_back(std::make_unique<BoxTextured>(gfx, randomCoord, worldRot, modelRot, moving));
 		}
@@ -30,7 +30,7 @@ App::App()
 		{
 			shapes.push_back(std::make_unique<Box>(gfx, randomCoord, worldRot, modelRot, moving));
 		}
-		
+		*/
 		
     }
 }

@@ -7,7 +7,7 @@
 class BoxTextured : public DrawableBase<BoxTextured>
 {
 public:
-	BoxTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving);
+	BoxTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving, float x_in, float y_in, float z_in);
 
 private:
 	VertexIndexedListBox verIndListBox;

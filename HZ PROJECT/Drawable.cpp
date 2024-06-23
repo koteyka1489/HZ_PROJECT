@@ -74,12 +74,15 @@ DirectX::XMMATRIX Drawable::GetMatrix() const
 
 void Drawable::Update(float dt)
 {
-    roll += droll * dt;
-    pitch += dpitch * dt;
-    yaw += dyaw * dt;
-    theta += dtheta * dt;
-    phi += dphi * dt;
-    chi += dchi * dt;
+    if (IsMoving)
+    {
+        roll += droll * dt;
+        pitch += dpitch * dt;
+        yaw += dyaw * dt;
+        theta += dtheta * dt;
+        phi += dphi * dt;
+        chi += dchi * dt;
+    }
 }
 
 void Drawable::Draw(Graphics& gfx)
