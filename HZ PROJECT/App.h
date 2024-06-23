@@ -9,6 +9,7 @@
 #include "imgui\ImguiManager.h"
 #include "Camera.h"
 #include "SheetTextured.h"
+#include "Wall.h"
 
 class App
 {
@@ -28,6 +29,8 @@ private:
 	static constexpr int boxesCount = 1;
 	float speedFactor = 1.0f;
 	Camera camera;
-
+	Wall leftWall;
+	Wall rightWall;
+	Wall frontWall;
 };
 

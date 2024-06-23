@@ -6,36 +6,33 @@
 App::App()
 	:
 	wnd(1500, 1000),
-	gfx(wnd.GetHwnd())
+	gfx(wnd.GetHwnd()),
+	leftWall(gfx, 300.f, 50.f, -300.f, -5.f, 200.f, DirectX::XM_PIDIV2),
+	rightWall(gfx, 300.f, 50.f, 300.f, -5.f, 200.f, DirectX::XM_PIDIV2),
+	frontWall(gfx, 300.f, 50.f, 0.f, -5.f, 500.f, 0.f)
 {
-	bool randomCoord = false;
-	bool worldRot = false;
-	bool modelRot = true;
-	bool moving = false;
-	std::wstring texfilename = L"images//pashok.png";
-	float yaw_in = 0;
-	float pitch_in = DirectX::XM_PIDIV2;
-	float roll_in = 0;
-	
-    for (int i = 0; i < boxesCount; i++)
-    {
-		shapes.push_back(std::make_unique<SheetTextured>(gfx, randomCoord, worldRot, modelRot, moving, 0.f, -5.f, 0.f, yaw_in, pitch_in, roll_in, texfilename));
+	shapes.push_back(leftWall.GetSheetTexturedWall());
+	shapes.push_back(rightWall.GetSheetTexturedWall());
+	shapes.push_back(frontWall.GetSheetTexturedWall());
+ //   for (int i = 0; i < boxesCount; i++)
+ //   {
+	//	
 
-	/*	if (i % 2 == 0)
-		{
-			shapes.push_back(std::make_unique<BoxTextured>(gfx, randomCoord, worldRot, modelRot, moving));
-		}
-		else if (i % 3 == 0)
-		{
-			shapes.push_back(std::make_unique<Cone>(gfx, randomCoord, worldRot, modelRot, moving));
-		}
-		else
-		{
-			shapes.push_back(std::make_unique<Box>(gfx, randomCoord, worldRot, modelRot, moving));
-		}
-		*/
-		
-    }
+	///*	if (i % 2 == 0)
+	//	{
+	//		shapes.push_back(std::make_unique<BoxTextured>(gfx, randomCoord, worldRot, modelRot, moving));
+	//	}
+	//	else if (i % 3 == 0)
+	//	{
+	//		shapes.push_back(std::make_unique<Cone>(gfx, randomCoord, worldRot, modelRot, moving));
+	//	}
+	//	else
+	//	{
+	//		shapes.push_back(std::make_unique<Box>(gfx, randomCoord, worldRot, modelRot, moving));
+	//	}
+	//	*/
+	//	
+ //   }
 }
 
 int App::Go()

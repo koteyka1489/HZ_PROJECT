@@ -1,6 +1,8 @@
 #include "SheetTextured.h"
 
-SheetTextured::SheetTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving, float x_in, float y_in, float z_in,float yaw_in, float pitch_in, float roll_in, const std::wstring& texFilename)
+SheetTextured::SheetTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving,
+	float x_in, float y_in, float z_in,float yaw_in, float pitch_in, float roll_in, float scaleX_in, float scaleY_in,
+	const std::wstring& texFilename)
 {
 
 	isRandomCoord = randomCoord;
@@ -11,8 +13,8 @@ SheetTextured::SheetTextured(Graphics& gfx, bool randomCoord, bool worldRot, boo
 	y = y_in;
 	z = z_in;
 	scaleZ = 0.01f;
-	scaleX = 20.f;
-	scaleY = 20.f;
+	scaleX = scaleX_in;
+	scaleY = scaleY_in;
 	yaw = yaw_in;
 	pitch = pitch_in;
 	roll = pitch_in;
