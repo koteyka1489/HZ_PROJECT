@@ -14,11 +14,11 @@ public:
 private:
     float x = 0.f;
     float y = 0.f;
-    float z = -20.f;
+    float z = -500.f;
     float pitch = 0.f;
     float yaw = 0.f;
     float roll = 0.f;
-    float cameraSpeed = 30.f;
+    float cameraSpeed = 200.f;
     float rotationSpeed = DirectX::XM_PIDIV4; 
 	
 };

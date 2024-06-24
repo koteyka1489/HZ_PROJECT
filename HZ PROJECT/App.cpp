@@ -7,13 +7,19 @@ App::App()
 	:
 	wnd(1500, 1000),
 	gfx(wnd.GetHwnd()),
-	leftWall(gfx, 300.f, 50.f, -300.f, -5.f, 200.f, DirectX::XM_PIDIV2),
-	rightWall(gfx, 300.f, 50.f, 300.f, -5.f, 200.f, DirectX::XM_PIDIV2),
-	frontWall(gfx, 300.f, 50.f, 0.f, -5.f, 500.f, 0.f)
+	leftWall(gfx, 500.f, 200.f, -500.f, -5.f, 200.f, DirectX::XM_PIDIV2),
+	rightWall(gfx, 500.f, 200.f, 500.f, -5.f, 200.f, DirectX::XM_PIDIV2),
+	frontWall(gfx, 500.f, 200.f, 0.f, -5.f, 700.f, 0.f)
 {
 	shapes.push_back(leftWall.GetSheetTexturedWall());
 	shapes.push_back(rightWall.GetSheetTexturedWall());
 	shapes.push_back(frontWall.GetSheetTexturedWall());
+	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 0.f, 50.f, 699.f, 0,
+		0.f, 0.f, 100.f, 100.f, L"images//pashok.png"));
+	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, -250.f, 50.f, 699.f, 0,
+		0.f, 0.f, 100.f, 100.f, L"images//kim.jpeg"));
+	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 250.f, 50.f, 699.f, 0,
+		0.f, 0.f, 100.f, 100.f, L"images//putin.jpg"));
  //   for (int i = 0; i < boxesCount; i++)
  //   {
 	//	

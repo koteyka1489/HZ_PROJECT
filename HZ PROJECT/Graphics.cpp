@@ -106,7 +106,7 @@ Graphics::Graphics(HWND hWnd)
 
     pContext->RSSetViewports(1u, &vp);
 
-    projection = DirectX::XMMatrixPerspectiveLH(1.f, height / width, 0.5f, 1000.f);
+    projection = DirectX::XMMatrixPerspectiveLH(1.f, height / width, 0.5f, 10000.f);
     camera = DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
 
     // init imgui

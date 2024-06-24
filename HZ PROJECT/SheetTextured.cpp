@@ -58,7 +58,7 @@ SheetTextured::SheetTextured(Graphics& gfx, bool randomCoord, bool worldRot, boo
 
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vertices));
 
-		AddStaticBind(std::make_unique<Texture>(gfx, texFilename));
+		
 
 		AddStaticBind(std::make_unique<Sampler>(gfx));
 
@@ -89,4 +89,5 @@ SheetTextured::SheetTextured(Graphics& gfx, bool randomCoord, bool worldRot, boo
 	}
 
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
+	AddBind(std::make_unique<Texture>(gfx, texFilename));
 }
