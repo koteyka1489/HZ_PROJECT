@@ -7,7 +7,7 @@
 class Sphere : public DrawableBase<Sphere>
 {
 public:
-	Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving);
+	Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving, float x_in, float y_in, float z_in, float scale);
 
 private:
 	VertexIndexedListSphere verIndListSphere;

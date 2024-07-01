@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving)
+Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bool moving, float x_in, float y_in, float z_in, float scale)
 	:
 	verIndListSphere(12u, 12u)
 {
@@ -8,6 +8,14 @@ Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bo
 	isWorldCoordRotate = worldRot;
 	isModelCoordRotate = modelRot;
 	IsMoving = moving;
+
+	x = x_in;
+	y = y_in;
+	z = z_in;
+
+	scaleX *= scale;
+	scaleY *= scale;
+	scaleZ *= scale;
 
 	if (isRandomCoord)
 	{
@@ -52,7 +60,7 @@ Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bo
 		const ConstantBuffer2 cb2 =
 		{
 			{
-				{1.0f, 1.0f, 1.0f}
+				{0.9f, 0.9f, 0.0f}
 			}
 		};
 
