@@ -11,6 +11,7 @@
 #include "SheetTextured.h"
 #include "Wall.h"
 #include "Floor.h"
+#include "Sphere.h"
 
 class App
 {

@@ -176,6 +176,7 @@
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="SheetTextured.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Topology.cpp" />
     <ClCompile Include="TransfornCBuff.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="SheetTextured.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="ThrowMacros.h" />
     <ClInclude Include="Topology.h" />
@@ -236,6 +238,7 @@
     <ClInclude Include="VertexIndexedListCone.h" />
     <ClInclude Include="VertexIndexedListOcto.h" />
     <ClInclude Include="VertexIndexedListPrism.h" />
+    <ClInclude Include="VertexIndexedListSphere.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
@@ -287,6 +290,14 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="PixelShaderSphere.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="TexturePixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

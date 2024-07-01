@@ -153,14 +153,17 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="SheetTextured.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Floor.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="SheetTextured.cpp">
+      <Filter>Source Files\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Source Files\Graphics\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,10 +315,16 @@
       <Filter>Header Files\Graphics\Drawable</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexIndexedListSphere.h">
+      <Filter>Header Files\Graphics\VertexIndexList</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files\Graphics\Drawable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +360,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="TexturePixelShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShaderSphere.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

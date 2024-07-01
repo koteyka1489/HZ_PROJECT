@@ -5,7 +5,7 @@ cbuffer CBuf
 
 float4 main(uint tid : SV_PrimitiveID) : SV_Target
 {
-    float4 res = face_colors[tid / 2];
+    float4 res = face_colors[tid];
     
     return res;
 }

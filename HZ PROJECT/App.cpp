@@ -22,6 +22,7 @@ App::App()
 	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 250.f, 50.f, 695.f, 0,
 		0.f, 0.f, 100.f, 100.f, L"images//putin.jpg"));
 	shapes.push_back(floor.GetSheetTexturedWall());
+	shapes.push_back(std::make_unique<Sphere>(gfx, true, true, true, true));
  //   for (int i = 0; i < boxesCount; i++)
  //   {
 	//	
