@@ -157,6 +157,7 @@
     <ClCompile Include="DxgiInfoManager.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="ChiliTimer.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\ImguiManager.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="DxgiInfoManager.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="ChiliTimer.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />

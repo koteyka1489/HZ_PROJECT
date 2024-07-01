@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "SheetTextured.h"
 #include "Wall.h"
+#include "Floor.h"
 
 class App
 {
@@ -32,5 +33,6 @@ private:
 	Wall leftWall;
 	Wall rightWall;
 	Wall frontWall;
+	Floor floor;
 };
 
