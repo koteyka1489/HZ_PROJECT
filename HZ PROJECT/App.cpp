@@ -10,7 +10,7 @@ App::App()
 	leftWall(gfx, 500.f, 200.f, -500.f, -5.f, 200.f, DirectX::XM_PIDIV2),
 	rightWall(gfx, 500.f, 200.f, 500.f, -5.f, 200.f, DirectX::XM_PIDIV2),
 	frontWall(gfx, 500.f, 200.f, 0.f, -5.f, 700.f, 0.f),
-	floor(gfx, 500.f, 500.f, 0.f, -205.f, 200.f)
+	floor(gfx, -2500.f, -205.f, -2500.f)
 {
 	shapes.push_back(leftWall.GetSheetTexturedWall());
 	shapes.push_back(rightWall.GetSheetTexturedWall());
@@ -21,8 +21,15 @@ App::App()
 		0.f, 0.f, 100.f, 100.f, L"images//kim.jpeg"));
 	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 250.f, 50.f, 695.f, 0,
 		0.f, 0.f, 100.f, 100.f, L"images//putin.jpg"));
-	shapes.push_back(floor.GetSheetTexturedWall());
 	shapes.push_back(std::make_unique<Sphere>(gfx, false, false, true, false, 0.f, 500.f, 350.f, 50.f));
+
+
+	auto floorShapes = floor.GetSheetTexturedWall();
+	for (auto& shapeFl : floorShapes)
+	{
+		shapes.push_back(std::move(shapeFl));
+	}
+	
  //   for (int i = 0; i < boxesCount; i++)
  //   {
 	//	
