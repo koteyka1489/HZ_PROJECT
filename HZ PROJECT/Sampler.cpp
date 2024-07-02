@@ -6,10 +6,11 @@ Sampler::Sampler(Graphics& gfx)
 
 	D3D11_SAMPLER_DESC sdc = {};
 	sdc.Filter = D3D11_FILTER_ANISOTROPIC;
+	sdc.MaxAnisotropy = 16u;
 	sdc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	sdc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	sdc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	sdc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	sdc.MipLODBias = 0.f;
 	sdc.MinLOD = 0;
 	sdc.MaxLOD = D3D11_FLOAT32_MAX;
 

@@ -18,8 +18,8 @@ Graphics::Graphics(HWND hWnd)
     sd.BufferDesc.Width = widthU;
     sd.BufferDesc.Height = heightU;
     sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-    sd.BufferDesc.RefreshRate.Denominator = 0;
-    sd.BufferDesc.RefreshRate.Numerator = 0;
+    sd.BufferDesc.RefreshRate.Denominator = 1;
+    sd.BufferDesc.RefreshRate.Numerator = 144;
     sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
     sd.SampleDesc.Count = 1;
@@ -106,7 +106,12 @@ Graphics::Graphics(HWND hWnd)
 
     pContext->RSSetViewports(1u, &vp);
 
-    projection = DirectX::XMMatrixPerspectiveLH(1.f, height / width, 0.5f, 50000.f);
+    projection = DirectX::XMMatrixPerspectiveFovLH(
+        DirectX::XM_PIDIV4,    // ”гол обзора (field of view)
+        width / height,        // —оотношение сторон (aspect ratio)
+        0.1f,                  // Ѕлижн€€ плоскость отсечени€ (near plane)
+        100000.0f                // ƒальн€€ плоскость отсечени€ (far plane)
+    );
     camera = DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
 
     // init imgui
@@ -151,7 +156,7 @@ void Graphics::EndFrame()
 #ifndef NDEBUG
 	infoManager.Set();
 #endif
-	hr = pSwap->Present(1u, 0u);
+	hr = pSwap->Present(0u, 0u);
 	THROW_COM_ERROR_GFX_INFO(hr, "ERROR pSwap Present");
 }
 

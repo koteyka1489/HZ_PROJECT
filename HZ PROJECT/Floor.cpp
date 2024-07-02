@@ -6,7 +6,7 @@ Floor::Floor(Graphics& gfx, float xStart, float yStart, float zStart)
 	bool worldRot = false;
 	bool modelRot = true;
 	bool moving = false;
-	std::wstring texfilename = L"images//grass.jpg";
+	std::wstring texfilename = L"images//grass5.png";
 	float yaw = 0.f;
 	float pitch = DirectX::XM_PIDIV2;
 	float roll = 0.f;

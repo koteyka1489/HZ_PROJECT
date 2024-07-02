@@ -15,11 +15,11 @@ App::App()
 	shapes.push_back(leftWall.GetSheetTexturedWall());
 	shapes.push_back(rightWall.GetSheetTexturedWall());
 	shapes.push_back(frontWall.GetSheetTexturedWall());
-	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 0.f, 50.f, 695.f, 0,
+	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 0.f, 50.f, 680.f, 0,
 		0.f, 0.f, 100.f, 100.f, L"images//pashok.png"));
-	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, -250.f, 50.f, 695.f, 0,
+	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, -250.f, 50.f, 680.f, 0,
 		0.f, 0.f, 100.f, 100.f, L"images//kim.jpeg"));
-	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 250.f, 50.f, 695.f, 0,
+	shapes.push_back(std::make_unique<SheetTextured>(gfx, false, false, true, false, 250.f, 50.f, 680.f, 0,
 		0.f, 0.f, 100.f, 100.f, L"images//putin.jpg"));
 	shapes.push_back(std::make_unique<Sphere>(gfx, false, false, true, false, 0.f, 500.f, 350.f, 50.f));
 

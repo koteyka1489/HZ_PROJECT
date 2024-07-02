@@ -11,5 +11,6 @@ public:
 protected:
 	ComPtr<ID3D11Resource> pResource;
 	ComPtr<ID3D11ShaderResourceView> pShaderResourceView;
+	ComPtr<ID3D11Texture2D> pTexture;
 };
 
