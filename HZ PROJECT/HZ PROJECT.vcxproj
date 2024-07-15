@@ -183,6 +183,7 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Octo.cpp" />
     <ClCompile Include="PixelShader.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KotWin.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Octo.h" />
     <ClInclude Include="PixelShader.h" />
@@ -253,6 +255,7 @@
     <ClInclude Include="VertexIndexedListPrism.h" />
     <ClInclude Include="VertexIndexedListSphere.h" />
     <ClInclude Include="VertexShader.h" />
+    <ClInclude Include="VertexTexNormCoord.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -339,6 +342,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="models\nanosuit.obj" />
+    <Object Include="models\suzanne.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
