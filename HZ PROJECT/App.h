@@ -16,24 +16,23 @@
 class App
 {
 public:
-	App();
-	int Go();
+    App();
+    int Go();
 
 private:
-	void DoFrame();
+    void DoFrame();
 
 private:
-	ImguiManager imgui;
-	Window wnd;
-	Graphics gfx;
-	ChiliTimer timer;
-	std::vector <std::unique_ptr<Drawable>> shapes;
-	static constexpr int boxesCount = 1;
-	float speedFactor = 1.0f;
-	Camera camera;
-	Wall leftWall;
-	Wall rightWall;
-	Wall frontWall;
-	Floor floor;
+    ImguiManager imgui;
+    Window wnd;
+    Graphics gfx;
+    ChiliTimer timer;
+    std::vector<std::unique_ptr<Drawable>> shapes;
+    static constexpr int boxesCount = 10000;
+    float speedFactor               = 1.0f;
+    Camera camera;
+    Wall leftWall;
+    Wall rightWall;
+    Wall frontWall;
+    Floor floor;
 };
-

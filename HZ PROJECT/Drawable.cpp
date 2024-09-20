@@ -35,7 +35,7 @@ void Drawable::RandomCoordInit()
     std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
     std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
     std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
-    std::uniform_real_distribution<float> rdist(6.0f, 40.0f);
+    std::uniform_real_distribution<float> rdist(6.0f, 100.0f);
     std::uniform_real_distribution<float> sdist(0.1f, 5.0f);
 
     x = rdist(rng);
