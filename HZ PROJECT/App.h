@@ -12,6 +12,9 @@
 #include "Wall.h"
 #include "Floor.h"
 #include "Sphere.h"
+#include "Model.h"
+
+
 
 class App
 {
@@ -35,5 +38,6 @@ private:
 	Wall rightWall;
 	Wall frontWall;
 	Floor floor;
+	
 };
 
