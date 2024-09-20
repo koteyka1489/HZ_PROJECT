@@ -91,3 +91,4 @@ SheetTextured::SheetTextured(Graphics& gfx, bool randomCoord, bool worldRot, boo
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
 	AddBind(std::make_unique<Texture>(gfx, texFilename));
 }
+
