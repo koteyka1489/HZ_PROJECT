@@ -24,7 +24,6 @@ Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bo
 
 	if (IsStaticNonInitialized())
 	{
-
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, verIndListSphere.GetVertices()));
 
 		auto pvs = std::make_unique<VertexShader>(gfx, L"VertexShader.cso");
@@ -38,14 +37,11 @@ Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bo
 		{
 			{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
 		};
-
-
+	    
 		AddStaticBind(std::make_unique<InputLayout>(gfx, pvsbt, ied));
 
 		AddStaticBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-
-
-
+	    
 		struct ConstantBuffer2
 		{
 			struct
@@ -65,12 +61,8 @@ Sphere::Sphere(Graphics& gfx, bool randomCoord, bool worldRot, bool modelRot, bo
 		};
 
 		AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
-
-
-
+	    
 		AddStaticBind(std::make_unique<PixelShader>(gfx, L"PixelShaderSphere.cso"));
-
 	}
-
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
 }

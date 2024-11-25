@@ -8,10 +8,7 @@ struct VS_OUT
 {
     float2 tc : TEXCOORD;
     float4 pos : SV_Position;
-    
 };
-
-
 
 VS_OUT main(float3 pos : POSITION, float2 tc : TEXCOORD)
 {

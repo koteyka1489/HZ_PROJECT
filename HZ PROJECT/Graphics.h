@@ -1,7 +1,5 @@
 #pragma once
-#include "KotWin.h"
 #include <d3d11.h>
-#include "ThrowMacros.h"
 #include <wrl.h>
 #include "DxgiInfoManager.h"
 #include <DirectXMath.h>

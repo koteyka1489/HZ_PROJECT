@@ -11,7 +11,7 @@ public:
 	{
 		INFOMAN(gfx);
 
-		D3D11_BUFFER_DESC VBDesc = {}; // описание свойств для Vertex Buffer
+		D3D11_BUFFER_DESC VBDesc = {}; 
 		VBDesc.ByteWidth = UINT(vertices.size() * sizeof(V));
 		VBDesc.Usage = D3D11_USAGE_DEFAULT;
 		VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -19,10 +19,10 @@ public:
 		VBDesc.MiscFlags = 0u;
 		VBDesc.StructureByteStride = sizeof(V);
 
-		D3D11_SUBRESOURCE_DATA verSubResData = {}; // описание данных
+		D3D11_SUBRESOURCE_DATA verSubResData = {}; 
 		verSubResData.pSysMem = vertices.data(); 
 
-		hr = GetDevice(gfx)->CreateBuffer(&VBDesc, &verSubResData, &pVertexBuffer); // создание бафера с использованием описания бафера, описание данных
+		hr = GetDevice(gfx)->CreateBuffer(&VBDesc, &verSubResData, &pVertexBuffer); 
 		THROW_COM_ERROR_GFX_INFO(hr, "ERROR pDevice->CreateBuffer Vertexes");
 
 	};

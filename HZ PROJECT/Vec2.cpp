@@ -1,8 +1,5 @@
 #include "Vec2.h"
 
-
-
-
 Vec2::Vec2(float x, float y)
 	:
 	x(x),
@@ -133,12 +130,6 @@ Vec2 Vec2::Normalize() const
 	return normalize;
 }
 
-
-
-
-
-
-// Вектор направления
 Vec2Dir::Vec2Dir(Vec2 endPoint, Vec2 startPoint)
 	:
 	endPoint(endPoint),

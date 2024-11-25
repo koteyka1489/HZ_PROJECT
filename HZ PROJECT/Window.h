@@ -12,26 +12,20 @@ class Window
 private:
     class WindowClass
     {
-
-        // Public Methods
     public:
         static const CHAR* GetName();
         static HINSTANCE GetInstance();
-
-        // Private Methods
     private:
         WindowClass();
         ~WindowClass();
         WindowClass(const WindowClass&)            = delete;
         WindowClass& operator=(const WindowClass&) = delete;
-        // Fields
-    private:
+
         static const std::string wndClassName;
         static WindowClass wndClass;
         HINSTANCE hInstance;
     };
 
-    // Public Methods
 public:
     Window(int width, int height);
     ~Window();
@@ -42,13 +36,11 @@ public:
     static std::optional<int> PrecessMessages();
     HWND GetHwnd();
 
-    // Private Methods
 private:
     static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
     static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
     LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
-    // Fields
 public:
     Keyboard kbd;
     Mouse mouse;

@@ -22,22 +22,20 @@ Window::WindowClass::WindowClass()
 	:
 	hInstance(GetModuleHandle(nullptr))
 {
-	
-	WNDCLASSEX wcex = { 0 }; //  структура, которая содержит информацию о классе окна
-	wcex.cbSize = sizeof(WNDCLASSEX); // размер структуры
-	wcex.style = CS_OWNDC; // стиль класса окна, в данном случае устанавливается флаг CS_OWNDC, который позволяет окну иметь собственный контекст устройства отображения (device context).
-	wcex.lpfnWndProc = HandleMsgSetup; // указатель на функцию WndProc, которая будет обработчиком сообщений окна.
-	wcex.cbClsExtra = 0; // количество дополнительной памяти, выделенной для класса окна
-	wcex.cbWndExtra = 0; // количество дополнительной памяти, выделенной для каждого экземпляра окна
-	wcex.hInstance = GetInstance(); // дескриптор экземпляра приложения
+	WNDCLASSEX wcex = { 0 }; 
+	wcex.cbSize = sizeof(WNDCLASSEX); 
+	wcex.style = CS_OWNDC; 
+	wcex.lpfnWndProc = HandleMsgSetup; 
+	wcex.cbClsExtra = 0; 
+	wcex.cbWndExtra = 0; 
+	wcex.hInstance = GetInstance(); 
 	wcex.hIcon = static_cast<HICON>(LoadImage(GetInstance(), MAKEINTRESOURCE( IDI_ICON3 ), IMAGE_ICON, 32, 32, 0));
-	wcex.hCursor = nullptr; // дескриптор курсора для класса окна
-	wcex.hbrBackground = nullptr; //  дескриптор кисти для фона окна
-	wcex.lpszMenuName = nullptr; //  имя строки меню для класса окна
-	wcex.lpszClassName = GetName(); //  указатель на строку с именем класса окна.
+	wcex.hCursor = nullptr; 
+	wcex.hbrBackground = nullptr; 
+	wcex.lpszMenuName = nullptr; 
+	wcex.lpszClassName = GetName(); 
 	wcex.hIconSm = static_cast<HICON>(LoadImage(GetInstance(), MAKEINTRESOURCE (IDI_ICON3), IMAGE_ICON, 16, 16, 0));
-
-	// Регистрация класса Windows
+    
 	RegisterClassEx(&wcex);
 }
 
@@ -64,14 +62,14 @@ Window::Window(int width, int height)
 	}
 
 	hWnd = CreateWindowExA(
-		0, // дополнительные стили окна (в данном случае отсутствуют)
-		WindowClass::GetName(), // указатель на строку с именем класса окна
-		GetTitle(), // указатель на строку с заголовком окна
-		WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, //  стили окна, в данном случае окно будет иметь заголовок, кнопку максимизации и системное меню
-		CW_USEDEFAULT, CW_USEDEFAULT, // стартовая точка x y
-		rectWin.right - rectWin.left, rectWin.bottom - rectWin.top, // размеры окна ширина и высота
+		0, 
+		WindowClass::GetName(), 
+		GetTitle(), 
+		WS_CAPTION | WS_MAXIMIZEBOX | WS_SYSMENU, 
+		CW_USEDEFAULT, CW_USEDEFAULT, 
+		rectWin.right - rectWin.left, rectWin.bottom - rectWin.top, 
 		nullptr, nullptr,
-		WindowClass::GetInstance(), // дескриптор экземпляра приложения
+		WindowClass::GetInstance(), 
 		this
 	);
 	if (hWnd == nullptr)
@@ -128,28 +126,20 @@ HWND Window::GetHwnd()
 
 LRESULT Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
-	// использование параметра создания, переданного из CreateWindow(), для сохранения указателя класса окна на стороне WinAPI
 	if (msg == WM_NCCREATE)
 	{
-		// извлечение указателя на класс окна из данных создания
 		const CREATESTRUCTW* const pCreate = reinterpret_cast<CREATESTRUCTW*>(lParam);
 		Window* const pWnd = static_cast<Window*>(pCreate->lpCreateParams);
-		// установка управляемых WinAPI данных пользователя для сохранения указателя на экземпляр окна
 		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWnd));
-		// установка обработчика сообщения в нормальный (не настроечный) после завершения настройки
 		SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&Window::HandleMsgThunk));
-		// пересылка сообщения обработчику экземпляра окна
 		return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
 	}
-	// если мы получили сообщение до сообщения WM_NCCREATE, обработать его с помощью обработчика по умолчанию
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 LRESULT Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
-	// получение указателя на экземпляр окна
 	Window* const pWnd = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
-	// пересылка сообщения обработчику экземпляра окна
 	return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
 }
 
@@ -163,34 +153,30 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	switch (msg)
 	{
 	case WM_CLOSE:
-		// обработка сообщения о выходе
 		PostQuitMessage(0);
 		return 0;
 
-	case WM_KILLFOCUS: // обработка сообщения о потере фокуса окна
+	case WM_KILLFOCUS: 
 		kbd.ClearState(); 
 		break;
-
-// ОБРАБОТКА СООБЩЕНИЙ С КЛАВИАТУРЫ
-
-	case WM_KEYDOWN: // буквы и тд нажаты
-	case WM_SYSKEYDOWN: // системные клавиши нажаты
+	    
+	case WM_KEYDOWN: 
+	case WM_SYSKEYDOWN: 
 		if (!(lParam & 0x40000000) || kbd.AutoRepeatIsEnabled())
 		{
 			kbd.OnKeyPressed(static_cast<unsigned char>(wParam));
 		}
 		break;
 
-	case WM_KEYUP: // буквы и тд подняты
-	case WM_SYSKEYUP: // ситсемные клавиши подняты 
+	case WM_KEYUP: 
+	case WM_SYSKEYUP: 
 		kbd.OnKeyReleased(static_cast<unsigned char>(wParam));
 		break;
 
 	case WM_CHAR:
 		kbd.OnChar(static_cast<unsigned char>(wParam));
 		break;
-
-// ОБРАБОТКА СООБЩЕНИЙ МЫШИ
+	    
 	case WM_MOUSEMOVE:
 		POINTS pt = MAKEPOINTS(lParam);
 		if (pt.x >= 0 && pt.x <= width && pt.y >= 0 && pt.y <= height)
@@ -199,7 +185,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 
 			if (!mouse.IsInWindow())
 			{
-				SetCapture(hWnd); // позволяет захватывать сообщения даже за пределами окна
+				SetCapture(hWnd); 
 				mouse.OnMouseEnter();
 			}
 		}
@@ -211,7 +197,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			}
 			else
 			{
-				ReleaseCapture(); // снимает захват сообщений за пределами окна
+				ReleaseCapture(); 
 				mouse.OnMouseLeave();
 			}
 		}

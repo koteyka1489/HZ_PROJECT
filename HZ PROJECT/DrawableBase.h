@@ -21,11 +21,9 @@ protected:
 	void AddStaticIndexBuffer(std::unique_ptr<IndexBuffer> ibuf)
 	{
 		assert("Attempting to add index buffer a second time" && pIndexBuffer == nullptr);
-
-		// Сохранение указателя на индексный буфер в члене pIndexBuffer.
+	    
 		pStaticIndexBuffer = ibuf.get();
-
-		// Перемещение уникального указателя ibuf в контейнер binds.
+	    
 		staticBinds.push_back(std::move(ibuf));
 	}
 

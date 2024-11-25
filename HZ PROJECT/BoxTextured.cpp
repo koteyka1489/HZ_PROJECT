@@ -77,8 +77,7 @@ BoxTextured::BoxTextured(Graphics& gfx, bool randomCoord, bool worldRot, bool mo
 		auto pvs = std::make_unique<VertexShader>(gfx, L"TextureVertexShader.cso");
 		auto pvsbt = pvs->GetByteCode();
 		AddStaticBind(std::move(pvs));
-
-		// Индексы для всех граней куба
+	    
 		const std::vector<unsigned short> indices =
 		{
 			0, 2, 1, 2, 3, 1,      // Front

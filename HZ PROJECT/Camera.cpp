@@ -38,7 +38,7 @@ void Camera::Control(Window& wnd, float dt)
 {
     if (wnd.kbd.KeyIsPressed('W'))
     {
-        // Вперед
+       
         x += sinf(yaw) * cosf(pitch) * cameraSpeed * dt;
         y -= sinf(pitch) * cameraSpeed * dt;
         z += cosf(yaw) * cosf(pitch) * cameraSpeed * dt;
@@ -46,7 +46,7 @@ void Camera::Control(Window& wnd, float dt)
     }
     if (wnd.kbd.KeyIsPressed('S'))
     {
-        // Назад
+        
         x -= sinf(yaw) * cosf(pitch) * cameraSpeed * dt;
         y += sinf(pitch) * cameraSpeed * dt;
         z -= cosf(yaw) * cosf(pitch) * cameraSpeed * dt;
@@ -54,13 +54,13 @@ void Camera::Control(Window& wnd, float dt)
     }
     if (wnd.kbd.KeyIsPressed('A'))
     {
-        // Влево
+        
         x -= cosf(yaw) * cameraSpeed * dt;
         z += sinf(yaw) * cameraSpeed * dt;
     }
     if (wnd.kbd.KeyIsPressed('D'))
     {
-        // Вправо
+        
         x += cosf(yaw) * cameraSpeed * dt;
         z -= sinf(yaw) * cameraSpeed * dt;
     }

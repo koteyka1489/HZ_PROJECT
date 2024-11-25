@@ -78,7 +78,6 @@ Vec3 Vec3::operator*=(float scl)
 	return (*this) * scl;
 }
 
-// dot product
 float Vec3::operator*(Vec3 rhs)
 {
 	return x * rhs.x + y * rhs.y + z * rhs.z;
@@ -144,12 +143,6 @@ Vec3 Vec3::CrossProduct(Vec3 lhs, Vec3 rhs)
 	);
 }
 
-
-
-
-
-
-// Вектор направления
 Vec3Dir::Vec3Dir(Vec3 endPoint, Vec3 startPoint)
 	:
 	endPoint(endPoint),

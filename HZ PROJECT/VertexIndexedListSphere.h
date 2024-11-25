@@ -10,8 +10,7 @@ public:
         const float PI = 3.14159265359f;
         const float latitudeStep = PI / latitudeCount;
         const float longitudeStep = 2.0f * PI / longitudeCount;
-
-        // Генерация вершин
+        
         for (unsigned int i = 0; i <= latitudeCount; ++i)
         {
             const float theta = i * latitudeStep;
@@ -31,8 +30,7 @@ public:
                 vertices.push_back({ x * radius, y * radius, z * radius });
             }
         }
-
-        // Генерация индексов
+        
         for (unsigned int i = 0; i < latitudeCount; ++i)
         {
             for (unsigned int j = 0; j < longitudeCount; ++j)

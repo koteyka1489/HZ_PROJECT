@@ -44,27 +44,24 @@ public:
 		
 		INFOMAN(gfx);
 
-		// —труктура дл€ описани€ области пам€ти, которую мы собираемс€ отобразить.
+		
 		D3D11_MAPPED_SUBRESOURCE msr;
 
-		// ќтображение (map) буфера, позвол€ющее нам получить доступ к его пам€ти.
-		// D3D11_MAP_WRITE_DISCARD используетс€ дл€ указани€, что мы будем полностью перезаписывать данные.
-		// hr будет содержать результат выполнени€ функции Map.
+		
 		hr = GetContext(gfx)->Map(
-			pConstantBuffer.Get(), // ”казатель на буфер, который нужно отобразить.
-			0u, // Ќомер подресурса (0 дл€ большинства случаев).
-			D3D11_MAP_WRITE_DISCARD, // ‘лаг дл€ указани€ типа доступа к пам€ти (полна€ перезапись).
-			0u, // ƒополнительные флаги (не используютс€).
-			&msr // ”казатель на структуру, котора€ будет заполнена информацией о отображенной области пам€ти.
+			pConstantBuffer.Get(), 
+			0u, 
+			D3D11_MAP_WRITE_DISCARD, 
+			0u, 
+			&msr 
 		);
 
 		THROW_COM_ERROR_GFX_INFO(hr, "ERROR Map Constant Buffer");
 
-		//  опирование данных из consts в отображенную область пам€ти.
-		// msr.pData указывает на начало отображенной области пам€ти.
+		
 		memcpy(msr.pData, &consts, sizeof(consts));
 
-		// –азмонтирование (unmap) буфера, освобожда€ доступ к его пам€ти.
+		
 		GetContext(gfx)->Unmap(pConstantBuffer.Get(), 0u);
 	}
 	ComPtr<ID3D11Buffer> pConstantBuffer;
@@ -83,7 +80,7 @@ public:
 	using ConstantBuffer<C>::ConstantBuffer;
 	void Bind(Graphics& gfx) noexcept override
 	{
-		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //прив€зка буфера констант  в pipeline к Vertex Shader
+		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); 
 	};
 };
 
@@ -97,6 +94,6 @@ public:
 	using ConstantBuffer<C>::ConstantBuffer;
 	void Bind(Graphics& gfx) noexcept override
 	{
-		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); //прив€зка буфера констант  в pipeline к Pixel Shader
+		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf()); 
 	};
 };

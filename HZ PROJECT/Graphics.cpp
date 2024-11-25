@@ -1,7 +1,5 @@
 #include "Graphics.h"
-
-
-
+#include "ThrowMacros.h"
 
 Graphics::Graphics(HWND hWnd)
 {
@@ -107,10 +105,10 @@ Graphics::Graphics(HWND hWnd)
     pContext->RSSetViewports(1u, &vp);
 
     projection = DirectX::XMMatrixPerspectiveFovLH(
-        DirectX::XM_PIDIV4,    // Угол обзора (field of view)
-        width / height,        // Соотношение сторон (aspect ratio)
-        0.1f,                  // Ближняя плоскость отсечения (near plane)
-        100000.0f                // Дальняя плоскость отсечения (far plane)
+        DirectX::XM_PIDIV4,    
+        width / height,        
+        0.1f,                  
+        100000.0f               
     );
     camera = DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
 
@@ -134,15 +132,9 @@ Graphics::~Graphics()
 void Graphics::BeginFrame(float red, float green, float blue)
 {
     const float color[] = { red, green, blue, 1.0f };
-    // Очистка буфера кадра (цветного буфера) заданным цветом. 
     pContext->ClearRenderTargetView(pTarget.Get(), color);
-
-    // Очистка буфера глубины и трафарета. 
     pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
-
-    // Установка целевого рендеринга и буфера глубины-трафарета для выходного модуля (output merger).
     pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
-
     ImguiBeginFrame();
 }
 

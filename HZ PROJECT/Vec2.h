@@ -34,8 +34,6 @@ public:
 	float w = 1.0f;
 };
 
-
-// Вектор направления
 class Vec2Dir
 {
 public:

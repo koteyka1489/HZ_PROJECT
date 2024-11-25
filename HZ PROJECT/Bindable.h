@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include <string>
 #include <vector>
+#include "ThrowMacros.h"
 
 class Bindable
 {

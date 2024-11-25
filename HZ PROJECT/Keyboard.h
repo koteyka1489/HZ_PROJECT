@@ -71,10 +71,10 @@ private:
 	void OnKeyReleased(unsigned char keycode);
 	void OnChar(char character);
 
-	void ClearState(); // очистка keystates
+	void ClearState(); 
 
 	template <typename T>
-	static void TrimBuffer(std::queue<T> buffer) // обрезка излишков keybuffer and charbeffer
+	static void TrimBuffer(std::queue<T> buffer) 
 	{
 		while (buffer.size() > bufferSize)
 		{
